@@ -1,0 +1,25 @@
+using UnityEngine;
+
+public class PlayerFortuneCookie : MonoBehaviour
+{
+    public float pickUpDistance = 2f;
+    private KeyCode pickUpKey = KeyCode.E;
+    public Transform fortuneCookieTable;
+    public CustomerNPC customerNPC;
+    private bool hasCookie;
+
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position, fortuneCookieTable.position) <= pickUpDistance && Input.GetKeyDown(pickUpKey) && !hasCookie)
+        {
+            PickUpCookie();
+        }
+    }
+
+    private void PickUpCookie()
+    {
+        hasCookie = true;
+        customerNPC.hasFortuneCookie = true;
+        Debug.Log("Fortune Cookie Picked Up! Extra Tip on Delivery!");
+    }
+}
