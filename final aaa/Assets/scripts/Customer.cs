@@ -26,7 +26,8 @@ public class CustomerNPC : MonoBehaviour
         {
             InitiateDialogue();
         }
-        if (isInRange && Input.GetKeyDown(deliverKey) && !hasDelivered && DeliveryManager.Instance.currentOrder != null)
+        if (isInRange && Input.GetKeyDown(deliverKey) && !hasDelivered && DeliveryManager.Instance.currentOrder != null
+        && DeliveryManager.Instance.currentOrder.currentState == OrderState.PickedUp)
         {
             DeliverFood();
         }
@@ -45,10 +46,18 @@ public class CustomerNPC : MonoBehaviour
 
     private void DeliverFood()
     {
+        if (DeliveryManager.Instance.currentOrder.currentState != OrderState.PickedUp)
+            return;
+
         int totalTip = hasFortuneCookie ? tipAmount + fortuneCookieExtraTip : tipAmount;
+
         DeliveryManager.Instance.AddEarnings(totalTip);
         FindObjectOfType<EarningsUI>().AddCurrentEarnings(totalTip);
+
+        DeliveryManager.Instance.currentOrder.currentState = OrderState.Delivered;
+
         hasDelivered = true;
+
         Debug.Log("Food Delivered! Tip: " + totalTip);
         Debug.Log("Return to Owner to submit order!");
     }

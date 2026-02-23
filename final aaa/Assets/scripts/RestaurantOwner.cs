@@ -26,7 +26,8 @@ public class RestaurantOwnerNPC : MonoBehaviour
         {
             AssignOrder();
         }
-        if (isInRange && Input.GetKeyDown(actionKey) && isOrderAssigned && DeliveryManager.Instance.currentOrder != null)
+        if (isInRange && Input.GetKeyDown(actionKey) && isOrderAssigned && DeliveryManager.Instance.currentOrder != null 
+        && DeliveryManager.Instance.currentOrder.currentState == OrderState.Delivered)
         {
             SubmitOrder();
         }
@@ -61,17 +62,27 @@ public class RestaurantOwnerNPC : MonoBehaviour
     {
         if (!DeliveryManager.Instance.firstDeliveryCompleted)
         {
-            DeliveryManager.Instance.StartOrder(DeliveryManager.Instance.burgerOrder);
-            OrderUI.Instance.UpdateOrderUI(DeliveryManager.Instance.burgerOrder);
+            OrderData order = DeliveryManager.Instance.burgerOrder;
+
+            order.currentState = OrderState.Accepted;
+            DeliveryManager.Instance.StartOrder(order);
+
+            OrderUI.Instance.UpdateOrderUI(order);
             isOrderAssigned = true;
-            Debug.Log("Burger Order Assigned! Press O to view order.");
+
+            Debug.Log("Burger Order Assigned!");
         }
         else if (DeliveryManager.Instance.pizzaOrder.isUnlocked)
         {
-            DeliveryManager.Instance.StartOrder(DeliveryManager.Instance.pizzaOrder);
-            OrderUI.Instance.UpdateOrderUI(DeliveryManager.Instance.pizzaOrder);
+            OrderData order = DeliveryManager.Instance.pizzaOrder;
+
+            order.currentState = OrderState.Accepted;
+            DeliveryManager.Instance.StartOrder(order);
+
+            OrderUI.Instance.UpdateOrderUI(order);
             isOrderAssigned = true;
-            Debug.Log("Pizza Order Assigned! Press O to view order.");
+
+            Debug.Log("Pizza Order Assigned!");
         }
     }
 
@@ -86,6 +97,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
         {
             DeliveryManager.Instance.CompleteFirstDelivery();
         }
+        DeliveryManager.Instance.currentOrder.currentState = OrderState.Submitted;
 
         isOrderAssigned = false;
         DeliveryManager.Instance.currentOrder = null;

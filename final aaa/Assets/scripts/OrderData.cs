@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewOrder", menuName = "Order/OrderData")]
 public class OrderData : ScriptableObject
 {
     public string customerName;
@@ -7,4 +8,15 @@ public class OrderData : ScriptableObject
     public string foodType;
     public int basePay;
     public bool isUnlocked;
+
+    public OrderState currentState;
+}
+
+public enum OrderState
+{
+    Unaccepted,
+    Accepted,
+    PickedUp,
+    Delivered,
+    Submitted
 }
