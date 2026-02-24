@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: BurgerOder
   m_EditorClassIdentifier: 
   customerName: Amy
-  orderImage: {fileID: 0}
+  orderImage: {fileID: 21300000, guid: 77cca7b0242c7704bb2249d7589b6ed4, type: 3}
   foodType: Burger
   basePay: 5
   isUnlocked: 0
+  currentState: 0
+  isCookieOffered: 0
+  isCookiePicked: 0

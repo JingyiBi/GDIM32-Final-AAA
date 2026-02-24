@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class OrderUI : MonoBehaviour
 {
     public static OrderUI Instance;
     public GameObject orderPopup;
     public Image orderImageDisplay;
-    public Text customerNameText;
-    public Text foodTypeText;
-    public Text basePayText;
+    public TMP_Text customerNameText;
+    public TMP_Text foodTypeText;
+    public TMP_Text basePayText;
     private KeyCode orderKey = KeyCode.O;
 
     private void Awake()

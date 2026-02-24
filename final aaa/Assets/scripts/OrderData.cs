@@ -10,6 +10,8 @@ public class OrderData : ScriptableObject
     public bool isUnlocked;
 
     public OrderState currentState;
+    public bool isCookieOffered;
+    public bool isCookiePicked;
 }
 
 public enum OrderState

@@ -2,34 +2,47 @@ using UnityEngine;
 
 public class CustomerNPC : MonoBehaviour
 {
-    public float interactionDistance = 3f;
+    public float interactionDistance = 5f;
     public int tipAmount = 20;
     public int fortuneCookieExtraTip = 10;
+
     private KeyCode interactKey = KeyCode.I;
     private KeyCode deliverKey = KeyCode.E;
+
     private Transform player;
     private bool isInRange;
     private bool hasDelivered;
-    public bool hasFortuneCookie;
+    private bool isDialogueOpen;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
         hasDelivered = false;
-        hasFortuneCookie = false;
+        isDialogueOpen = false;
     }
 
     private void Update()
     {
         CheckInteractionRange();
-        if (isInRange && Input.GetKeyDown(interactKey) && !hasDelivered && DeliveryManager.Instance.currentOrder != null)
+
+        if (!isInRange) return;
+
+        if (Input.GetKeyDown(interactKey) &&
+            !hasDelivered &&
+            DeliveryManager.Instance.currentOrder != null)
         {
+            isDialogueOpen = true;
             InitiateDialogue();
         }
-        if (isInRange && Input.GetKeyDown(deliverKey) && !hasDelivered && DeliveryManager.Instance.currentOrder != null
-        && DeliveryManager.Instance.currentOrder.currentState == OrderState.PickedUp)
+
+        if (isDialogueOpen &&
+            Input.GetKeyDown(deliverKey) &&
+            !hasDelivered &&
+            DeliveryManager.Instance.currentOrder != null &&
+            DeliveryManager.Instance.currentOrder.currentState == OrderState.PickedUp)
         {
             DeliverFood();
+            isDialogueOpen = false;
         }
     }
 
@@ -49,7 +62,9 @@ public class CustomerNPC : MonoBehaviour
         if (DeliveryManager.Instance.currentOrder.currentState != OrderState.PickedUp)
             return;
 
-        int totalTip = hasFortuneCookie ? tipAmount + fortuneCookieExtraTip : tipAmount;
+        bool hasCookie = DeliveryManager.Instance.currentOrder.isCookiePicked;
+
+        int totalTip = hasCookie ? tipAmount + fortuneCookieExtraTip : tipAmount;
 
         DeliveryManager.Instance.AddEarnings(totalTip);
         FindObjectOfType<EarningsUI>().AddCurrentEarnings(totalTip);

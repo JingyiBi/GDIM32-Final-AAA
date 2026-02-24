@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: PizzaOrder
   m_EditorClassIdentifier: 
   customerName: Ann
-  orderImage: {fileID: 0}
+  orderImage: {fileID: 21300000, guid: ab41fa66f28fbf44b9ac7d5ebec7d688, type: 3}
   foodType: Pizza
   basePay: 6
   isUnlocked: 0
+  currentState: 0
+  isCookieOffered: 0
+  isCookiePicked: 0

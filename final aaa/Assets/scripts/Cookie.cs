@@ -19,7 +19,9 @@ public class PlayerFortuneCookie : MonoBehaviour
     private void PickUpCookie()
     {
         hasCookie = true;
-        customerNPC.hasFortuneCookie = true;
+
+        DeliveryManager.Instance.currentOrder.isCookiePicked = true;
+
         Debug.Log("Fortune Cookie Picked Up! Extra Tip on Delivery!");
     }
 }
