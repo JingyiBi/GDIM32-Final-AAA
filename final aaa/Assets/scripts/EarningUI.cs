@@ -1,16 +1,18 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro; 
 
 public class EarningsUI : MonoBehaviour
 {
-    public Text currentEarningsText;
-    public Text totalEarningsText;
+    public TMP_Text currentEarningsText; 
+    public TMP_Text totalEarningsText; 
     private int currentDeliveryEarnings;
 
     private void Update()
     {
-        currentEarningsText.text = currentDeliveryEarnings.ToString();
-        totalEarningsText.text = DeliveryManager.Instance.totalEarnings.ToString();
+        if (currentEarningsText != null)
+            currentEarningsText.text = "Current: " + currentDeliveryEarnings.ToString();
+        if (totalEarningsText != null)
+            totalEarningsText.text = "Total: " + DeliveryManager.Instance.totalEarnings.ToString();
     }
 
     public void AddCurrentEarnings(int amount)
