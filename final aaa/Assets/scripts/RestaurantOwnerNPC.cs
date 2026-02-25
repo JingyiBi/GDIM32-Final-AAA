@@ -3,6 +3,7 @@ using UnityEngine;
 public class RestaurantOwnerNPC : MonoBehaviour
 {
     public float interactionDistance = 5f;
+    public GameObject interactionPrompt;
 
     private KeyCode interactKey = KeyCode.I;
     private KeyCode actionKey = KeyCode.E;
@@ -11,6 +12,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
     private bool isInRange;
     private bool isOrderAssigned;
     private bool isDialogueOpen;
+
 
     private void Start()
     {
@@ -26,6 +28,11 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
         isOrderAssigned = false;
         isDialogueOpen = false;
+
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(false);
+        }
     }
 
     private void Update()
@@ -60,6 +67,11 @@ public class RestaurantOwnerNPC : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, player.position);
         isInRange = distance <= interactionDistance;
+
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(true);
+        }
     }
 
     private void InitiateDialogue()
