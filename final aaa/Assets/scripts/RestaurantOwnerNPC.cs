@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RestaurantOwnerNPC : MonoBehaviour
@@ -11,6 +10,8 @@ public class RestaurantOwnerNPC : MonoBehaviour
     private Transform player;
     private bool isInRange;
     private bool isOrderAssigned;
+
+    private DialogueNode startNode;   
 
     private void Start()
     {
@@ -30,51 +31,6 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
-    }
-
-    private DialogueNode BuildDialogueTree()
-    {
-        DialogueNode endNode = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "Smart move! Now go show Emily what good service looks like.",
-            endsDialogue = true
-        };
-
-        DialogueNode secondNode = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "Ha! I like someone who cuts to the chase. You get $5 base pay. Customers might tip too.",
-            choices = new DialogueChoice[]
-            {
-            new DialogueChoice
-            {
-                choiceText = "Sounds fair. Tell me more about the order.",
-                nextNode = endNode
-            }
-            }
-        };
-
-        DialogueNode start = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "Hey there! Think you can handle this delivery?",
-            choices = new DialogueChoice[]
-            {
-            new DialogueChoice
-            {
-                choiceText = "Sure, what's the order?",
-                nextNode = endNode
-            },
-            new DialogueChoice
-            {
-                choiceText = "What's in it for me?",
-                nextNode = secondNode
-            }
-            }
-        };
-
-        return start;
     }
 
     private void Update()
@@ -100,46 +56,45 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private void StartOwnerDialogue()
     {
-        DialogueNode startNode = BuildDialogueTree();
         DialogueManager.Instance.StartDialogue(startNode);
     }
 
     private DialogueNode BuildDialogueTree()
     {
-        DialogueNode node1 = new DialogueNode();
-        node1.speakerName = "Owner";
-        node1.dialogueText =
-            "Hey there! You must be our new delivery rider. Think you can handle an order?";
+        DialogueNode acceptNode = new DialogueNode
+        {
+            speakerName = "Owner",
+            dialogueText = "Great! One Burger. $5 base pay. Don't keep the customer waiting!",
+            endsDialogue = true
+        };
 
-        DialogueNode acceptNode = new DialogueNode();
-        acceptNode.speakerName = "Owner";
-        acceptNode.dialogueText =
-            "Great! One Burger. $5 base pay. Don't keep the customer waiting!";
+        DialogueNode payNode = new DialogueNode
+        {
+            speakerName = "Owner",
+            dialogueText = "You get $5 base pay per delivery. Treat customers well — they might tip you!",
+            endsDialogue = true
+        };
 
-        acceptNode.endsDialogue = true;
+        DialogueNode start = new DialogueNode
+        {
+            speakerName = "Owner",
+            dialogueText = "Hey there! You must be our new delivery rider. Think you can handle an order?",
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice
+                {
+                    choiceText = "Sure, what's the order?",
+                    nextNode = acceptNode
+                },
+                new DialogueChoice
+                {
+                    choiceText = "What's in it for me?",
+                    nextNode = payNode
+                }
+            }
+        };
 
-        acceptNode.choices = new DialogueChoice[0];
-
-        DialogueNode payNode = new DialogueNode();
-        payNode.speakerName = "Owner";
-        payNode.dialogueText =
-            "You get $5 base pay per delivery. Treat customers well — they might tip you!";
-
-        payNode.endsDialogue = true;
-
-        payNode.choices = new DialogueChoice[0];
-
-        node1.choices = new DialogueChoice[2];
-
-        node1.choices[0] = new DialogueChoice();
-        node1.choices[0].choiceText = "Sure, what's the order?";
-        node1.choices[0].nextNode = acceptNode;
-
-        node1.choices[1] = new DialogueChoice();
-        node1.choices[1].choiceText = "What's in it for me?";
-        node1.choices[1].nextNode = payNode;
-
-        return node1;
+        return start;
     }
 
     public void AssignOrder()
@@ -172,7 +127,6 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
         Debug.Log("Order Assigned!");
     }
-
 
     public void SubmitOrder()
     {
