@@ -34,7 +34,7 @@ public class OrderUI : MonoBehaviour
         orderPanel.SetActive(true);
 
         titleText.text = "Current Order";
-        itemText.text = "Item: " + order.itemName;
+        itemText.text = "Food: " + order.foodType;
         payText.text = "Pay: $" + order.basePay;
         statusText.text = "Status: " + order.currentState.ToString();
     }

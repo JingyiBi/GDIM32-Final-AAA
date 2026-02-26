@@ -1,27 +1,56 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class DialogueUI : MonoBehaviour
 {
-    public static DialogueUI Instance;
-
     public GameObject panel;
+    public TextMeshProUGUI speakerText;
     public TextMeshProUGUI dialogueText;
 
-    private void Awake()
+    public Button[] optionButtons;
+    public TextMeshProUGUI[] optionTexts;
+
+    public void Show()
     {
-        Instance = this;
+        panel.SetActive(true);
+    }
+
+    public void Hide()
+    {
         panel.SetActive(false);
     }
 
-    public void ShowDialogue(string text)
+    public void SetSpeaker(string name)
     {
-        panel.SetActive(true);
+        speakerText.text = name;
+    }
+
+    public void SetText(string text)
+    {
         dialogueText.text = text;
     }
 
-    public void HideDialogue()
+    public void SetChoices(DialogueChoice[] choices)
     {
-        panel.SetActive(false);
+        for (int i = 0; i < optionButtons.Length; i++)
+        {
+            if (i < choices.Length)
+            {
+                optionButtons[i].gameObject.SetActive(true);
+                optionTexts[i].text = choices[i].choiceText;
+
+                int index = i;
+                optionButtons[i].onClick.RemoveAllListeners();
+                optionButtons[i].onClick.AddListener(() =>
+                {
+                    DialogueManager.Instance.ChooseOption(index);
+                });
+            }
+            else
+            {
+                optionButtons[i].gameObject.SetActive(false);
+            }
+        }
     }
 }
