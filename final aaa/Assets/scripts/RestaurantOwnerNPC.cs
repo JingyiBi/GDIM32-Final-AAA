@@ -71,7 +71,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
         DialogueNode payNode = new DialogueNode
         {
             speakerName = "Owner",
-            dialogueText = "You get $5 base pay per delivery. Treat customers well — they might tip you!",
+            dialogueText = "You get $5 base pay per delivery. Treat customers well ï¿½ they might tip you!",
             endsDialogue = true
         };
 

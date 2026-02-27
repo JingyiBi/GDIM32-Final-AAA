@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 26594623}
   - component: {fileID: 26594624}
   - component: {fileID: 26594625}
+  - component: {fileID: 26594626}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -336,6 +337,27 @@ MonoBehaviour:
   mouseSensitivity: 120
   gravity: -9.81
   jumpHeight: 1
+--- !u!65 &26594626
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26594621}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &34065122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5050,7 +5072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 5
-  interactionPrompt: {fileID: 1429966076}
+  interactionPrompt: {fileID: 1612405329}
 --- !u!1 &1183300694
 GameObject:
   m_ObjectHideFlags: 0
@@ -5638,7 +5660,7 @@ GameObject:
   - component: {fileID: 1339224381}
   - component: {fileID: 1339224380}
   m_Layer: 5
-  m_Name: OderPanel
+  m_Name: OrderPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8016,9 +8038,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18dab52792ac3468392e7cc292f69069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentOrder: {fileID: 0}
-  burgerOrder: {fileID: 11400000, guid: 134e9e18657204515a8cb4a8ed162cb9, type: 2}
-  pizzaOrder: {fileID: 11400000, guid: 0b1cddc8ad5cc44e7a98200a91fef1a1, type: 2}
+  currentOrder: {fileID: 11400000, guid: f1ebff74f8c01f44fa8a7856c0777e11, type: 2}
+  burgerOrder: {fileID: 11400000, guid: f1ebff74f8c01f44fa8a7856c0777e11, type: 2}
+  pizzaOrder: {fileID: 11400000, guid: 2102795655bf6094892ace0859ae017e, type: 2}
   totalEarnings: 0
   firstDeliveryCompleted: 0
 --- !u!4 &1956875893
