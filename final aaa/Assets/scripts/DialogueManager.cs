@@ -17,7 +17,11 @@ public class DialogueManager : MonoBehaviour
     {
         currentNode = startNode;
         dialogueUI.Show();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         DisplayNode();
+        Debug.Log(dialogueUI);
     }
 
     void DisplayNode()
@@ -29,15 +33,48 @@ public class DialogueManager : MonoBehaviour
 
     public void ChooseOption(int index)
     {
+        Debug.Log($"ChooseOption index={index}");
+
+        if (currentNode == null)
+        {
+            Debug.LogError("currentNode is NULL");
+            return;
+        }
+
+        if (currentNode.choices == null)
+        {
+            Debug.LogError("currentNode.choices is NULL");
+            return;
+        }
+
+        if (index < 0 || index >= currentNode.choices.Length)
+        {
+            Debug.LogError($"Index out of range. choices.Length={currentNode.choices.Length}, index={index}");
+            return;
+        }
+
         if (currentNode.choices.Length == 0)
         {
             EndDialogue();
             return;
         }
 
-        currentNode = currentNode.choices[index].nextNode;
+        var chosen = currentNode.choices[index];
+        if (chosen == null)
+        {
+            Debug.LogError($"Choice[{index}] is NULL");
+            return;
+        }
 
-        if (currentNode.endsDialogue)
+        if (chosen.nextNode == null)
+        {
+            Debug.LogError($"Choice[{index}] nextNode is NULL. choiceText={chosen.choiceText}");
+            return;
+        }
+
+        currentNode = chosen.nextNode;
+
+        if (currentNode.endsDialogue || currentNode.choices == null || currentNode.choices.Length == 0)
         {
             EndDialogue();
             return;
@@ -55,5 +92,8 @@ public class DialogueManager : MonoBehaviour
         {
             owner.AssignOrder();
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

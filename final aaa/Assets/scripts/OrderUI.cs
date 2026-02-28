@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class OrderUI : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class OrderUI : MonoBehaviour
     public TextMeshProUGUI itemText;
     public TextMeshProUGUI payText;
     public TextMeshProUGUI statusText;
-
+    public Image orderImageUI;
     private void Awake()
     {
         if (Instance == null)
@@ -37,6 +38,9 @@ public class OrderUI : MonoBehaviour
         itemText.text = "Food: " + order.foodType;
         payText.text = "Pay: $" + order.basePay;
         statusText.text = "Status: " + order.currentState.ToString();
+
+        if (orderImageUI != null)
+            orderImageUI.sprite = order.orderImage;
     }
 
     public void HideOrderUI()

@@ -43,6 +43,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
         {
             StartOwnerDialogue();
         }
+
     }
 
     private void CheckInteractionRange()
