@@ -9,7 +9,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private Transform player;
     private bool isInRange;
-    private bool isOrderAssigned;
+    public bool isOrderAssigned;
 
     private DialogueNode startNode;   
 
