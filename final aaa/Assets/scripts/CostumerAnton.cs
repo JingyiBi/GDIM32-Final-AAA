@@ -8,6 +8,10 @@ public class CustomerAnton : MonoBehaviour
     private Transform player;
     private bool isInRange;
 
+    private bool dialogueFinished = false;
+
+    public GameObject interactionHint;
+
     private void Start()
     {
         GameObject playerObj = GameObject.FindWithTag("Player");
@@ -23,41 +27,74 @@ public class CustomerAnton : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         isInRange = distance <= interactionDistance;
 
+        if (interactionHint != null)
+            interactionHint.SetActive(isInRange);
+
         if (isInRange && Input.GetKeyDown(interactKey))
         {
-            TrySubmitOrder();
+            if (!dialogueFinished)
+                PlayDialogue();
+            else
+                SubmitOrder();
         }
     }
+    void PlayDialogue()
+    {
+        DialogueNode thankNode = new DialogueNode
+        {
+            speakerName = "Anton",
+            dialogueText = "Thank you.",
+            endsDialogue = true,
+            autoContinue = true
+        };
 
-    void TrySubmitOrder()
+        DialogueNode playerNode = new DialogueNode
+        {
+            speakerName = "You",
+            dialogueText = "This is your Burger.",
+            endsDialogue = false,
+            autoContinue = true,
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice { nextNode = thankNode }
+            }
+        };
+
+        DialogueNode hiNode = new DialogueNode
+        {
+            speakerName = "Anton",
+            dialogueText = "Hi!",
+            endsDialogue = false,
+            autoContinue = true,
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice { nextNode = playerNode }
+            }
+        };
+
+        DialogueManager.Instance.StartDialogue(hiNode);
+
+        dialogueFinished = true;
+
+        Debug.Log("Click Anton again to give him the burger.");
+    }
+
+    void SubmitOrder()
     {
         if (DeliveryManager.Instance == null) return;
-
-        if (DeliveryManager.Instance.currentOrder == null)
-            return;
+        if (DeliveryManager.Instance.currentOrder == null) return;
 
         if (DeliveryManager.Instance.currentOrder.foodType != "Burger")
             return;
 
         RestaurantOwnerNPC owner = FindObjectOfType<RestaurantOwnerNPC>();
         if (owner != null)
-        {
             owner.SubmitOrder();
-        }
 
-        OrderUI inventory = FindObjectOfType<OrderUI>();
-        if (inventory != null)
-        {
-            inventory.HideOrderUI();
+        OrderUI orderUI = FindObjectOfType<OrderUI>();
+        if (orderUI != null)
+            orderUI.HideOrderUI();
 
-            DialogueNode thankNode = new DialogueNode
-            {
-                speakerName = "Anton",
-                dialogueText = "Thank you!",
-                endsDialogue = true
-            };
-
-            DialogueManager.Instance.StartDialogue(thankNode);
-        }
+        dialogueFinished = false;
     }
 }

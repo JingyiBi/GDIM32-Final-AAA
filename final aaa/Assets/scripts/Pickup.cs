@@ -22,6 +22,7 @@ public class PickupZone : MonoBehaviour
         {
             DeliveryManager.Instance.currentOrder.currentState = OrderState.PickedUp;
             Debug.Log("Order Picked Up!");
+            Debug.Log("Mouse click detected");
         }
     }
 }

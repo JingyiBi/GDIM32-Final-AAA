@@ -68,7 +68,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
             dialogueText = "Please pick up the burger on the table by clicking it.",
             endsDialogue = true,
             autoContinue = true,
-            autoContinueDelay = 1.5f
+            autoContinueDelay = 2f
         };
 
 
@@ -78,7 +78,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
             dialogueText = "Great! One Burger. $5 base pay. Don't keep the customer waiting!",
             endsDialogue = false,
             autoContinue = true,
-            autoContinueDelay = 1.5f,
+            autoContinueDelay = 2f,
             choices = new DialogueChoice[]
             {
                 new DialogueChoice

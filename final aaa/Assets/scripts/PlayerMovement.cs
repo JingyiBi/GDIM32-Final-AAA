@@ -12,12 +12,11 @@ public class PlayerMovement : MonoBehaviour
     private Transform mainCamera;
     private Vector3 velocity;
 
+
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
         mainCamera = Camera.main.transform;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void Update()
@@ -60,5 +59,9 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         cc.Move(velocity * Time.deltaTime);
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Mouse clicked");
+        }
     }
 }

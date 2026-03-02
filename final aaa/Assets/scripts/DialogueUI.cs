@@ -33,33 +33,32 @@ public class DialogueUI : MonoBehaviour
 
     public void SetChoices(DialogueChoice[] choices)
     {
-        if (choices == null || choices.Length == 0)
+        for (int i = 0; i < optionButtons.Length; i++)
         {
-            for (int i = 0; i < optionButtons.Length; i++)
-            {
-                optionButtons[i].gameObject.SetActive(false);
-            }
-            return;
+            optionButtons[i].onClick.RemoveAllListeners();
+            optionButtons[i].gameObject.SetActive(false);
+
+ 
+            if (i < optionTexts.Length && optionTexts[i] != null)
+                optionTexts[i].text = "";
         }
+
+        if (choices == null || choices.Length == 0)
+            return;
 
         for (int i = 0; i < optionButtons.Length; i++)
         {
-            if (i < choices.Length)
-            {
-                optionButtons[i].gameObject.SetActive(true);
-                optionTexts[i].text = choices[i].choiceText;
+            if (i >= choices.Length) break;
 
-                int index = i;
-                optionButtons[i].onClick.RemoveAllListeners();
-                optionButtons[i].onClick.AddListener(() =>
-                {
-                    DialogueManager.Instance.ChooseOption(index);
-                });
-            }
-            else
+            optionButtons[i].gameObject.SetActive(true);
+            if (i < optionTexts.Length && optionTexts[i] != null)
+                optionTexts[i].text = choices[i].choiceText ?? "";
+
+            int index = i;
+            optionButtons[i].onClick.AddListener(() =>
             {
-                optionButtons[i].gameObject.SetActive(false);
-            }
+                DialogueManager.Instance.ChooseOption(index);
+            });
         }
     }
 }

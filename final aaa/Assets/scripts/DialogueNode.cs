@@ -22,5 +22,6 @@ public class DialogueNode
     public bool endsDialogue;
 
     public bool autoContinue;
-    public float autoContinueDelay = 1.5f;
+    public float autoContinueDelay = 2f;
+    public DialogueNode nextNode;
 }
