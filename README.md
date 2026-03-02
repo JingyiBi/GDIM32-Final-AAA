@@ -33,4 +33,6 @@ For future planning, I’ll add technical details like core scripts and Unity co
 Put your individual final Devlog here.
 
 ## Open-Source Assets
-Cite any open-source assets here. Put them in a LIST, and use correctly formatted LINKS.
+- [funky preparation](https://www.aigei.com) - background music
+- [characters](https://www.mixamo.com/#/)- 3D characters model and animation
+- 
