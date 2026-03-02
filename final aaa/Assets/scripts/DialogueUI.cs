@@ -33,6 +33,15 @@ public class DialogueUI : MonoBehaviour
 
     public void SetChoices(DialogueChoice[] choices)
     {
+        if (choices == null || choices.Length == 0)
+        {
+            for (int i = 0; i < optionButtons.Length; i++)
+            {
+                optionButtons[i].gameObject.SetActive(false);
+            }
+            return;
+        }
+
         for (int i = 0; i < optionButtons.Length; i++)
         {
             if (i < choices.Length)

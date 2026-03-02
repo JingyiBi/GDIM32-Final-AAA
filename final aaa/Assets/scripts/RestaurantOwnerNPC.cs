@@ -62,17 +62,36 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private DialogueNode BuildDialogueTree()
     {
+        DialogueNode pickupNode = new DialogueNode
+        {
+            speakerName = "Owner",
+            dialogueText = "Please pick up the burger on the table by clicking it.",
+            endsDialogue = true,
+            autoContinue = true,
+            autoContinueDelay = 1.5f
+        };
+
+
         DialogueNode acceptNode = new DialogueNode
         {
             speakerName = "Owner",
             dialogueText = "Great! One Burger. $5 base pay. Don't keep the customer waiting!",
-            endsDialogue = true
+            endsDialogue = false,
+            autoContinue = true,
+            autoContinueDelay = 1.5f,
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice
+                {
+                    nextNode = pickupNode
+                }
+            }
         };
 
         DialogueNode payNode = new DialogueNode
         {
             speakerName = "Owner",
-            dialogueText = "You get $5 base pay per delivery. Treat customers well � they might tip you!",
+            dialogueText = "You get $5 base pay per delivery. Treat customers well — they might tip you!",
             endsDialogue = true
         };
 
@@ -82,16 +101,16 @@ public class RestaurantOwnerNPC : MonoBehaviour
             dialogueText = "Hey there! You must be our new delivery rider. Think you can handle an order?",
             choices = new DialogueChoice[]
             {
-                new DialogueChoice
-                {
-                    choiceText = "Sure, what's the order?",
-                    nextNode = acceptNode
-                },
-                new DialogueChoice
-                {
-                    choiceText = "What's in it for me?",
-                    nextNode = payNode
-                }
+            new DialogueChoice
+            {
+                choiceText = "Sure, what's the order?",
+                nextNode = acceptNode
+            },
+            new DialogueChoice
+            {
+                choiceText = "What's in it for me?",
+                nextNode = payNode
+            }
             }
         };
 

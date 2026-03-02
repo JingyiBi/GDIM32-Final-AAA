@@ -20,4 +20,7 @@ public class DialogueNode
     public DialogueChoice[] choices;
 
     public bool endsDialogue;
+
+    public bool autoContinue;
+    public float autoContinueDelay = 1.5f;
 }

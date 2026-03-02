@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class DialogueManager : MonoBehaviour
     public DialogueUI dialogueUI;
 
     private DialogueNode currentNode;
+
+    private Coroutine autoContinueRoutine;
 
     private void Awake()
     {
@@ -29,6 +32,31 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetSpeaker(currentNode.speakerName);
         dialogueUI.SetText(currentNode.dialogueText);
         dialogueUI.SetChoices(currentNode.choices);
+
+        if (currentNode.autoContinue)
+        {
+            if (autoContinueRoutine != null)
+                StopCoroutine(autoContinueRoutine);
+
+            autoContinueRoutine = StartCoroutine(AutoContinue());
+        }
+    }
+
+    IEnumerator AutoContinue()
+    {
+        yield return new WaitForSeconds(currentNode.autoContinueDelay);
+
+        if (currentNode.endsDialogue)
+        {
+            EndDialogue();
+            yield break;
+        }
+
+        if (currentNode.choices != null && currentNode.choices.Length > 0)
+        {
+            currentNode = currentNode.choices[0].nextNode;
+            DisplayNode();
+        }
     }
 
     public void ChooseOption(int index)
