@@ -1375,6 +1375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hamburgerUISprite: {fileID: 21300000, guid: 618a2a4cb48b54ae38ac66c62dc7238a, type: 3}
   inventoryUIContainer: {fileID: 560105351}
+  hasTalkedToCustomer: 0
 --- !u!65 &274716019
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2761,14 +2762,14 @@ RectTransform:
   m_GameObject: {fileID: 560105350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.588125, y: 1.65, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 343185954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -61, y: 89}
+  m_AnchoredPosition: {x: -211, y: 218}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &602778755
@@ -6042,7 +6043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3208eb9e81ded43b0a5b14ca1765d705, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.54
+      value: -29.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3208eb9e81ded43b0a5b14ca1765d705, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6050,7 +6051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3208eb9e81ded43b0a5b14ca1765d705, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.21
+      value: 5.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3208eb9e81ded43b0a5b14ca1765d705, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9016,7 +9017,7 @@ RectTransform:
   m_GameObject: {fileID: 1861225635}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.1328125, y: 2.203125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 732604993}
@@ -9476,6 +9477,8 @@ MonoBehaviour:
   hamburgerInteract: {fileID: 274716018}
   restaurantOwner: {fileID: 1182456941}
   inventoryUIContainer: {fileID: 560105351}
+  interactionDistance: 5
+  interactionPrompt: {fileID: 0}
 --- !u!65 &2037116952
 BoxCollider:
   m_ObjectHideFlags: 0

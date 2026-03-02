@@ -62,59 +62,95 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private DialogueNode BuildDialogueTree()
     {
-        DialogueNode pickupNode = new DialogueNode
+        DialogueNode repeatNode = new DialogueNode();
+        
+        DialogueNode fifthNode = new DialogueNode
         {
             speakerName = "Owner",
-            dialogueText = "Please pick up the burger on the table by clicking it.",
-            endsDialogue = true,
-            autoContinue = true,
-            autoContinueDelay = 1.5f
-        };
-
-
-        DialogueNode acceptNode = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "Great! One Burger. $5 base pay. Don't keep the customer waiting!",
+            dialogueText = "Good luck! Go deliver the meal!",
             endsDialogue = false,
-            autoContinue = true,
-            autoContinueDelay = 1.5f,
+            autoContinue = false,
             choices = new DialogueChoice[]
             {
                 new DialogueChoice
                 {
-                    nextNode = pickupNode
+                    choiceText = "Got it",
+                    nextNode = new DialogueNode
+                    {
+                        speakerName = "Owner",
+                        dialogueText = "",
+                        endsDialogue = true
+                    }
+                },
+                new DialogueChoice
+                {
+                    choiceText = "Please repeat what you just said",
+                    nextNode = repeatNode 
                 }
             }
         };
 
-        DialogueNode payNode = new DialogueNode
+        DialogueNode fourthNode = new DialogueNode
         {
             speakerName = "Owner",
-            dialogueText = "You get $5 base pay per delivery. Treat customers well — they might tip you!",
-            endsDialogue = true
-        };
-
-        DialogueNode start = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "Hey there! You must be our new delivery rider. Think you can handle an order?",
+            dialogueText = "Click on the burger to pick it up.",
+            endsDialogue = false,
+            autoContinue = false,
             choices = new DialogueChoice[]
             {
-            new DialogueChoice
-            {
-                choiceText = "Sure, what's the order?",
-                nextNode = acceptNode
-            },
-            new DialogueChoice
-            {
-                choiceText = "What's in it for me?",
-                nextNode = payNode
-            }
+                new DialogueChoice
+                {
+                    choiceText = "Continue",
+                    nextNode = fifthNode
+                }
             }
         };
 
-        return start;
+        DialogueNode thirdNode = new DialogueNode
+        {
+            speakerName = "Owner",
+            dialogueText = "The customer's name and address are in the top right corner, click to enlarge.",
+            endsDialogue = false,
+            autoContinue = false,
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice
+                {
+                    choiceText = "Continue",
+                    nextNode = fourthNode
+                }
+            }
+        };
+
+        DialogueNode secondNode = new DialogueNode
+        {
+            speakerName = "Owner",
+            dialogueText = "I will assign you an order.",
+            endsDialogue = false,
+            autoContinue = false,
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice
+                {
+                    choiceText = "Continue",
+                    nextNode = thirdNode
+                }
+            }
+        };
+
+        repeatNode.speakerName = "Owner";
+        repeatNode.dialogueText = "Hello, you're here!";
+        repeatNode.endsDialogue = false;
+        repeatNode.autoContinue = false;
+        repeatNode.choices = new DialogueChoice[]
+        {
+            new DialogueChoice
+            {
+                choiceText = "Continue",
+                nextNode = secondNode
+            }
+        };
+        return repeatNode;
     }
 
     public void AssignOrder()

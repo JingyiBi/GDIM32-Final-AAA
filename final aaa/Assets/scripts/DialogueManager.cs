@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class DialogueManager : MonoBehaviour
     private DialogueNode currentNode;
 
     private Coroutine autoContinueRoutine;
+
+    public event Action OnDialogueEnd;
 
     private void Awake()
     {
@@ -120,6 +123,8 @@ public class DialogueManager : MonoBehaviour
         {
             owner.AssignOrder();
         }
+
+        OnDialogueEnd?.Invoke();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

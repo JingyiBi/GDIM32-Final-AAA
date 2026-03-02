@@ -7,6 +7,7 @@ public class HamburgerInteract : MonoBehaviour
     public Transform inventoryUIContainer;
     private bool isPicked = false;
     private RestaurantOwnerNPC restaurantOwner;
+    public bool hasTalkedToCustomer = false;
 
     void Start()
     {
