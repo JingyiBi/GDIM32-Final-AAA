@@ -46,7 +46,8 @@ For one thing, I built the dialogue system architectures of our two NPCs, Restau
 For the other, I designed the Order UI with my teammates' help. To create the interactive UI structure, we used DeliveryManager.Instance.currentOrder, OrderData structure
 OrderUI display logic and the OrderPanel. I created the OrderData class to store structured information about each delivery task. This class centralizes all order-related properties, which include "public string customerName; public string foodType; public int basePay; public string orderStatus." This OrderUI will change according to the player's actions shown in "Delivered State; Total Earning" on the screen. 
 
-## Open-Source Assets
+We actually revised some details based on the Proposal and Breakdown, but it is really useful to let us get back on track and operate logically. Our Proposal clearly outlined our intended architecture using the Model–View–Controller pattern and how OrderData and OrderUI could act. This is helpful when we start our project and divisions, because it clears the separate data, UI, and interaction logic, and our state transitions, such as Accepted → PickedUp → Delivered → Submitted. However, the proposal did not anticipate the level of state synchronization required between systems. For example, we did not foresee issues involving cursor locking, UI button residue, or order-state gating for pickup interactions. These were not conceptual design problems but implementation-level interaction problems that only emerged once systems began interacting in real time.
+
 - [funky preparation](https://www.aigei.com) - background music
 - [characters](https://www.mixamo.com/#/)- 3D characters model and animation
 - [buildings](https://brokenvector.itch.io/low-poly-brick-houses) - 3D building model
