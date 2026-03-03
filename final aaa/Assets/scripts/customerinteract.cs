@@ -15,6 +15,7 @@ public class CustomerInteract : MonoBehaviour
     private bool isDialogueCompleted = false;
     private DialogueNode startNode;
     private bool isRewardGiven = false;
+    private bool isDialogueStarted = false;
 
     private void Start()
     {
@@ -51,6 +52,7 @@ public class CustomerInteract : MonoBehaviour
         if (isInRange && Input.GetKeyDown(interactKey))
         {
             StartCustomerDialogue();
+            isDialogueStarted = true;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -62,7 +64,8 @@ public class CustomerInteract : MonoBehaviour
                     && hamburgerInteract != null 
                     && restaurantOwner != null 
                     && restaurantOwner.isOrderAssigned 
-                    && isDialogueCompleted)
+                    && isDialogueStarted 
+                    && isDialogueCompleted) 
                 {
                     RemoveHamburgerUI();
                     restaurantOwner.SubmitOrder();
@@ -110,10 +113,13 @@ public class CustomerInteract : MonoBehaviour
             autoContinue = false
         };
 
-        DialogueNode thirdNode = new DialogueNode
+
+        
+
+        DialogueNode firstNode = new DialogueNode
         {
             speakerName = "Anton",
-            dialogueText = "Give you 50 dollars.",
+            dialogueText = "Thank you for the delivery. Click on me and your meal will be delivered. I will give you 50 dollars.",
             endsDialogue = false,
             autoContinue = false,
             choices = new DialogueChoice[]
@@ -122,38 +128,6 @@ public class CustomerInteract : MonoBehaviour
                 {
                     choiceText = "OK",
                     nextNode = fourthNode
-                }
-            }
-        };
-
-        DialogueNode secondNode = new DialogueNode
-        {
-            speakerName = "Anton",
-            dialogueText = "Click on me and your meal will be delivered.",
-            endsDialogue = false,
-            autoContinue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice
-                {
-                    choiceText = "Continue",
-                    nextNode = thirdNode
-                }
-            }
-        };
-
-        DialogueNode firstNode = new DialogueNode
-        {
-            speakerName = "Anton",
-            dialogueText = "Thank you for the delivery.",
-            endsDialogue = false,
-            autoContinue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice
-                {
-                    choiceText = "Continue",
-                    nextNode = secondNode
                 }
             }
         };
