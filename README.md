@@ -22,6 +22,8 @@ Jingyi Bi:
 During this phase, I handled the majority of scene construction tasks for the project. Utilizing the Tilemaps system and various GameObjects, I built the foundational environment including architecture and terrain. I manually configured the necessary colors and Materials for all previously untextured models, ensuring visual consistency. For specific project configurations, I meticulously adjusted component parameters for character models and various functional objects within scenes, while also optimizing the overall layout of the UI interface. Regarding scripting, I developed the core logic for the RestaurantOwner and Customer scripts, defining relevant methods and variables. I subsequently iterated and debugged these scripts in collaboration with team members.
 
 Looking back at our project proposal developed in Week 7 (W7), I believe it demonstrated remarkable foresight. The proposal was so meticulously detailed that we encountered almost no last-minute changes or additional requirements during actual development and editing, significantly ensuring progress stability. However, I identified an area for improvement: while the plan was comprehensive, we failed to fully standardize all classes and interface specifications during the initial architecture phase. This led to significant time and effort spent resolving inconsistencies and debugging issues during later code integration. For future game development projects, I will propose establishing unified coding standards and a class architecture diagram before commencing work to further enhance team collaboration and development efficiency.
+
+
 ### Team Member Name 2
 Peiyi Xiong: 
 
@@ -32,6 +34,7 @@ Our project proposal gave a clear basic plan for Order Up!, including core game 
 Our original architecture plans stayed mostly the same. We only made small changes to make code more modular, like splitting interaction logic into separate scripts for easier team optimization.
 
 For future planning, I’ll add technical details like core scripts and Unity components to proposals. I’ll also make a detailed task checklist early on to set clear milestones and plan better code modularity for easier team work.
+
 
 ### Team Member Name 3
 Ruixuan Pan:
