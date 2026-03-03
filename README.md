@@ -17,7 +17,11 @@ The main idea behind this feature is raycasting, which needs two key vectors: a 
 This code works because raycasting uses vector math to connect 2D and 3D spaces. Without raycasting, we could not reliably link mouse clicks to 3D objects. Simple position checks would not work if the camera moves or the hamburger is blocked by something else. The ray’s direction vector makes sure we only detect the object that is right under the mouse cursor. This makes the interaction accurate and easy to use. The RaycastHit result also tells us the exact point where the ray hits the object, a vector3 value, which lets us add visual feedback like a highlight to the hamburger later if we want to.
 
 ### Team Member Name 1
-Put your individual final Devlog here.
+Jingyi Bi:
+
+During this phase, I handled the majority of scene construction tasks for the project. Utilizing the Tilemaps system and various GameObjects, I built the foundational environment including architecture and terrain. I manually configured the necessary colors and Materials for all previously untextured models, ensuring visual consistency. For specific project configurations, I meticulously adjusted component parameters for character models and various functional objects within scenes, while also optimizing the overall layout of the UI interface. Regarding scripting, I developed the core logic for the RestaurantOwner and Customer scripts, defining relevant methods and variables. I subsequently iterated and debugged these scripts in collaboration with team members.
+
+Looking back at our project proposal developed in Week 7 (W7), I believe it demonstrated remarkable foresight. The proposal was so meticulously detailed that we encountered almost no last-minute changes or additional requirements during actual development and editing, significantly ensuring progress stability. However, I identified an area for improvement: while the plan was comprehensive, we failed to fully standardize all classes and interface specifications during the initial architecture phase. This led to significant time and effort spent resolving inconsistencies and debugging issues during later code integration. For future game development projects, I will propose establishing unified coding standards and a class architecture diagram before commencing work to further enhance team collaboration and development efficiency.
 ### Team Member Name 2
 Peiyi Xiong: 
 
@@ -42,4 +46,6 @@ OrderUI display logic and the OrderPanel. I created the OrderData class to store
 ## Open-Source Assets
 - [funky preparation](https://www.aigei.com) - background music
 - [characters](https://www.mixamo.com/#/)- 3D characters model and animation
-- 
+- [buildings](https://brokenvector.itch.io/low-poly-brick-houses) - 3D building model
+- [characters](https://vinrax.itch.io/psx-casual-male-character) - 3D characters model
+- [characters](https://vinrax.itch.io/psx-secretary-character)- 3D characters model
