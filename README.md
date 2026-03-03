@@ -30,8 +30,11 @@ Our original architecture plans stayed mostly the same. We only made small chang
 For future planning, I’ll add technical details like core scripts and Unity components to proposals. I’ll also make a detailed task checklist early on to set clear milestones and plan better code modularity for easier team work.
 
 ### Team Member Name 3
-Put your individual final Devlog here.
+Ruixuan Pan:
 
+In this final-check-in project, I mainly focused on creating dialogue with NPCs and the interactive UI designs. 
+
+For one thing, I built the dialogue system architectures of our two NPCs, Restaurant Owner and Consumer Anton, by writing and modifying the script of Delivery Manager and so on. We designed the choice-based branching dialogue for the Restaurant Owner with the Player, and added the dialogue UI of buttons, titles, and texts. I use the core methods of StartDialogue(DialogueNode startNode), ChooseOption(int index), and DisplayNode to realize it. 
 ## Open-Source Assets
 - [funky preparation](https://www.aigei.com) - background music
 - [characters](https://www.mixamo.com/#/)- 3D characters model and animation
