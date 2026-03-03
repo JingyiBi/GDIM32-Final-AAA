@@ -17,7 +17,13 @@ The main idea behind this feature is raycasting, which needs two key vectors: a 
 This code works because raycasting uses vector math to connect 2D and 3D spaces. Without raycasting, we could not reliably link mouse clicks to 3D objects. Simple position checks would not work if the camera moves or the hamburger is blocked by something else. The ray’s direction vector makes sure we only detect the object that is right under the mouse cursor. This makes the interaction accurate and easy to use. The RaycastHit result also tells us the exact point where the ray hits the object, a vector3 value, which lets us add visual feedback like a highlight to the hamburger later if we want to.
 
 ### Team Member Name 1
-Put your individual final Devlog here.
+Jingyi Bi:
+
+During this phase, I handled the majority of scene construction tasks for the project. Utilizing the Tilemaps system and various GameObjects, I built the foundational environment including architecture and terrain. I manually configured the necessary colors and Materials for all previously untextured models, ensuring visual consistency. For specific project configurations, I meticulously adjusted component parameters for character models and various functional objects within scenes, while also optimizing the overall layout of the UI interface. Regarding scripting, I developed the core logic for the RestaurantOwner and Customer scripts, defining relevant methods and variables. I subsequently iterated and debugged these scripts in collaboration with team members.
+
+Looking back at our project proposal developed in Week 7 (W7), I believe it demonstrated remarkable foresight. The proposal was so meticulously detailed that we encountered almost no last-minute changes or additional requirements during actual development and editing, significantly ensuring progress stability. However, I identified an area for improvement: while the plan was comprehensive, we failed to fully standardize all classes and interface specifications during the initial architecture phase. This led to significant time and effort spent resolving inconsistencies and debugging issues during later code integration. For future game development projects, I will propose establishing unified coding standards and a class architecture diagram before commencing work to further enhance team collaboration and development efficiency.
+
+
 ### Team Member Name 2
 Peiyi Xiong: 
 
@@ -29,10 +35,21 @@ Our original architecture plans stayed mostly the same. We only made small chang
 
 For future planning, I’ll add technical details like core scripts and Unity components to proposals. I’ll also make a detailed task checklist early on to set clear milestones and plan better code modularity for easier team work.
 
-### Team Member Name 3
-Put your individual final Devlog here.
 
-## Open-Source Assets
+### Team Member Name 3
+Ruixuan Pan:
+
+In this final check-in project, I mainly focused on creating dialogue with NPCs and the interactive UI designs. 
+
+For one thing, I built the dialogue system architectures of our two NPCs, Restaurant Owner and Consumer Anton, by writing and modifying the script of Delivery Manager and so on. We designed the choice-based branching dialogue for the Restaurant Owner with the Player, and added the dialogue UI of buttons, titles, and texts. I use the core methods of StartDialogue(DialogueNode startNode), ChooseOption(int index), and DisplayNode to realize it. I also design the interaction between the player and the NPC. For instance,  I use the 'public float interactionDistance = 8f; if (isInRange && Input.GetKeyDown(interactKey))' to create the interaction loop that, when the player approaches the Restaurant Owner, the hint on his head (as a world-space) appears. And when the player clicks 'I', the dialogue with the Restaurant Owner and the options appear.
+
+For the other, I designed the Order UI with my teammates' help. To create the interactive UI structure, we used DeliveryManager.Instance.currentOrder, OrderData structure
+OrderUI display logic and the OrderPanel. I created the OrderData class to store structured information about each delivery task. This class centralizes all order-related properties, which include "public string customerName; public string foodType; public int basePay; public string orderStatus." This OrderUI will change according to the player's actions shown in "Delivered State; Total Earning" on the screen. 
+
+We actually revised some details based on the Proposal and Breakdown, but it is really useful to let us get back on track and operate logically. Our Proposal clearly outlined our intended architecture using the Model–View–Controller pattern and how OrderData and OrderUI could act. This is helpful when we start our project and divisions, because it clears the separate data, UI, and interaction logic, and our state transitions, such as Accepted → PickedUp → Delivered → Submitted. However, the proposal did not anticipate the level of state synchronization required between systems. For example, we did not foresee issues involving cursor locking, UI button residue, or order-state gating for pickup interactions. These were not conceptual design problems but implementation-level interaction problems that only emerged once systems began interacting in real time.
+
 - [funky preparation](https://www.aigei.com) - background music
 - [characters](https://www.mixamo.com/#/)- 3D characters model and animation
-- 
+- [buildings](https://brokenvector.itch.io/low-poly-brick-houses) - 3D building model
+- [characters](https://vinrax.itch.io/psx-casual-male-character) - 3D characters model
+- [characters](https://vinrax.itch.io/psx-secretary-character)- 3D characters model
