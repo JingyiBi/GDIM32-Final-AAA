@@ -7,6 +7,7 @@ public class HamburgerInteract : MonoBehaviour
     public Transform inventoryUIContainer;
     private bool isPicked = false;
     private RestaurantOwnerNPC restaurantOwner;
+    public bool hasTalkedToCustomer = false;
 
     void Start()
     {
@@ -31,18 +32,21 @@ public class HamburgerInteract : MonoBehaviour
     private void InteractWithHamburger()
     {
         gameObject.SetActive(false); 
+
         CreateHamburgerUI();
+
         isPicked = true;
 
-        if (DeliveryManager.Instance.currentOrder != null)
-        {
-            DeliveryManager.Instance.currentOrder.currentState = OrderState.PickedUp;
-        }
+        Debug.Log("汉堡已拾取！");
     }
 
     private void CreateHamburgerUI()
     {
-        if (inventoryUIContainer == null || hamburgerUISprite == null) return;
+        if (inventoryUIContainer == null || hamburgerUISprite == null)
+        {
+            Debug.LogError("请在Inspector面板中赋值汉堡UI贴图和InventoryUI容器！");
+            return;
+        }
 
         GameObject uiIcon = new GameObject("HamburgerIcon");
         uiIcon.transform.SetParent(inventoryUIContainer, false);
