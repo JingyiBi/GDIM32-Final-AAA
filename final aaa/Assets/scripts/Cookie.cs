@@ -5,7 +5,7 @@ public class PlayerFortuneCookie : MonoBehaviour
     public float pickUpDistance = 2f;
     private KeyCode pickUpKey = KeyCode.E;
     public Transform fortuneCookieTable;
-    public CustomerNPC customerNPC;
+    public CustomerAnton customerNPC;
     private bool hasCookie;
 
     private void Update()
