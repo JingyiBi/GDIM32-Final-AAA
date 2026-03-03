@@ -32,9 +32,12 @@ For future planning, I’ll add technical details like core scripts and Unity co
 ### Team Member Name 3
 Ruixuan Pan:
 
-In this final-check-in project, I mainly focused on creating dialogue with NPCs and the interactive UI designs. 
+In this final check-in project, I mainly focused on creating dialogue with NPCs and the interactive UI designs. 
 
-For one thing, I built the dialogue system architectures of our two NPCs, Restaurant Owner and Consumer Anton, by writing and modifying the script of Delivery Manager and so on. We designed the choice-based branching dialogue for the Restaurant Owner with the Player, and added the dialogue UI of buttons, titles, and texts. I use the core methods of StartDialogue(DialogueNode startNode), ChooseOption(int index), and DisplayNode to realize it. 
+For one thing, I built the dialogue system architectures of our two NPCs, Restaurant Owner and Consumer Anton, by writing and modifying the script of Delivery Manager and so on. We designed the choice-based branching dialogue for the Restaurant Owner with the Player, and added the dialogue UI of buttons, titles, and texts. I use the core methods of StartDialogue(DialogueNode startNode), ChooseOption(int index), and DisplayNode to realize it. I also design the interaction between the player and the NPC. For instance,  I use the 'public float interactionDistance = 8f; if (isInRange && Input.GetKeyDown(interactKey))' to create the interaction loop that, when the player approaches the Restaurant Owner, the hint on his head (as a world-space) appears. And when the player clicks 'I', the dialogue with the Restaurant Owner and the options appear.
+
+For the other, I designed the 
+
 ## Open-Source Assets
 - [funky preparation](https://www.aigei.com) - background music
 - [characters](https://www.mixamo.com/#/)- 3D characters model and animation
