@@ -7,12 +7,14 @@ public class CustomerInteract : MonoBehaviour
     public Transform inventoryUIContainer;
     public float interactionDistance = 5f;
     public GameObject interactionPrompt;
+    public EarningsUI earningsUI;
     private KeyCode interactKey = KeyCode.I;
     private Transform player;
     private bool isInRange;
     private bool isOrderDelivered = false;
     private bool isDialogueCompleted = false;
     private DialogueNode startNode;
+    private bool isRewardGiven = false;
 
     private void Start()
     {
@@ -90,16 +92,38 @@ public class CustomerInteract : MonoBehaviour
     private void OnDialogueCompletelyFinished()
     {
         isDialogueCompleted = true;
+        if (!isRewardGiven && earningsUI != null)
+        {
+            earningsUI.ResetCurrentEarnings(); 
+            earningsUI.AddCurrentEarnings(50); 
+            isRewardGiven = true;
+        }
     }
 
     private DialogueNode BuildDialogueTree()
     {
+        DialogueNode fourthNode = new DialogueNode
+        {
+            speakerName = "Anton",
+            dialogueText = "oh",
+            endsDialogue = true,
+            autoContinue = false
+        };
+
         DialogueNode thirdNode = new DialogueNode
         {
             speakerName = "Anton",
-            dialogueText = "Go to the boss to claim your payment.",
-            endsDialogue = true,
-            autoContinue = false
+            dialogueText = "Give you 50 dollars.",
+            endsDialogue = false,
+            autoContinue = false,
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice
+                {
+                    choiceText = "OK",
+                    nextNode = fourthNode
+                }
+            }
         };
 
         DialogueNode secondNode = new DialogueNode
