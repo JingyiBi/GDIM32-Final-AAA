@@ -36,7 +36,8 @@ In this final check-in project, I mainly focused on creating dialogue with NPCs 
 
 For one thing, I built the dialogue system architectures of our two NPCs, Restaurant Owner and Consumer Anton, by writing and modifying the script of Delivery Manager and so on. We designed the choice-based branching dialogue for the Restaurant Owner with the Player, and added the dialogue UI of buttons, titles, and texts. I use the core methods of StartDialogue(DialogueNode startNode), ChooseOption(int index), and DisplayNode to realize it. I also design the interaction between the player and the NPC. For instance,  I use the 'public float interactionDistance = 8f; if (isInRange && Input.GetKeyDown(interactKey))' to create the interaction loop that, when the player approaches the Restaurant Owner, the hint on his head (as a world-space) appears. And when the player clicks 'I', the dialogue with the Restaurant Owner and the options appear.
 
-For the other, I designed the Order UI with my teammates' help.
+For the other, I designed the Order UI with my teammates' help. To create the interactive UI structure, we used DeliveryManager.Instance.currentOrder, OrderData structure
+OrderUI display logic and the OrderPanel. I created the OrderData class to store structured information about each delivery task. This class centralizes all order-related properties, which include "public string customerName; public string foodType; public int basePay; public string orderStatus." This OrderUI will change according to the player's actions shown in "Delivered State; Total Earning" on the screen. 
 
 ## Open-Source Assets
 - [funky preparation](https://www.aigei.com) - background music
