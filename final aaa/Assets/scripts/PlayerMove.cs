@@ -6,16 +6,17 @@ public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 3f;
     public float mouseSensitivity = 150f;
+    public float keyLookSpeed = 0.5f; 
+    public float rotateSmoothTime = 0.1f;
     public float gravity = -9.81f;
     public float jumpHeight = 1f;
 
     private CharacterController cc;
     private Transform mainCamera;
-
     private Vector3 velocity;
-
     private float yaw;
     private float pitch;
+    private float currentRotateVelocity;
 
     private void Awake()
     {
@@ -27,7 +28,6 @@ public class PlayerMove : MonoBehaviour
     {
         yaw = transform.eulerAngles.y;
         pitch = mainCamera.localEulerAngles.x;
-
         if (pitch > 180f) pitch -= 360f;
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
     }
@@ -43,16 +43,13 @@ public class PlayerMove : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-
         Vector3 moveDir = transform.right * horizontal + transform.forward * vertical;
-
         cc.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
     }
 
     private void HandleCameraRotation()
     {
         bool isRotating = Input.GetMouseButton(1);
-
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             isRotating = false;
@@ -68,7 +65,6 @@ public class PlayerMove : MonoBehaviour
 
             yaw += mouseX;
             pitch -= mouseY;
-
             pitch = Mathf.Clamp(pitch, -80f, 80f);
 
             transform.rotation = Quaternion.Euler(0f, yaw, 0f);
@@ -78,6 +74,14 @@ public class PlayerMove : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            float keyX = Input.GetAxisRaw("Horizontal");
+            if (keyX != 0)
+            {
+                float targetYaw = yaw + keyX * keyLookSpeed;
+                yaw = Mathf.SmoothDamp(yaw, targetYaw, ref currentRotateVelocity, rotateSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+            }
         }
     }
 
@@ -92,9 +96,7 @@ public class PlayerMove : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-
         velocity.y += gravity * Time.deltaTime;
-
         cc.Move(velocity * Time.deltaTime);
 
         if (Input.GetMouseButtonDown(0))
