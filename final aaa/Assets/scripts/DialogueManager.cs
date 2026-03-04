@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class DialogueManager : MonoBehaviour
     public DialogueUI dialogueUI;
 
     private DialogueNode currentNode;
+
     private Coroutine autoContinueRoutine;
+
+    public event Action OnDialogueEnd;
 
     private void Awake()
     {
@@ -19,22 +23,18 @@ public class DialogueManager : MonoBehaviour
     {
         currentNode = startNode;
         dialogueUI.Show();
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
         DisplayNode();
+        Debug.Log(dialogueUI);
     }
 
     void DisplayNode()
     {
         dialogueUI.SetSpeaker(currentNode.speakerName);
         dialogueUI.SetText(currentNode.dialogueText);
-
-        if (currentNode.autoContinue)
-            dialogueUI.SetChoices(null);
-        else
-            dialogueUI.SetChoices(currentNode.choices);
+        dialogueUI.SetChoices(currentNode.choices);
 
         if (currentNode.autoContinue)
         {
@@ -55,13 +55,6 @@ public class DialogueManager : MonoBehaviour
             yield break;
         }
 
-        if (currentNode.nextNode != null)
-        {
-            currentNode = currentNode.nextNode;
-            DisplayNode();
-            yield break;
-        }
-
         if (currentNode.choices != null && currentNode.choices.Length > 0)
         {
             currentNode = currentNode.choices[0].nextNode;
@@ -71,38 +64,69 @@ public class DialogueManager : MonoBehaviour
 
     public void ChooseOption(int index)
     {
-        if (currentNode == null) return;
-        if (currentNode.choices == null) return;
-        if (index < 0 || index >= currentNode.choices.Length) return;
+        Debug.Log($"ChooseOption index={index}");
 
-        currentNode = currentNode.choices[index].nextNode;
-
-        DisplayNode();  
-
-        if (currentNode.endsDialogue)
+        if (currentNode == null)
         {
-            StartCoroutine(EndAfterDelay());
+            Debug.LogError("currentNode is NULL");
+            return;
         }
-    }
 
-    IEnumerator EndAfterDelay()
-    {
-        yield return new WaitForSeconds(2f);
-        EndDialogue();
+        if (currentNode.choices == null)
+        {
+            Debug.LogError("currentNode.choices is NULL");
+            return;
+        }
+
+        if (index < 0 || index >= currentNode.choices.Length)
+        {
+            Debug.LogError($"Index out of range. choices.Length={currentNode.choices.Length}, index={index}");
+            return;
+        }
+
+        if (currentNode.choices.Length == 0)
+        {
+            EndDialogue();
+            return;
+        }
+
+        var chosen = currentNode.choices[index];
+        if (chosen == null)
+        {
+            Debug.LogError($"Choice[{index}] is NULL");
+            return;
+        }
+
+        if (chosen.nextNode == null)
+        {
+            Debug.LogError($"Choice[{index}] nextNode is NULL. choiceText={chosen.choiceText}");
+            return;
+        }
+
+        currentNode = chosen.nextNode;
+
+        if (currentNode.endsDialogue || currentNode.choices == null || currentNode.choices.Length == 0)
+        {
+            EndDialogue();
+            return;
+        }
+
+        DisplayNode();
     }
 
     public void EndDialogue()
     {
         dialogueUI.Hide();
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
         RestaurantOwnerNPC owner = FindObjectOfType<RestaurantOwnerNPC>();
-        if (owner != null && !owner.isOrderAssigned)
+        if (owner != null)
         {
             owner.AssignOrder();
-            Debug.Log("Order assigned from EndDialogue");
         }
+
+        OnDialogueEnd?.Invoke();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
