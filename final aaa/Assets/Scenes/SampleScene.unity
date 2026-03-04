@@ -2812,6 +2812,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c99a78ecfed3a49bda6d3aba4eb650d7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2037116952}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c99a78ecfed3a49bda6d3aba4eb650d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2037116954}
   m_SourcePrefab: {fileID: 100100000, guid: c99a78ecfed3a49bda6d3aba4eb650d7, type: 3}
 --- !u!1 &555593346
 GameObject:
@@ -8545,6 +8548,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1780647967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780647963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c891cab0d12eb4150b36ad330a9a3230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionDistance: 3
+  tipAmount: 20
+  fortuneCookieExtraTip: 10
 --- !u!1001 &1786587649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9026,6 +9044,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 99d11f162c9c04ce698535e333aa7f82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1780647966}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 99d11f162c9c04ce698535e333aa7f82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1780647967}
   m_SourcePrefab: {fileID: 100100000, guid: 99d11f162c9c04ce698535e333aa7f82, type: 3}
 --- !u!1 &1838679457
 GameObject:
@@ -9621,6 +9642,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065651c714510458791b5f8adc397f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hamburgerInteract: {fileID: 274716018}
+  restaurantOwner: {fileID: 1182456941}
+  inventoryUIContainer: {fileID: 560105351}
+  interactionDistance: 5
+  interactionPrompt: {fileID: 0}
+  earningsUI: {fileID: 1838679458}
 --- !u!65 &2037116952
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9647,6 +9674,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c99a78ecfed3a49bda6d3aba4eb650d7, type: 3}
   m_PrefabInstance: {fileID: 552810769}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2037116954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037116947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfe3d9646b25a142a9d937d69203290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hamburgerInteract: {fileID: 274716018}
+  restaurantOwner: {fileID: 1182456941}
+  inventoryUIContainer: {fileID: 560105351}
+  interactionDistance: 5
+  interactionPrompt: {fileID: 0}
+  earningsUI: {fileID: 1838679458}
 --- !u!1 &2047295185
 GameObject:
   m_ObjectHideFlags: 0
