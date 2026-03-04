@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749e8f13501054dbaa2f5e419a313e7f, type: 3}
   m_Name: BurgerOrder
   m_EditorClassIdentifier: 
-  customerName: Amy
+  customerName: Anton
   orderImage: {fileID: 21300000, guid: 77cca7b0242c7704bb2249d7589b6ed4, type: 3}
   foodType: Burger
-  basePay: 5
-  isUnlocked: 0
-  currentState: 0
+  basePay: 50
+  isUnlocked: 1
+  currentState: 4
   isCookieOffered: 0
   isCookiePicked: 0

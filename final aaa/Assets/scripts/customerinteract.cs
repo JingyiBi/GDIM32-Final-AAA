@@ -7,12 +7,15 @@ public class CustomerInteract : MonoBehaviour
     public Transform inventoryUIContainer;
     public float interactionDistance = 5f;
     public GameObject interactionPrompt;
+    public EarningsUI earningsUI;
     private KeyCode interactKey = KeyCode.I;
     private Transform player;
     private bool isInRange;
     private bool isOrderDelivered = false;
     private bool isDialogueCompleted = false;
     private DialogueNode startNode;
+    private bool isRewardGiven = false;
+    private bool isDialogueStarted = false;
 
     private void Start()
     {
@@ -49,6 +52,7 @@ public class CustomerInteract : MonoBehaviour
         if (isInRange && Input.GetKeyDown(interactKey))
         {
             StartCustomerDialogue();
+            isDialogueStarted = true;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -60,7 +64,8 @@ public class CustomerInteract : MonoBehaviour
                     && hamburgerInteract != null 
                     && restaurantOwner != null 
                     && restaurantOwner.isOrderAssigned 
-                    && isDialogueCompleted)
+                    && isDialogueStarted 
+                    && isDialogueCompleted) 
                 {
                     RemoveHamburgerUI();
                     restaurantOwner.SubmitOrder();
@@ -90,46 +95,39 @@ public class CustomerInteract : MonoBehaviour
     private void OnDialogueCompletelyFinished()
     {
         isDialogueCompleted = true;
+        if (!isRewardGiven && earningsUI != null)
+        {
+            earningsUI.ResetCurrentEarnings(); 
+            earningsUI.AddCurrentEarnings(50); 
+            isRewardGiven = true;
+        }
     }
 
     private DialogueNode BuildDialogueTree()
     {
-        DialogueNode thirdNode = new DialogueNode
+        DialogueNode fourthNode = new DialogueNode
         {
             speakerName = "Anton",
-            dialogueText = "Go to the boss to claim your payment.",
+            dialogueText = "oh",
             endsDialogue = true,
             autoContinue = false
         };
 
-        DialogueNode secondNode = new DialogueNode
-        {
-            speakerName = "Anton",
-            dialogueText = "Click on me and your meal will be delivered.",
-            endsDialogue = false,
-            autoContinue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice
-                {
-                    choiceText = "Continue",
-                    nextNode = thirdNode
-                }
-            }
-        };
+
+        
 
         DialogueNode firstNode = new DialogueNode
         {
             speakerName = "Anton",
-            dialogueText = "Thank you for the delivery.",
+            dialogueText = "Thank you for the delivery. Click on me and your meal will be delivered. I will give you 50 dollars.",
             endsDialogue = false,
             autoContinue = false,
             choices = new DialogueChoice[]
             {
                 new DialogueChoice
                 {
-                    choiceText = "Continue",
-                    nextNode = secondNode
+                    choiceText = "OK",
+                    nextNode = fourthNode
                 }
             }
         };
