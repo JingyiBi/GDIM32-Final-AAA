@@ -58,20 +58,37 @@ public class CustomerInteract : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.collider.gameObject == gameObject 
-                    && hamburgerInteract != null 
-                    && restaurantOwner != null 
-                    && restaurantOwner.isOrderAssigned 
-                    && isDialogueStarted 
-                    && isDialogueCompleted) 
+                if (hit.collider.gameObject == gameObject)
                 {
+                    if (!restaurantOwner.isOrderAssigned)
+                    {
+                        Debug.Log("You don't have an order yet.");
+                        return;
+                    }
+
+                    if (!isDialogueStarted)
+                    {
+                        Debug.Log("Talk to Anton first.");
+                        return;
+                    }
+
+                    if (!isDialogueCompleted)
+                    {
+                        Debug.Log("Finish the conversation before delivering.");
+                        return;
+                    }
+
                     RemoveHamburgerUI();
                     restaurantOwner.SubmitOrder();
                     isOrderDelivered = true;
+
                     if (interactionPrompt != null)
                         interactionPrompt.SetActive(false);
+
+                    Debug.Log("Burger delivered successfully!");
                 }
             }
         }
