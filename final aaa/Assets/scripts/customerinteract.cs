@@ -51,8 +51,15 @@ public class CustomerInteract : MonoBehaviour
 
         if (isInRange && Input.GetKeyDown(interactKey))
         {
-            StartCustomerDialogue();
-            isDialogueStarted = true;
+            if (!hamburgerInteract.HasHamburger())
+            {
+                StartNoBurgerDialogue();
+            }
+            else
+            {
+                StartCustomerDialogue();
+                isDialogueStarted = true;
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -101,6 +108,20 @@ public class CustomerInteract : MonoBehaviour
 
         if (interactionPrompt != null)
             interactionPrompt.SetActive(isInRange && !isOrderDelivered);
+    }
+    private void StartNoBurgerDialogue()
+    {
+        DialogueNode noBurgerNode = new DialogueNode
+        {
+            speakerName = "Anton",
+            dialogueText = "Hey! Where is my burger? Please go back to the restaurant and pick it up!",
+            endsDialogue = false,
+            autoContinue = false
+        };
+
+        DialogueManager.Instance.StartDialogue(noBurgerNode);
+
+        StartCoroutine(CloseDialogueAfterDelay(3f));
     }
 
     private void StartCustomerDialogue()
@@ -165,5 +186,11 @@ public class CustomerInteract : MonoBehaviour
         {
             hamburgerInteract.RemoveHamburgerIcon();
         }
+    }
+    private System.Collections.IEnumerator CloseDialogueAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        DialogueManager.Instance.EndDialogue();
     }
 }

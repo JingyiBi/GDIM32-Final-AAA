@@ -8,6 +8,7 @@ public class HamburgerInteract : MonoBehaviour
     private bool isPicked = false;
     private RestaurantOwnerNPC restaurantOwner;
     public bool hasTalkedToCustomer = false;
+  
 
     void Start()
     {
@@ -66,5 +67,11 @@ public class HamburgerInteract : MonoBehaviour
     {
         Transform icon = inventoryUIContainer.Find("HamburgerIcon");
         if (icon != null) Destroy(icon.gameObject);
+
+        isPicked = false;
+    }
+    public bool HasHamburger()
+    {
+        return isPicked;
     }
 }
