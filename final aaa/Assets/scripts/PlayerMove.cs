@@ -1,22 +1,35 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
-    public float moveSpeed = 6f;
+    public float moveSpeed = 3f;
     public float mouseSensitivity = 150f;
     public float gravity = -9.81f;
     public float jumpHeight = 1f;
 
     private CharacterController cc;
-    private float xRotation = 0f; 
     private Transform mainCamera;
+
     private Vector3 velocity;
 
+    private float yaw;
+    private float pitch;
 
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
         mainCamera = Camera.main.transform;
+    }
+
+    private void Start()
+    {
+        yaw = transform.eulerAngles.y;
+        pitch = mainCamera.localEulerAngles.x;
+
+        if (pitch > 180f) pitch -= 360f;
+        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
     }
 
     private void Update()
@@ -30,16 +43,42 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+
         Vector3 moveDir = transform.right * horizontal + transform.forward * vertical;
+
         cc.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
     }
 
     private void HandleCameraRotation()
     {
-        //float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        bool isRotating = Input.GetMouseButton(1);
 
-        //transform.Rotate(Vector3.up * mouseX);
-        mainCamera.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            isRotating = false;
+        }
+
+        if (isRotating)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            yaw += mouseX;
+            pitch -= mouseY;
+
+            pitch = Mathf.Clamp(pitch, -80f, 80f);
+
+            transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+            mainCamera.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     private void HandleGravityAndJump()
@@ -55,7 +94,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         velocity.y += gravity * Time.deltaTime;
+
         cc.Move(velocity * Time.deltaTime);
+
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Mouse clicked");

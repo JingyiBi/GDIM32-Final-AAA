@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RestaurantOwnerNPC : MonoBehaviour
 {
-    public float interactionDistance = 5f;
+    public float interactionDistance = 7f;
     public GameObject interactionPrompt;
 
     private KeyCode interactKey = KeyCode.I;
