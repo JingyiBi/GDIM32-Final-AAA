@@ -373,8 +373,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   mouseSensitivity: 150
-  keyLookSpeed: 3
-  rotateSmoothTime: 0.1
   gravity: -9.81
   jumpHeight: 1
 --- !u!1001 &34065122
@@ -4007,11 +4005,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bc7f0079acb6e443f8926765669f957b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.91
+      value: 0.909
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bc7f0079acb6e443f8926765669f957b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.73
+      value: 7.347
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bc7f0079acb6e443f8926765669f957b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4056,6 +4054,110 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 274716018}
   m_SourcePrefab: {fileID: 100100000, guid: bc7f0079acb6e443f8926765669f957b, type: 3}
+--- !u!1001 &865623064
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.92
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.914
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.806
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_Name
+      value: whole pepperoni
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 865623067}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 865623066}
+  m_SourcePrefab: {fileID: 100100000, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+--- !u!1 &865623065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+  m_PrefabInstance: {fileID: 865623064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &865623066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865623065}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.10102002, y: 0.042060513, z: 0.029090934}
+  m_Center: {x: 0.028059911, y: -0.00035296642, z: -0.0038199753}
+--- !u!114 &865623067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865623065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efc31253424747db86a8be7d9276854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pizzaUISprite: {fileID: 21300000, guid: 64da6b9f8b8074db5b4a7a0239ce8d24, type: 3}
+  inventoryUIContainer: {fileID: 560105351}
+  interactionDistance: 4
 --- !u!4 &865981885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb2433fe8eb88411992904e8d3c1c8c3, type: 3}
@@ -5629,7 +5731,7 @@ GameObject:
   - component: {fileID: 1172979585}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9533,6 +9635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18dab52792ac3468392e7cc292f69069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentGameState: 0
   currentOrder: {fileID: 11400000, guid: f1ebff74f8c01f44fa8a7856c0777e11, type: 2}
   burgerOrder: {fileID: 11400000, guid: f1ebff74f8c01f44fa8a7856c0777e11, type: 2}
   pizzaOrder: {fileID: 11400000, guid: 2102795655bf6094892ace0859ae017e, type: 2}
@@ -9761,7 +9864,7 @@ MonoBehaviour:
   inventoryUIContainer: {fileID: 560105351}
   interactionDistance: 5
   interactionPrompt: {fileID: 0}
-  earningsUI: {fileID: 1838679458}
+  earningsUI: {fileID: 0}
 --- !u!1 &2047295185
 GameObject:
   m_ObjectHideFlags: 0
@@ -10553,3 +10656,4 @@ SceneRoots:
   - {fileID: 1651850025}
   - {fileID: 175118410}
   - {fileID: 1838679459}
+  - {fileID: 865623064}

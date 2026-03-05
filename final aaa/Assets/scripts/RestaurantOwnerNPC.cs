@@ -43,7 +43,6 @@ public class RestaurantOwnerNPC : MonoBehaviour
         {
             StartOwnerDialogue();
         }
-
     }
 
     private void CheckInteractionRange()
@@ -57,7 +56,17 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private void StartOwnerDialogue()
     {
-        DialogueManager.Instance.StartDialogue(startNode);
+        if (DeliveryManager.Instance != null && DeliveryManager.Instance.firstDeliveryCompleted)
+        {
+            DeliveryManager.Instance.currentGameState = GameState.SecondOrder;
+
+            DialogueNode pizzaNode = BuildPizzaDialogueTree();
+            DialogueManager.Instance.StartDialogue(pizzaNode);
+        }
+        else
+        {
+            DialogueManager.Instance.StartDialogue(startNode);
+        }
     }
 
     private DialogueNode BuildDialogueTree()
@@ -151,6 +160,28 @@ public class RestaurantOwnerNPC : MonoBehaviour
             }
         };
         return repeatNode;
+    }
+
+    private DialogueNode BuildPizzaDialogueTree()
+    {
+        DialogueNode endNode = new DialogueNode 
+        { 
+            speakerName = "Owner", 
+            dialogueText = "The Pizza is on the table, deliver it fast!", 
+            endsDialogue = true 
+        };
+        
+        DialogueNode pizzaNode = new DialogueNode
+        {
+            speakerName = "Owner",
+            dialogueText = "You did great with Anton! Now, here is a Pizza for the next customer.",
+            endsDialogue = false,
+            choices = new DialogueChoice[]
+            {
+                new DialogueChoice { choiceText = "Continue", nextNode = endNode }
+            }
+        };
+        return pizzaNode;
     }
 
     public void AssignOrder()

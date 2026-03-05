@@ -51,51 +51,12 @@ public class CustomerInteract : MonoBehaviour
 
         if (isInRange && Input.GetKeyDown(interactKey))
         {
-            if (!hamburgerInteract.HasHamburger())
+            if (hamburgerInteract != null && hamburgerInteract.HasHamburger())
             {
-                StartNoBurgerDialogue();
-            }
-            else
-            {
-                StartCustomerDialogue();
-                isDialogueStarted = true;
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (hit.collider.gameObject == gameObject)
+                if (!isDialogueStarted)
                 {
-                    if (!restaurantOwner.isOrderAssigned)
-                    {
-                        Debug.Log("You don't have an order yet.");
-                        return;
-                    }
-
-                    if (!isDialogueStarted)
-                    {
-                        Debug.Log("Talk to Anton first.");
-                        return;
-                    }
-
-                    if (!isDialogueCompleted)
-                    {
-                        Debug.Log("Finish the conversation before delivering.");
-                        return;
-                    }
-
-                    RemoveHamburgerUI();
-                    restaurantOwner.SubmitOrder();
-                    isOrderDelivered = true;
-
-                    if (interactionPrompt != null)
-                        interactionPrompt.SetActive(false);
-
-                    Debug.Log("Burger delivered successfully!");
+                    DialogueManager.Instance.StartDialogue(startNode);
+                    isDialogueStarted = true;
                 }
             }
         }
@@ -107,42 +68,39 @@ public class CustomerInteract : MonoBehaviour
         isInRange = distance <= interactionDistance;
 
         if (interactionPrompt != null)
-            interactionPrompt.SetActive(isInRange && !isOrderDelivered);
-    }
-    private void StartNoBurgerDialogue()
-    {
-        DialogueNode noBurgerNode = new DialogueNode
-        {
-            speakerName = "Anton",
-            dialogueText = "Hey! Where is my burger? Please go back to the restaurant and pick it up!",
-            endsDialogue = false,
-            autoContinue = false
-        };
-
-        DialogueManager.Instance.StartDialogue(noBurgerNode);
-
-        StartCoroutine(CloseDialogueAfterDelay(3f));
-    }
-
-    private void StartCustomerDialogue()
-    {
-        DialogueManager.Instance.StartDialogue(startNode);
-        hamburgerInteract.hasTalkedToCustomer = true;
+            interactionPrompt.SetActive(isInRange);
     }
 
     private void OnDialogueCompletelyFinished()
     {
-        isDialogueCompleted = true;
-        if (!isRewardGiven && earningsUI != null)
+        // 核心逻辑：只有当你拿着汉堡且对话结束时触发
+        if (hamburgerInteract != null && hamburgerInteract.HasHamburger() && !isRewardGiven)
         {
-            earningsUI.ResetCurrentEarnings(); 
-            earningsUI.AddCurrentEarnings(50); 
+            // 1. 调用你原本的老板交单逻辑
+            if (restaurantOwner != null)
+            {
+                restaurantOwner.SubmitOrder();
+            }
+
+            // 2. 移除汉堡 UI
+            RemoveHamburgerUI();
+
+            // 3. 【新增】仅通知 Manager 第一单完成了（为了开启 Pizza 流程）
+            if (DeliveryManager.Instance != null)
+            {
+                DeliveryManager.Instance.CompleteFirstDelivery();
+            }
+
+            // 4. 更新奖励状态
+            if (earningsUI != null) earningsUI.AddCurrentEarnings(50); 
             isRewardGiven = true;
+            isOrderDelivered = true;
         }
     }
 
     private DialogueNode BuildDialogueTree()
     {
+        // 严格还原你代码中的对话结构
         DialogueNode fourthNode = new DialogueNode
         {
             speakerName = "Anton",
@@ -150,9 +108,6 @@ public class CustomerInteract : MonoBehaviour
             endsDialogue = true,
             autoContinue = false
         };
-
-
-        
 
         DialogueNode firstNode = new DialogueNode
         {
@@ -164,7 +119,7 @@ public class CustomerInteract : MonoBehaviour
             {
                 new DialogueChoice
                 {
-                    choiceText = "OK",
+                    choiceText = "OK", // 你的 Continue 按钮
                     nextNode = fourthNode
                 }
             }
@@ -187,10 +142,10 @@ public class CustomerInteract : MonoBehaviour
             hamburgerInteract.RemoveHamburgerIcon();
         }
     }
+
     private System.Collections.IEnumerator CloseDialogueAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-
         DialogueManager.Instance.EndDialogue();
     }
 }
