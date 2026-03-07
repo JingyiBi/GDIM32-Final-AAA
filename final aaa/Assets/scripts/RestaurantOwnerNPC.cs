@@ -162,27 +162,59 @@ public class RestaurantOwnerNPC : MonoBehaviour
         return repeatNode;
     }
 
-    private DialogueNode BuildPizzaDialogueTree()
-    {
-        DialogueNode endNode = new DialogueNode 
-        { 
-            speakerName = "Owner", 
-            dialogueText = "The Pizza is on the table, deliver it fast!", 
-            endsDialogue = true 
-        };
-        
-        DialogueNode pizzaNode = new DialogueNode
+private DialogueNode BuildPizzaDialogueTree()
+{
+    DialogueNode pizzaNode = new DialogueNode();
+    
+    DialogueNode endNode = new DialogueNode 
+    { 
+        speakerName = "Owner", 
+        dialogueText = "The Pizza is on the table, deliver it fast!", 
+        endsDialogue = false,
+        choices = new DialogueChoice[]
         {
-            speakerName = "Owner",
-            dialogueText = "You did great with Anton! Now, here is a Pizza for the next customer.",
-            endsDialogue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice { choiceText = "Continue", nextNode = endNode }
-            }
-        };
-        return pizzaNode;
-    }
+            new DialogueChoice { choiceText = "I understand", nextNode = new DialogueNode 
+            { 
+                speakerName = "Owner", 
+                dialogueText = "", 
+                endsDialogue = true 
+            }},
+            new DialogueChoice { choiceText = "Please repeat what you just said", nextNode = pizzaNode }
+        }
+    };
+    
+    DialogueNode surpriseNode = new DialogueNode
+    {
+        speakerName = "Owner",
+        dialogueText = "There will be unexpected surprises!",
+        endsDialogue = false,
+        choices = new DialogueChoice[]
+        {
+            new DialogueChoice { choiceText = "Continue", nextNode = endNode }
+        }
+    };
+
+    DialogueNode cookieNode = new DialogueNode
+    {
+        speakerName = "Owner",
+        dialogueText = "You can look for a fortune cookie.",
+        endsDialogue = false,
+        choices = new DialogueChoice[]
+        {
+            new DialogueChoice { choiceText = "Continue", nextNode = surpriseNode }
+        }
+    };
+    
+    pizzaNode.speakerName = "Owner";
+    pizzaNode.dialogueText = "You did great with Anton! Now, here is a Pizza for the next customer.";
+    pizzaNode.endsDialogue = false;
+    pizzaNode.choices = new DialogueChoice[]
+    {
+        new DialogueChoice { choiceText = "Continue", nextNode = cookieNode }
+    };
+    
+    return pizzaNode;
+}
 
     public void AssignOrder()
     {
