@@ -38,7 +38,6 @@ public class HamburgerInteract : MonoBehaviour
 
         isPicked = true;
 
-        Debug.Log("汉堡已拾取！");
     }
 
     private void CreateHamburgerUI()

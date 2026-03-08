@@ -57,17 +57,74 @@ public class CustomerInteract : MonoBehaviour
 
         if (isInRange && Input.GetKeyDown(interactKey))
         {
-            if (hamburgerInteract != null && hamburgerInteract.HasHamburger())
-            {
-                if (!isDialogueStarted)
+            if (hamburgerInteract == null) return;
+
+            if (!hamburgerInteract.HasHamburger())
                 {
-                    DialogueManager.Instance.StartDialogue(startNode);
+                    StartNoBurgerDialogue();
+                    return;
+                }
+
+            if (!isDialogueStarted)
+                {
+                    StartCustomerDialogue();
                     isDialogueStarted = true;
                 }
             }
+
+        if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out RaycastHit hit))
+                {
+                    if (hit.collider.gameObject == gameObject)
+                    {
+                        if (!restaurantOwner.isOrderAssigned)
+                        {
+                            Debug.Log("You don't have an order yet.");
+                            return;
+                        }
+
+                        if (!isDialogueStarted)
+                        {
+                            Debug.Log("Talk to Anton first.");
+                            return;
+                        }
+
+                        if (!isDialogueCompleted)
+                        {
+                            Debug.Log("Finish the conversation before delivering.");
+                            return;
+                        }
+
+                        RemoveHamburgerUI();
+                        restaurantOwner.SubmitOrder();
+                        isOrderDelivered = true;
+
+                        if (interactionPrompt != null)
+                            interactionPrompt.SetActive(false);
+
+                        Debug.Log("Burger delivered successfully!");
+                        DialogueManager.Instance.StartDialogue(startNode);
+                        isDialogueStarted = true;
+                    }
+                }
         }
     }
+    private void StartNoBurgerDialogue()
+    {
+        DialogueNode noBurgerNode = new DialogueNode
+        {
+            speakerName = "Anton",
+            dialogueText = "Hey! Where is my burger? Please go back to the restaurant and pick it up!",
+            endsDialogue = false,
+            autoContinue = false
+        };
 
+        DialogueManager.Instance.StartDialogue(noBurgerNode);
+        StartCoroutine(CloseDialogueAfterDelay(3f));
+    }
     private void CheckInteractionRange()
     {
         float distance = Vector3.Distance(transform.position, player.position);
@@ -75,6 +132,11 @@ public class CustomerInteract : MonoBehaviour
 
         if (interactionPrompt != null)
             interactionPrompt.SetActive(isInRange);
+    }
+    private void StartCustomerDialogue()
+    {
+        DialogueManager.Instance.StartDialogue(startNode);
+        hamburgerInteract.hasTalkedToCustomer = true;
     }
 
     private void OnDialogueCompletelyFinished()

@@ -16,6 +16,8 @@ public class OrderPopupUI : MonoBehaviour
     public void ShowCurrentOrder()
     {
         if (DeliveryManager.Instance.currentOrder == null) return;
+        if (DeliveryManager.Instance.currentOrder.currentState != OrderState.Accepted)
+            return;
 
         popupImage.sprite = DeliveryManager.Instance.currentOrder.orderImage;
         popupPanel.SetActive(true);
