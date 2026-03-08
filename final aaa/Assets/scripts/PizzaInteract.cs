@@ -5,9 +5,9 @@ public class PizzaInteract : MonoBehaviour
 {
     public Sprite pizzaUISprite;
     public Transform inventoryUIContainer;
+    public bool isPicked = false;
     public float interactionDistance = 4f;
     private Transform player;
-    private bool isPicked = false;
 
     void Start()
     {
@@ -48,7 +48,6 @@ public class PizzaInteract : MonoBehaviour
             if (OrderUI.Instance != null) OrderUI.Instance.UpdateOrderUI(DeliveryManager.Instance.currentOrder);
         }
 
-        // Add to UI
         GameObject uiIcon = new GameObject("PizzaIcon");
         uiIcon.transform.SetParent(inventoryUIContainer, false);
         Image img = uiIcon.AddComponent<Image>();

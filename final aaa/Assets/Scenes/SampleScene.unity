@@ -4477,6 +4477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pizzaUISprite: {fileID: 21300000, guid: 64da6b9f8b8074db5b4a7a0239ce8d24, type: 3}
   inventoryUIContainer: {fileID: 560105351}
+  isPicked: 0
   interactionDistance: 4
 --- !u!4 &865981885 stripped
 Transform:
@@ -9228,8 +9229,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cookieUIImage: {fileID: 1683423256}
+  inventoryUIContainer: {fileID: 560105351}
   interactionDistance: 5
   promptText: {fileID: 1485149457}
+  amyNPC: {fileID: 1780647968}
+  hasPickedUp: 0
 --- !u!65 &1741046089
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9431,6 +9435,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 99d11f162c9c04ce698535e333aa7f82, type: 3}
   m_PrefabInstance: {fileID: 1833129409}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1780647968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780647963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26100ff3ffe484046ac434a01f5f9850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionDistance: 5
+  interactionPrompt: {fileID: 2085282154}
+  pizzaInteract: {fileID: 865623067}
+  ownerNPC: {fileID: 1182456941}
+  cookiePickup: {fileID: 1741046088}
+  isPicked: 1
 --- !u!1001 &1786587649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9915,6 +9937,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 99d11f162c9c04ce698535e333aa7f82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1780647966}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 99d11f162c9c04ce698535e333aa7f82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1780647968}
   m_SourcePrefab: {fileID: 100100000, guid: 99d11f162c9c04ce698535e333aa7f82, type: 3}
 --- !u!1 &1838679457
 GameObject:

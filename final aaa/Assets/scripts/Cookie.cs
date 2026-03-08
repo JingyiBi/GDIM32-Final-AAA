@@ -4,10 +4,13 @@ using UnityEngine.UI;
 public class CookiePickup : MonoBehaviour
 {
     public Image cookieUIImage;
+    public Transform inventoryUIContainer;
     public float interactionDistance = 3f;
-    public GameObject promptText; 
+    public GameObject promptText;
+
     private Transform player;
-    private bool hasPickedUp = false;
+
+    public bool hasPickedUp = false;
 
     private void Start()
     {
@@ -26,6 +29,7 @@ public class CookiePickup : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, player.position);
         bool isInRange = distance <= interactionDistance;
+
         if (promptText != null)
             promptText.SetActive(isInRange);
 
@@ -34,10 +38,16 @@ public class CookiePickup : MonoBehaviour
             CheckRaycastForCookie();
         }
     }
-
+    public bool HasCookie()
+    {
+        return hasPickedUp;
+    }
     private void CheckRaycastForCookie()
     {
+        if (Camera.main == null) return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
         if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance))
         {
             if (hit.collider.gameObject == gameObject)
@@ -50,7 +60,7 @@ public class CookiePickup : MonoBehaviour
     private void PickUpCookie()
     {
         hasPickedUp = true;
-        
+
         if (promptText != null)
             promptText.SetActive(false);
         
