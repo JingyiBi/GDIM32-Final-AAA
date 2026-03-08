@@ -42,6 +42,12 @@ public class OrderUI : MonoBehaviour
         if (orderImageUI != null)
             orderImageUI.sprite = order.orderImage;
     }
+    public void ToggleOrderPanel()
+    {
+        if (DeliveryManager.Instance.currentOrder == null) return;
+
+        orderPanel.SetActive(!orderPanel.activeSelf);
+    }
 
     public void HideOrderUI()
     {
