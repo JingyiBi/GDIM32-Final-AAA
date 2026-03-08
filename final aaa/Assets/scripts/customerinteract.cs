@@ -99,7 +99,7 @@ public class CustomerInteract : MonoBehaviour
                         }
 
                         RemoveHamburgerUI();
-                        restaurantOwner.SubmitOrder();
+                        OrderManager.Instance.SubmitOrder();
                         isOrderDelivered = true;
 
                         if (interactionPrompt != null)
@@ -145,7 +145,7 @@ public class CustomerInteract : MonoBehaviour
         {
             if (restaurantOwner != null)
             {
-                restaurantOwner.SubmitOrder();
+                OrderManager.Instance.SubmitOrder();
             }
 
             RemoveHamburgerUI();

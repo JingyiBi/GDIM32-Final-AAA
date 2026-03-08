@@ -1390,6 +1390,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 32f932b07d9c3408ea835fc2c9853d5f, type: 3}
   m_PrefabInstance: {fileID: 914491645}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &243264535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243264536}
+  m_Layer: 0
+  m_Name: OrderManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &243264536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243264535}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 959.99994, y: 539.80286, z: 6.577264}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &257619844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,8 +2381,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 86.5, y: -20}
-  m_SizeDelta: {x: 400, y: 40}
+  m_AnchoredPosition: {x: 215.3638, y: -26.4016}
+  m_SizeDelta: {x: 430.7277, y: 52.8033}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &482667248
 MonoBehaviour:
@@ -2400,8 +2431,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5954,8 +5985,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 522, y: 46.69}
-  m_SizeDelta: {x: 373.7946, y: 57.18}
+  m_AnchoredPosition: {x: 551, y: 41}
+  m_SizeDelta: {x: 347.33, y: 57.18}
   m_Pivot: {x: 0.53428775, y: 0.5}
 --- !u!114 &1152252048
 MonoBehaviour:
@@ -6612,6 +6643,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionDistance: 7
   interactionPrompt: {fileID: 1612405329}
+  burgerStartNode: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
+  pizzaStartNode: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
   isOrderAssigned: 0
 --- !u!1 &1183300694
 GameObject:
@@ -6932,8 +6965,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6968,7 +7001,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 55.055695, z: 0, w: -10.242905}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -9232,7 +9265,6 @@ MonoBehaviour:
   inventoryUIContainer: {fileID: 560105351}
   interactionDistance: 5
   promptText: {fileID: 1485149457}
-  amyNPC: {fileID: 1780647968}
   hasPickedUp: 0
 --- !u!65 &1741046089
 BoxCollider:
@@ -9450,9 +9482,8 @@ MonoBehaviour:
   interactionDistance: 5
   interactionPrompt: {fileID: 2085282154}
   pizzaInteract: {fileID: 865623067}
-  ownerNPC: {fileID: 1182456941}
   cookiePickup: {fileID: 1741046088}
-  isPicked: 1
+  ownerNPC: {fileID: 1182456941}
 --- !u!1001 &1786587649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10024,8 +10055,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 3.8922, y: 203.95428}
-  m_SizeDelta: {x: 636.437, y: 245.5875}
+  m_AnchoredPosition: {x: 21.8167, y: 251.33}
+  m_SizeDelta: {x: 720.9385, y: 340.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1857220784
 MonoBehaviour:
@@ -10705,8 +10736,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 105, y: 46.69}
-  m_SizeDelta: {x: 387.8, y: 57.1797}
+  m_AnchoredPosition: {x: 183, y: 41}
+  m_SizeDelta: {x: 348.9, y: 57.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047295187
 MonoBehaviour:
@@ -11678,3 +11709,4 @@ SceneRoots:
   - {fileID: 1838679459}
   - {fileID: 865623064}
   - {fileID: 1741046090}
+  - {fileID: 243264536}

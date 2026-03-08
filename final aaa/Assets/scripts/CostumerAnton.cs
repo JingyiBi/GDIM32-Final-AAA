@@ -89,7 +89,7 @@ public class CustomerAnton : MonoBehaviour
 
         RestaurantOwnerNPC owner = FindObjectOfType<RestaurantOwnerNPC>();
         if (owner != null)
-            owner.SubmitOrder();
+            OrderManager.Instance.SubmitOrder();
 
         OrderUI orderUI = FindObjectOfType<OrderUI>();
         if (orderUI != null)

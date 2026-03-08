@@ -177,7 +177,7 @@ public class AmyInteract : MonoBehaviour
             };
         }
 
-        ownerNPC.SubmitOrder();
+        OrderManager.Instance.SubmitOrder();
 
         if (hasCookie && !bonusGiven)
         {

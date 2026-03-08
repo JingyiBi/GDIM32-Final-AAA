@@ -5,13 +5,17 @@ public class RestaurantOwnerNPC : MonoBehaviour
     public float interactionDistance = 7f;
     public GameObject interactionPrompt;
 
-    private KeyCode interactKey = KeyCode.I;
+    public DialogueNode burgerStartNode;
+    public DialogueNode pizzaStartNode;
 
+    private KeyCode interactKey = KeyCode.I;
     private Transform player;
     private bool isInRange;
+
     public bool isOrderAssigned;
 
-    private DialogueNode startNode;   
+    private bool startedBurgerDialogue;
+    private bool startedPizzaDialogue;
 
     private void Start()
     {
@@ -19,25 +23,31 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
         if (playerObj == null)
         {
-            Debug.LogError("Player not found!");
+            Debug.LogError("Player not found! Make sure Player has the tag 'Player'.");
             return;
         }
 
         player = playerObj.transform;
 
-        startNode = BuildDialogueTree();
-
-        isOrderAssigned = false;
-
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
+
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.OnDialogueEnd += HandleDialogueEnd;
     }
 
     private void Update()
     {
+        if (player == null)
+            return;
+
         CheckInteractionRange();
 
-        if (!isInRange) return;
+        if (!isInRange)
+            return;
+
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
+            return;
 
         if (Input.GetKeyDown(interactKey))
         {
@@ -56,219 +66,67 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private void StartOwnerDialogue()
     {
-        if (DeliveryManager.Instance != null && DeliveryManager.Instance.firstDeliveryCompleted)
+        if (DialogueManager.Instance == null)
         {
-            DeliveryManager.Instance.currentGameState = GameState.SecondOrder;
-
-            DialogueNode pizzaNode = BuildPizzaDialogueTree();
-            DialogueManager.Instance.StartDialogue(pizzaNode);
-        }
-        else
-        {
-            DialogueManager.Instance.StartDialogue(startNode);
-        }
-    }
-
-    private DialogueNode BuildDialogueTree()
-    {
-        DialogueNode repeatNode = new DialogueNode();
-        
-        DialogueNode fifthNode = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "Good luck! Go deliver the meal!",
-            endsDialogue = false,
-            autoContinue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice
-                {
-                    choiceText = "Got it",
-                    nextNode = new DialogueNode
-                    {
-                        speakerName = "Owner",
-                        dialogueText = "",
-                        endsDialogue = true
-                    }
-                },
-                new DialogueChoice
-                {
-                    choiceText = "Please repeat what you just said",
-                    nextNode = repeatNode 
-                }
-            }
-        };
-
-        DialogueNode fourthNode = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "Click on the burger to pick it up.",
-            endsDialogue = false,
-            autoContinue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice
-                {
-                    choiceText = "Continue",
-                    nextNode = fifthNode
-                }
-            }
-        };
-
-        DialogueNode thirdNode = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "The customer's name and address are in the top right corner, click to enlarge.",
-            endsDialogue = false,
-            autoContinue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice
-                {
-                    choiceText = "Continue",
-                    nextNode = fourthNode
-                }
-            }
-        };
-
-        DialogueNode secondNode = new DialogueNode
-        {
-            speakerName = "Owner",
-            dialogueText = "I will assign you an order.",
-            endsDialogue = false,
-            autoContinue = false,
-            choices = new DialogueChoice[]
-            {
-                new DialogueChoice
-                {
-                    choiceText = "Continue",
-                    nextNode = thirdNode
-                }
-            }
-        };
-
-        repeatNode.speakerName = "Owner";
-        repeatNode.dialogueText = "Hello, you're here!";
-        repeatNode.endsDialogue = false;
-        repeatNode.autoContinue = false;
-        repeatNode.choices = new DialogueChoice[]
-        {
-            new DialogueChoice
-            {
-                choiceText = "Continue",
-                nextNode = secondNode
-            }
-        };
-        return repeatNode;
-    }
-
-private DialogueNode BuildPizzaDialogueTree()
-{
-    DialogueNode pizzaNode = new DialogueNode();
-    
-    DialogueNode endNode = new DialogueNode 
-    { 
-        speakerName = "Owner", 
-        dialogueText = "The Pizza is on the table, deliver it fast!", 
-        endsDialogue = false,
-        choices = new DialogueChoice[]
-        {
-            new DialogueChoice { choiceText = "I understand", nextNode = new DialogueNode 
-            { 
-                speakerName = "Owner", 
-                dialogueText = "", 
-                endsDialogue = true 
-            }},
-            new DialogueChoice { choiceText = "Please repeat what you just said", nextNode = pizzaNode }
-        }
-    };
-    
-    DialogueNode surpriseNode = new DialogueNode
-    {
-        speakerName = "Owner",
-        dialogueText = "There will be unexpected surprises!",
-        endsDialogue = false,
-        choices = new DialogueChoice[]
-        {
-            new DialogueChoice { choiceText = "Continue", nextNode = endNode }
-        }
-    };
-
-    DialogueNode cookieNode = new DialogueNode
-    {
-        speakerName = "Owner",
-        dialogueText = "You can look for a fortune cookie.",
-        endsDialogue = false,
-        choices = new DialogueChoice[]
-        {
-            new DialogueChoice { choiceText = "Continue", nextNode = surpriseNode }
-        }
-    };
-    
-    pizzaNode.speakerName = "Owner";
-    pizzaNode.dialogueText = "You did great with Anton! Now, here is a Pizza for the next customer.";
-    pizzaNode.endsDialogue = false;
-    pizzaNode.choices = new DialogueChoice[]
-    {
-        new DialogueChoice { choiceText = "Continue", nextNode = cookieNode }
-    };
-    
-    return pizzaNode;
-}
-
-    public void AssignOrder()
-    {
-        if (DeliveryManager.Instance == null || OrderUI.Instance == null)
-        {
-            Debug.LogError("Missing Managers");
+            Debug.LogError("DialogueManager.Instance is null.");
             return;
         }
 
-        OrderData order;
-
-        if (!DeliveryManager.Instance.firstDeliveryCompleted)
-            order = DeliveryManager.Instance.burgerOrder;
-        else
-            order = DeliveryManager.Instance.pizzaOrder;
-
-        if (order == null)
+        if (DeliveryManager.Instance == null)
         {
-            Debug.LogError("Order is NULL");
+            Debug.LogError("DeliveryManager.Instance is null.");
             return;
         }
 
-        order.currentState = OrderState.Accepted;
-        DeliveryManager.Instance.StartOrder(order);
+        startedBurgerDialogue = false;
+        startedPizzaDialogue = false;
 
-        OrderUI.Instance.UpdateOrderUI(order);
+        if (DeliveryManager.Instance.firstDeliveryCompleted)
+        {
+            if (pizzaStartNode == null)
+            {
+                Debug.LogWarning("Pizza Start Node is not assigned on RestaurantOwnerNPC.");
+                return;
+            }
 
-        isOrderAssigned = true;
+            startedPizzaDialogue = true;
+            DialogueManager.Instance.StartDialogue(pizzaStartNode);
+        }
+        else
+        {
+            if (burgerStartNode == null)
+            {
+                Debug.LogWarning("Burger Start Node is not assigned on RestaurantOwnerNPC.");
+                return;
+            }
 
-        Debug.Log("Order Assigned!");
+            startedBurgerDialogue = true;
+            DialogueManager.Instance.StartDialogue(burgerStartNode);
+        }
     }
 
-    public void SubmitOrder()
+    private void HandleDialogueEnd()
     {
-        if (DeliveryManager.Instance.currentOrder == null) return;
+        if (DeliveryManager.Instance == null)
+            return;
 
-        int basePay = DeliveryManager.Instance.currentOrder.basePay;
-
-        DeliveryManager.Instance.AddEarnings(basePay);
-
-        EarningsUI earnings = FindObjectOfType<EarningsUI>();
-        if (earnings != null)
+        if (startedBurgerDialogue)
         {
-            earnings.AddCurrentEarnings(basePay);
-            earnings.ResetCurrentEarnings();
+            isOrderAssigned = true;
+            startedBurgerDialogue = false;
+            Debug.Log("Burger order assigned. Player can now pick up the burger.");
         }
 
-        DeliveryManager.Instance.currentOrder.currentState = OrderState.Submitted;
+        if (startedPizzaDialogue)
+        {
+            startedPizzaDialogue = false;
+            Debug.Log("Pizza dialogue finished.");
+        }
+    }
 
-        isOrderAssigned = false;
-        DeliveryManager.Instance.currentOrder = null;
-
-        OrderUI.Instance.HideOrderUI();
-
-        Debug.Log("Order Submitted!");
+    private void OnDestroy()
+    {
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.OnDialogueEnd -= HandleDialogueEnd;
     }
 }
