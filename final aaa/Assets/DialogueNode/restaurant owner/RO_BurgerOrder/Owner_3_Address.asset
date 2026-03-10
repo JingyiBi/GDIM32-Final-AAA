@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Owner_3_Address
   m_EditorClassIdentifier: 
   speakerName: Restaurant Owner
-  dialogueText: The customer's name and address are in the top right corner.
+  dialogueText: The customer's name and address are in the top right corner. You
+    can click on the icon to enlarge the order image.
   choices:
   - choiceText: Continue
     nextNode: {fileID: 11400000, guid: 19f38c100c2e13b4a990e8afca535ee8, type: 2}
