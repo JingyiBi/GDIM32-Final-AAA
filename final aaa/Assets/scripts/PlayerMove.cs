@@ -34,15 +34,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (StartUIManager.Instance != null && !StartUIManager.Instance.IsGameStarted)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            return;
-        }
-
-        if (cc == null || mainCamera == null) return;
-        
         HandleMovement();
         HandleCameraRotation();
         HandleGravityAndJump();
@@ -62,11 +53,9 @@ public class PlayerMove : MonoBehaviour
     {
         bool isRotating = Input.GetMouseButton(1);
 
-        if (EventSystem.current != null)
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
-            PointerEventData eventData = new PointerEventData(EventSystem.current);
-            eventData.position = Input.mousePosition;
-            isRotating = isRotating && !EventSystem.current.IsPointerOverGameObject(eventData.pointerId);
+            isRotating = false;
         }
 
         if (isRotating)
