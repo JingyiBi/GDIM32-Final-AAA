@@ -54,4 +54,9 @@ public class PizzaInteract : MonoBehaviour
         img.sprite = pizzaUISprite;
         img.preserveAspect = true;
     }
+    
+    public bool HasPizza()
+    {
+        return isPicked;
+    }
 }

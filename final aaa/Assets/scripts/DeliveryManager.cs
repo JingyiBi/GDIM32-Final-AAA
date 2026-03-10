@@ -14,6 +14,7 @@ public class DeliveryManager : MonoBehaviour
     public OrderData pizzaOrder;
     public int totalEarnings;
     public bool firstDeliveryCompleted;
+    public bool secondDeliveryCompleted;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class DeliveryManager : MonoBehaviour
         if (burgerOrder != null) burgerOrder.isUnlocked = true;
         if (pizzaOrder != null) pizzaOrder.isUnlocked = false;
         firstDeliveryCompleted = false;
+        secondDeliveryCompleted = false;
         totalEarnings = 0;
     }
 

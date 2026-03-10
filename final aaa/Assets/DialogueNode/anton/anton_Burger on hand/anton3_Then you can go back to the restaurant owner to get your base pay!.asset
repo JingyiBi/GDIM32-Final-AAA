@@ -15,7 +15,7 @@ MonoBehaviour:
   speakerName: Anton
   dialogueText: Then you can go back to the restaurant owner to get your base pay!
   choices:
-  - choiceText: "OK\uFF01"
+  - choiceText: OK!
     nextNode: {fileID: 0}
   - choiceText: I've forgotten how to give you the hamburger...
     nextNode: {fileID: 11400000, guid: 0228a7925aec3438b91ad180225ae8c4, type: 2}
