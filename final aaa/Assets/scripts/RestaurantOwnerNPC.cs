@@ -2,20 +2,30 @@ using UnityEngine;
 
 public class RestaurantOwnerNPC : MonoBehaviour
 {
+    [Header("Interaction")]
     public float interactionDistance = 7f;
     public GameObject interactionPrompt;
 
+    [Header("Dialogue Nodes")]
     public DialogueNode burgerStartNode;
     public DialogueNode pizzaStartNode;
+    public DialogueNode finishPizzaNode;
+    public DialogueNode wrongReturnNode;
+
+    [Header("Food References")]
+    public HamburgerInteract hamburgerInteract;
+    public PizzaInteract pizzaInteract;
 
     private KeyCode interactKey = KeyCode.I;
     private Transform player;
+
     private bool isInRange;
 
     public bool isOrderAssigned;
 
     private bool startedBurgerDialogue;
     private bool startedPizzaDialogue;
+    private bool startedFinishDialogue;
 
     private void Start()
     {
@@ -23,7 +33,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
         if (playerObj == null)
         {
-            Debug.LogError("Player not found! Make sure Player has the tag 'Player'.");
+            Debug.LogError("Player not found! Make sure Player has tag 'Player'.");
             return;
         }
 
@@ -66,40 +76,50 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private void StartOwnerDialogue()
     {
-        if (DialogueManager.Instance == null)
-        {
-            Debug.LogError("DialogueManager.Instance is null.");
+        if (DialogueManager.Instance == null || DeliveryManager.Instance == null)
             return;
-        }
-
-        if (DeliveryManager.Instance == null)
-        {
-            Debug.LogError("DeliveryManager.Instance is null.");
-            return;
-        }
 
         startedBurgerDialogue = false;
         startedPizzaDialogue = false;
+        startedFinishDialogue = false;
+
+        bool hasBurger = hamburgerInteract != null && hamburgerInteract.HasHamburger();
+        bool hasPizza = pizzaInteract != null && pizzaInteract.HasPizza();
+
+  
+        if (hasBurger || hasPizza)
+        {
+            if (wrongReturnNode != null)
+            {
+                DialogueManager.Instance.StartDialogue(wrongReturnNode);
+                return;
+            }
+        }
+
+
+        if (DeliveryManager.Instance.secondDeliveryCompleted)
+        {
+            if (finishPizzaNode != null)
+            {
+                startedFinishDialogue = true;
+                DialogueManager.Instance.StartDialogue(finishPizzaNode);
+                return;
+            }
+        }
+
 
         if (DeliveryManager.Instance.firstDeliveryCompleted)
         {
-            if (pizzaStartNode == null)
+            if (pizzaStartNode != null)
             {
-                Debug.LogWarning("Pizza Start Node is not assigned on RestaurantOwnerNPC.");
+                startedPizzaDialogue = true;
+                DialogueManager.Instance.StartDialogue(pizzaStartNode);
                 return;
             }
-
-            startedPizzaDialogue = true;
-            DialogueManager.Instance.StartDialogue(pizzaStartNode);
         }
-        else
-        {
-            if (burgerStartNode == null)
-            {
-                Debug.LogWarning("Burger Start Node is not assigned on RestaurantOwnerNPC.");
-                return;
-            }
 
+  
+        {
             startedBurgerDialogue = true;
             DialogueManager.Instance.StartDialogue(burgerStartNode);
         }
@@ -114,13 +134,23 @@ public class RestaurantOwnerNPC : MonoBehaviour
         {
             isOrderAssigned = true;
             startedBurgerDialogue = false;
-            Debug.Log("Burger order assigned. Player can now pick up the burger.");
+
+            Debug.Log("Burger order assigned.");
         }
 
         if (startedPizzaDialogue)
         {
+            isOrderAssigned = true;
             startedPizzaDialogue = false;
-            Debug.Log("Pizza dialogue finished.");
+
+            Debug.Log("Pizza order assigned.");
+        }
+
+        if (startedFinishDialogue)
+        {
+            startedFinishDialogue = false;
+
+            Debug.Log("Pizza storyline finished.");
         }
     }
 

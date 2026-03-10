@@ -10863,11 +10863,11 @@ MonoBehaviour:
   hamburgerInteract: {fileID: 274716018}
   restaurantOwner: {fileID: 1182456941}
   inventoryUIContainer: {fileID: 560105351}
-  earningsUI: {fileID: 0}
+  earningsUI: {fileID: 1838679458}
   returnToOwnerPromptPanel: {fileID: 2131111825}
-  burgerDialogue: {fileID: 0}
-  pizzaDialogue: {fileID: 0}
-  nothingDialogue: {fileID: 0}
+  burgerDialogue: {fileID: 11400000, guid: 2cf13ab8237a545e4a3b3d3debe03c9f, type: 2}
+  pizzaDialogue: {fileID: 11400000, guid: 0400899ce34d2498498abe6ba0be0550, type: 2}
+  nothingDialogue: {fileID: 11400000, guid: 869105ac5fb0d4b378db9ac3f3ea3d6c, type: 2}
   interactionDistance: 5
   interactionPrompt: {fileID: 0}
   promptDisplayDuration: 3
