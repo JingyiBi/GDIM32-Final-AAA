@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d154d6158cc1246a1b2b8fb867fb0e, type: 3}
+  m_Name: Owner1_You're back! Thank you for completing the order for the first customer!
+  m_EditorClassIdentifier: 
+  speakerName: Restaurant Owner
+  dialogueText: You're back! Thank you for completing the order for the first customer!
+  choices:
+  - choiceText: continue
+    nextNode: {fileID: 11400000, guid: e76e10c5106a14872a7be2f4dba80c27, type: 2}
+  endsDialogue: 0
+  autoContinue: 0
+  autoContinueDelay: 2
+  nextNode: {fileID: 0}
