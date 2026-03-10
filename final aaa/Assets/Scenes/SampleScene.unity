@@ -1547,8 +1547,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.380563, y: 25.320208, z: 5.602035}
-  m_Center: {x: 1.6902819, y: 12.160104, z: -2.3010185}
+  m_Size: {x: 4.380563, y: 27.536509, z: 1.1178101}
+  m_Center: {x: 1.6902819, y: 13.268254, z: -4.5430117}
 --- !u!65 &257619849
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10863,10 +10863,13 @@ MonoBehaviour:
   hamburgerInteract: {fileID: 274716018}
   restaurantOwner: {fileID: 1182456941}
   inventoryUIContainer: {fileID: 560105351}
-  interactionDistance: 5
-  interactionPrompt: {fileID: 0}
   earningsUI: {fileID: 0}
   returnToOwnerPromptPanel: {fileID: 2131111825}
+  burgerDialogue: {fileID: 0}
+  pizzaDialogue: {fileID: 0}
+  nothingDialogue: {fileID: 0}
+  interactionDistance: 5
+  interactionPrompt: {fileID: 0}
   promptDisplayDuration: 3
 --- !u!1 &2047295185
 GameObject:
