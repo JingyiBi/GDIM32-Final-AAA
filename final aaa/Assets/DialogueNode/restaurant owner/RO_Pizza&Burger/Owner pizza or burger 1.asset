@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Owner pizza or burger 1
   m_EditorClassIdentifier: 
   speakerName: Restaurant Owner
-  dialogueText: What are you standing there for? Go deliver the food!
+  dialogueText: You can click the icon on the top-right corner to look at your order
   choices:
   - choiceText: OK
     nextNode: {fileID: 0}
