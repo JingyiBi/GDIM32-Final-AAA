@@ -4,7 +4,7 @@ public abstract class InteractableBase : MonoBehaviour
 {
     [Header("Interaction Settings")]
     public float interactionDistance = 5f;
-    public string interactionPrompt = "Press I to Interact";
+    public GameObject interactionPrompt;
 
    
     public abstract void Interact();
