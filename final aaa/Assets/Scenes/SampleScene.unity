@@ -9402,6 +9402,10 @@ MonoBehaviour:
   startGameButton: {fileID: 1084972719}
   startButtonText: {fileID: 1890546095}
   startUIPanel: {fileID: 716284518}
+  backgroundPanel: {fileID: 0}
+  controlPanel: {fileID: 0}
+  backgroundButton: {fileID: 0}
+  controlButton: {fileID: 0}
 --- !u!4 &1610983194
 Transform:
   m_ObjectHideFlags: 0
