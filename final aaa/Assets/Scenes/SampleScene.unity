@@ -1571,6 +1571,7 @@ GameObject:
   - component: {fileID: 257619849}
   - component: {fileID: 257619848}
   - component: {fileID: 257619847}
+  - component: {fileID: 257619853}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -1767,6 +1768,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.6621222, y: 20.736994, z: 1.2565672}
   m_Center: {x: -1.8310615, y: 9.868497, z: 4.404545}
+--- !u!65 &257619853
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257619844}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.529412, y: 10.498826, z: 6.7538757}
+  m_Center: {x: 0.559953, y: -0.93403864, z: -1.392261}
 --- !u!4 &268032569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9d9456dd7647c48c8af118cd6db850fb, type: 3}
@@ -4499,7 +4521,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00010681152, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &719207822
