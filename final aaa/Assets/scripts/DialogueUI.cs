@@ -1,64 +1,35 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class DialogueUI : MonoBehaviour
 {
     public GameObject panel;
     public TextMeshProUGUI speakerText;
-    public TextMeshProUGUI dialogueText;
+    public TextMeshProUGUI contentText;
+    public Button[] choiceButtons;
 
-    public Button[] optionButtons;
-    public TextMeshProUGUI[] optionTexts;
+    public void Show() => panel.SetActive(true);
+    public void Hide() => panel.SetActive(false);
 
-    public void Show()
+    public void SetSpeaker(string name) => speakerText.text = name;
+    public void SetText(string text) => contentText.text = text;
+
+    public void SetChoices(DialogueChoice[] choices, Action<DialogueNode> onChoiceSelected)
     {
-        panel.SetActive(true);
-    }
+        foreach (var btn in choiceButtons) btn.gameObject.SetActive(false);
 
-    public void Hide()
-    {
-        panel.SetActive(false);
-    }
+        if (choices == null || choices.Length == 0) return;
 
-    public void SetSpeaker(string name)
-    {
-        speakerText.text = name;
-    }
-
-    public void SetText(string text)
-    {
-        dialogueText.text = text;
-    }
-
-    public void SetChoices(DialogueChoice[] choices)
-    {
-        for (int i = 0; i < optionButtons.Length; i++)
+        for (int i = 0; i < choices.Length && i < choiceButtons.Length; i++)
         {
-            optionButtons[i].onClick.RemoveAllListeners();
-            optionButtons[i].gameObject.SetActive(false);
-
- 
-            if (i < optionTexts.Length && optionTexts[i] != null)
-                optionTexts[i].text = "";
-        }
-
-        if (choices == null || choices.Length == 0)
-            return;
-
-        for (int i = 0; i < optionButtons.Length; i++)
-        {
-            if (i >= choices.Length) break;
-
-            optionButtons[i].gameObject.SetActive(true);
-            if (i < optionTexts.Length && optionTexts[i] != null)
-                optionTexts[i].text = choices[i].choiceText ?? "";
-
+            choiceButtons[i].gameObject.SetActive(true);
+            choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = choices[i].choiceText;
+            
             int index = i;
-            optionButtons[i].onClick.AddListener(() =>
-            {
-                DialogueManager.Instance.ChooseOption(index);
-            });
+            choiceButtons[i].onClick.RemoveAllListeners();
+            choiceButtons[i].onClick.AddListener(() => onChoiceSelected(choices[index].nextNode));
         }
     }
 }

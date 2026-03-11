@@ -4,54 +4,30 @@ using UnityEngine.UI;
 
 public class OrderUI : MonoBehaviour
 {
-    public static OrderUI Instance;
+    public static OrderUI Instance { get; private set; }
 
-    [Header("UI References")]
-    public GameObject orderPanel;  
-    public TextMeshProUGUI titleText;
-    public TextMeshProUGUI itemText;
+    public GameObject orderPanel;
+    public TextMeshProUGUI foodTypeText;
     public TextMeshProUGUI payText;
-    public TextMeshProUGUI statusText;
-    public Image orderImageUI;
+    public Image foodImage;
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        if (orderPanel != null)
-            orderPanel.SetActive(false);
+        Instance = this;
+        HideOrderUI();
     }
 
     public void UpdateOrderUI(OrderData order)
     {
         if (order == null) return;
-
         orderPanel.SetActive(true);
-
-        titleText.text = "Current Order";
-        itemText.text = "Food: " + order.foodType;
-        payText.text = "Pay: $" + order.basePay;
-        statusText.text = "Status: " + order.currentState.ToString();
-
-        if (orderImageUI != null)
-            orderImageUI.sprite = order.orderImage;
-    }
-    public void ToggleOrderPanel()
-    {
-        if (DeliveryManager.Instance.currentOrder == null) return;
-
-        orderPanel.SetActive(!orderPanel.activeSelf);
+        foodTypeText.text = "Order: " + order.foodType;
+        payText.text = "Reward: $" + order.basePay;
+        if (foodImage != null) foodImage.sprite = order.orderImage;
     }
 
     public void HideOrderUI()
     {
-        if (orderPanel != null)
-            orderPanel.SetActive(false);
+        if (orderPanel != null) orderPanel.SetActive(false);
     }
 }

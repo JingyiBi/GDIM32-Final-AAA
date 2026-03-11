@@ -270,9 +270,8 @@ GameObject:
   m_Component:
   - component: {fileID: 26594623}
   - component: {fileID: 26594624}
-  - component: {fileID: 26594625}
-  - component: {fileID: 26594627}
   - component: {fileID: 26594626}
+  - component: {fileID: 26594627}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -322,22 +321,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &26594625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 26594621}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852cb2a6584dc4b5da4b24ef1517c89e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  mouseSensitivity: 100
-  gravity: -9.81
-  jumpHeight: 1
 --- !u!65 &26594626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -374,7 +357,7 @@ MonoBehaviour:
   moveSpeed: 5
   mouseSensitivity: 150
   gravity: -9.81
-  jumpHeight: 1
+  jumpHeight: 1.2
 --- !u!1001 &34065122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -984,6 +967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupDistance: 3
+  player: {fileID: 0}
 --- !u!4 &165638419
 Transform:
   m_ObjectHideFlags: 0
@@ -1813,6 +1797,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hamburgerUISprite: {fileID: 21300000, guid: 618a2a4cb48b54ae38ac66c62dc7238a, type: 3}
   inventoryUIContainer: {fileID: 560105351}
+  isPicked: 0
+  restaurantOwner: {fileID: 0}
   hasTalkedToCustomer: 0
 --- !u!65 &274716019
 BoxCollider:
@@ -2112,13 +2098,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 1857220782}
   speakerText: {fileID: 482667248}
-  dialogueText: {fileID: 1278076316}
-  optionButtons:
-  - {fileID: 2047295187}
-  - {fileID: 1152252048}
-  optionTexts:
-  - {fileID: 1102004114}
-  - {fileID: 79622716}
+  contentText: {fileID: 0}
+  choiceButtons: []
 --- !u!114 &343185959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2132,11 +2113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orderPanel: {fileID: 1339224378}
-  titleText: {fileID: 1325364423}
-  itemText: {fileID: 763517556}
+  foodTypeText: {fileID: 0}
   payText: {fileID: 1380914499}
-  statusText: {fileID: 1084764306}
-  orderImageUI: {fileID: 1334244751}
+  foodImage: {fileID: 0}
 --- !u!1001 &345448084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5046,6 +5025,7 @@ MonoBehaviour:
   inventoryUIContainer: {fileID: 560105351}
   isPicked: 0
   interactionDistance: 4
+  player: {fileID: 0}
 --- !u!4 &865981885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb2433fe8eb88411992904e8d3c1c8c3, type: 3}
@@ -7251,7 +7231,7 @@ PrefabInstance:
       addedObject: {fileID: 1182456938}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 929faa0374fd9416b83b87209f8e3f84, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1182456941}
+      addedObject: {fileID: 1182456940}
   m_SourcePrefab: {fileID: 100100000, guid: 929faa0374fd9416b83b87209f8e3f84, type: 3}
 --- !u!1 &1182456937 stripped
 GameObject:
@@ -7286,7 +7266,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 929faa0374fd9416b83b87209f8e3f84, type: 3}
   m_PrefabInstance: {fileID: 1182456936}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1182456941
+--- !u!114 &1182456940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7298,15 +7278,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a3e8a3753314ba9b7f86299c320e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 7
-  interactionPrompt: {fileID: 1612405329}
-  burgerStartNode: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
-  pizzaStartNode: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
-  finishPizzaNode: {fileID: 0}
+  interactionDistance: 5
+  interactionPrompt: {fileID: 0}
+  burgerStartNode: {fileID: 0}
   wrongReturnNode: {fileID: 0}
-  hamburgerInteract: {fileID: 0}
-  pizzaInteract: {fileID: 0}
-  isOrderAssigned: 0
+  pizzaStartNode: {fileID: 0}
+  finishPizzaNode: {fileID: 0}
 --- !u!1 &1183300694
 GameObject:
   m_ObjectHideFlags: 0
@@ -9270,6 +9247,97 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b2fa9113e5d540caa2f3bd3bdbea438, type: 3}
+--- !u!1 &1550310314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550310319}
+  - component: {fileID: 1550310318}
+  - component: {fileID: 1550310317}
+  - component: {fileID: 1550310316}
+  - component: {fileID: 1550310315}
+  m_Layer: 0
+  m_Name: GameManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1550310315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550310314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66bc2429c790c4b8da2c9fc0407ecd3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasTalkedToOwner: 0
+  firstOrderAccepted: 0
+--- !u!114 &1550310316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550310314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77a30c0c1c0c4c1f8c6dc12d7033f9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGameState: 0
+  burgerOrder: {fileID: 11400000, guid: f1ebff74f8c01f44fa8a7856c0777e11, type: 2}
+  pizzaOrder: {fileID: 11400000, guid: 2102795655bf6094892ace0859ae017e, type: 2}
+  totalEarnings: 0
+--- !u!114 &1550310317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550310314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46734c5f58378e44ea2eab0b829e2870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueUI: {fileID: 343185958}
+--- !u!114 &1550310318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550310314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83fc85fabe6e6604dac38e2fab66bbee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentOrder: {fileID: 0}
+--- !u!4 &1550310319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550310314}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 318.5, y: 351.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1574645030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9397,15 +9465,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61f7bf7386a24a559cd2788012fe121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTitleText: {fileID: 719207825}
-  teamInfoText: {fileID: 232463556}
-  startGameButton: {fileID: 1084972719}
-  startButtonText: {fileID: 1890546095}
-  startUIPanel: {fileID: 716284518}
-  backgroundPanel: {fileID: 0}
-  controlPanel: {fileID: 0}
-  backgroundButton: {fileID: 0}
-  controlButton: {fileID: 0}
+  startPanel: {fileID: 0}
+  startButton: {fileID: 0}
 --- !u!4 &1610983194
 Transform:
   m_ObjectHideFlags: 0
@@ -9979,6 +10040,7 @@ MonoBehaviour:
   inventoryUIContainer: {fileID: 560105351}
   interactionDistance: 5
   promptText: {fileID: 1485149457}
+  player: {fileID: 0}
   hasPickedUp: 0
 --- !u!65 &1741046089
 BoxCollider:
@@ -10194,10 +10256,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 5
-  interactionPrompt: {fileID: 2085282154}
-  pizzaInteract: {fileID: 865623067}
-  cookiePickup: {fileID: 1741046088}
-  ownerNPC: {fileID: 1182456941}
+  interactionPrompt: 
+  noPizzaNode: {fileID: 0}
+  givePizzaNode: {fileID: 0}
+  pizzaItem: {fileID: 0}
+  cookieItem: {fileID: 0}
 --- !u!1001 &1786587649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10716,6 +10779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalEarningsText: {fileID: 545738985}
+  currentDeliveryEarnings: 0
 --- !u!4 &1838679459
 Transform:
   m_ObjectHideFlags: 0
@@ -11291,7 +11355,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1956875893}
-  - component: {fileID: 1956875892}
   m_Layer: 0
   m_Name: DeliveryManager
   m_TagString: Untagged
@@ -11299,25 +11362,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1956875892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956875891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18dab52792ac3468392e7cc292f69069, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentGameState: 0
-  currentOrder: {fileID: 11400000, guid: f1ebff74f8c01f44fa8a7856c0777e11, type: 2}
-  burgerOrder: {fileID: 11400000, guid: f1ebff74f8c01f44fa8a7856c0777e11, type: 2}
-  pizzaOrder: {fileID: 11400000, guid: 2102795655bf6094892ace0859ae017e, type: 2}
-  totalEarnings: 0
-  firstDeliveryCompleted: 0
-  secondDeliveryCompleted: 0
 --- !u!4 &1956875893
 Transform:
   m_ObjectHideFlags: 0
@@ -11453,7 +11497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hamburgerInteract: {fileID: 274716018}
-  restaurantOwner: {fileID: 1182456941}
+  restaurantOwner: {fileID: 0}
   inventoryUIContainer: {fileID: 560105351}
   earningsUI: {fileID: 1838679458}
   returnToOwnerPromptPanel: {fileID: 2131111825}
@@ -11462,6 +11506,13 @@ MonoBehaviour:
   nothingDialogue: {fileID: 11400000, guid: 869105ac5fb0d4b378db9ac3f3ea3d6c, type: 2}
   interactionDistance: 5
   interactionPrompt: {fileID: 0}
+  interactKey: 105
+  player: {fileID: 0}
+  isInRange: 0
+  isDialogueStarted: 0
+  isDialogueCompleted: 0
+  isOrderDelivered: 0
+  isRewardGiven: 0
   promptDisplayDuration: 3
 --- !u!1 &2047295185
 GameObject:
@@ -12336,3 +12387,4 @@ SceneRoots:
   - {fileID: 1741046090}
   - {fileID: 243264536}
   - {fileID: 1610983194}
+  - {fileID: 1550310319}

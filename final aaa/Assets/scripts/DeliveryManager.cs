@@ -4,17 +4,14 @@ public enum GameState { FirstOrder, Transition, SecondOrder, Finished }
 
 public class DeliveryManager : MonoBehaviour
 {
-    public static DeliveryManager Instance;
-    
+    public static DeliveryManager Instance { get; private set; }
+
     [Header("State Machine")]
     public GameState currentGameState = GameState.FirstOrder;
 
-    public OrderData currentOrder;
     public OrderData burgerOrder;
     public OrderData pizzaOrder;
     public int totalEarnings;
-    public bool firstDeliveryCompleted;
-    public bool secondDeliveryCompleted;
 
     private void Awake()
     {
@@ -22,25 +19,13 @@ public class DeliveryManager : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
-    private void Start()
+    public void AddEarnings(int amount)
     {
-        currentGameState = GameState.FirstOrder;
-        if (burgerOrder != null) burgerOrder.isUnlocked = true;
-        if (pizzaOrder != null) pizzaOrder.isUnlocked = false;
-        firstDeliveryCompleted = false;
-        secondDeliveryCompleted = false;
-        totalEarnings = 0;
-    }
-
-    public void StartOrder(OrderData order)
-    {
-        currentOrder = order;
-        if (OrderUI.Instance != null) OrderUI.Instance.UpdateOrderUI(order);
+        totalEarnings += amount;
     }
 
     public void CompleteFirstDelivery()
     {
-        firstDeliveryCompleted = true;
         currentGameState = GameState.Transition;
         if (pizzaOrder != null) pizzaOrder.isUnlocked = true;
     }
@@ -48,11 +33,6 @@ public class DeliveryManager : MonoBehaviour
     public void StartPizzaPhase()
     {
         currentGameState = GameState.SecondOrder;
-        StartOrder(pizzaOrder);
-    }
-
-    public void AddEarnings(int amount)
-    {
-        totalEarnings += amount;
+        OrderManager.Instance.AcceptOrder(pizzaOrder);
     }
 }

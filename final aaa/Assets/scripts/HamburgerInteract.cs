@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PizzaInteract : InteractableBase
+public class HamburgerInteract : InteractableBase
 {
     public bool isPicked = false;
     public GameObject inventoryIcon;
@@ -9,14 +9,16 @@ public class PizzaInteract : InteractableBase
     {
         if (isPicked) return;
 
-        
+    
         if (OrderManager.Instance.currentOrder != null && 
-            OrderManager.Instance.currentOrder.foodType == "Pizza")
+            OrderManager.Instance.currentOrder.foodType == "Burger")
         {
             isPicked = true;
             gameObject.SetActive(false);
             if (inventoryIcon != null) inventoryIcon.SetActive(true);
+            
             OrderManager.Instance.PickUpOrder();
+            Debug.Log("Hamburger picked up!");
         }
     }
 }

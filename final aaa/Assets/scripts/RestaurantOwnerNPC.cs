@@ -8,149 +8,107 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     [Header("Dialogue Nodes")]
     public DialogueNode burgerStartNode;
+    public DialogueNode wrongReturnNode; 
     public DialogueNode pizzaStartNode;
     public DialogueNode finishPizzaNode;
-    public DialogueNode wrongReturnNode;
-
-    [Header("Food References")]
-    public HamburgerInteract hamburgerInteract;
-    public PizzaInteract pizzaInteract;
 
     private KeyCode interactKey = KeyCode.I;
     private Transform player;
-
     private bool isInRange;
 
-    public bool isOrderAssigned;
-
-    private bool startedBurgerDialogue;
-    private bool startedPizzaDialogue;
-    private bool startedFinishDialogue;
+    private bool startedBurgerDialogue = false;
+    private bool startedPizzaDialogue = false;
 
     private void Start()
     {
         GameObject playerObj = GameObject.FindWithTag("Player");
-
-        if (playerObj == null)
-        {
-            Debug.LogError("Player not found! Make sure Player has tag 'Player'.");
-            return;
-        }
-
-        player = playerObj.transform;
-
-        if (interactionPrompt != null)
-            interactionPrompt.SetActive(false);
-
+        if (playerObj != null) player = playerObj.transform;
+        
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
+        
         if (DialogueManager.Instance != null)
             DialogueManager.Instance.OnDialogueEnd += HandleDialogueEnd;
     }
 
     private void Update()
     {
-        if (player == null)
-            return;
+        if (player == null) return;
 
-        CheckInteractionRange();
+        float distance = Vector3.Distance(transform.position, player.position);
+        isInRange = distance <= interactionDistance;
 
-        if (!isInRange)
-            return;
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(isInRange);
+
+        if (!isInRange) return;
 
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
             return;
 
         if (Input.GetKeyDown(interactKey))
         {
-            StartOwnerDialogue();
+            InteractWithOwner();
         }
     }
 
-    private void CheckInteractionRange()
+    private void InteractWithOwner()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
-        isInRange = distance <= interactionDistance;
+        
+        GameState state = DeliveryManager.Instance.currentGameState;
 
-        if (interactionPrompt != null)
-            interactionPrompt.SetActive(isInRange);
-    }
+        
+        bool isPizzaFinished = (state == GameState.SecondOrder && 
+                                OrderManager.Instance.currentOrder != null && 
+                                OrderManager.Instance.currentOrder.currentState == OrderState.Submitted);
 
-    private void StartOwnerDialogue()
-    {
-        if (DialogueManager.Instance == null || DeliveryManager.Instance == null)
-            return;
-
-        startedBurgerDialogue = false;
-        startedPizzaDialogue = false;
-        startedFinishDialogue = false;
-
-        bool hasBurger = hamburgerInteract != null && hamburgerInteract.HasHamburger();
-        bool hasPizza = pizzaInteract != null && pizzaInteract.HasPizza();
-
-  
-        if (hasBurger || hasPizza)
+        
+        if (state == GameState.Finished || isPizzaFinished)
         {
-            if (wrongReturnNode != null)
-            {
-                DialogueManager.Instance.StartDialogue(wrongReturnNode);
-                return;
-            }
+            DeliveryManager.Instance.currentGameState = GameState.Finished;
+            if (finishPizzaNode != null) DialogueManager.Instance.StartDialogue(finishPizzaNode);
         }
-
-
-        if (DeliveryManager.Instance.secondDeliveryCompleted)
+        
+        else if (state == GameState.SecondOrder)
         {
-            if (finishPizzaNode != null)
-            {
-                startedFinishDialogue = true;
-                DialogueManager.Instance.StartDialogue(finishPizzaNode);
-                return;
-            }
+            if (wrongReturnNode != null) DialogueManager.Instance.StartDialogue(wrongReturnNode);
         }
-
-
-        if (DeliveryManager.Instance.firstDeliveryCompleted)
+        
+        else if (state == GameState.Transition)
         {
-            if (pizzaStartNode != null)
-            {
-                startedPizzaDialogue = true;
-                DialogueManager.Instance.StartDialogue(pizzaStartNode);
-                return;
-            }
+            startedPizzaDialogue = true;
+            if (pizzaStartNode != null) DialogueManager.Instance.StartDialogue(pizzaStartNode);
         }
-
-  
+        
+        else if (state == GameState.FirstOrder)
         {
-            startedBurgerDialogue = true;
-            DialogueManager.Instance.StartDialogue(burgerStartNode);
+            
+            if (OrderManager.Instance.currentOrder != null)
+            {
+                if (wrongReturnNode != null) DialogueManager.Instance.StartDialogue(wrongReturnNode);
+            }
+            else 
+            {
+                startedBurgerDialogue = true;
+                if (burgerStartNode != null) DialogueManager.Instance.StartDialogue(burgerStartNode);
+            }
         }
     }
 
     private void HandleDialogueEnd()
     {
-        if (DeliveryManager.Instance == null)
-            return;
-
+        
         if (startedBurgerDialogue)
         {
-            isOrderAssigned = true;
             startedBurgerDialogue = false;
-
-            Debug.Log("Burger order assigned.");
+            if (DeliveryManager.Instance.burgerOrder != null)
+            {
+                OrderManager.Instance.AcceptOrder(DeliveryManager.Instance.burgerOrder);
+            }
         }
-
-        if (startedPizzaDialogue)
+        else if (startedPizzaDialogue)
         {
-            isOrderAssigned = true;
             startedPizzaDialogue = false;
-
-            Debug.Log("Pizza order assigned.");
-        }
-
-        if (startedFinishDialogue)
-        {
-            startedFinishDialogue = false;
-
-            Debug.Log("Pizza storyline finished.");
+            DeliveryManager.Instance.StartPizzaPhase();
         }
     }
 

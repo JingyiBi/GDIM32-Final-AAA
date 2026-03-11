@@ -1,40 +1,41 @@
 using UnityEngine;
+using System.Collections.Generic;   
 
 public class OrderManager : MonoBehaviour
 {
-    public static OrderManager Instance;
+    public static OrderManager Instance { get; private set; }
 
     public OrderData currentOrder;
 
-    void Awake()
+    
+    public event System.Action<int> OnOrderSubmitted;
+
+    private void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     public void AcceptOrder(OrderData order)
     {
         currentOrder = order;
         currentOrder.currentState = OrderState.Accepted;
+        if (OrderUI.Instance != null) OrderUI.Instance.UpdateOrderUI(order);
     }
 
     public void PickUpOrder()
     {
-        if (currentOrder == null) return;
-        currentOrder.currentState = OrderState.PickedUp;
-    }
-
-    public void DeliverOrder()
-    {
-        if (currentOrder == null) return;
-        currentOrder.currentState = OrderState.Delivered;
+        if (currentOrder != null) currentOrder.currentState = OrderState.PickedUp;
     }
 
     public void SubmitOrder()
     {
         if (currentOrder == null) return;
-
+        
         currentOrder.currentState = OrderState.Submitted;
-
-        DeliveryManager.Instance.AddEarnings(currentOrder.basePay);
+        
+        OnOrderSubmitted?.Invoke(currentOrder.basePay);
+        
+        if (OrderUI.Instance != null) OrderUI.Instance.HideOrderUI();
     }
 }
