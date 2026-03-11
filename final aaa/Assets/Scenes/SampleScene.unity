@@ -7278,7 +7278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a3e8a3753314ba9b7f86299c320e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 5
+  interactionDistance: 700
   interactionPrompt: {fileID: 0}
   burgerStartNode: {fileID: 0}
   wrongReturnNode: {fileID: 0}
