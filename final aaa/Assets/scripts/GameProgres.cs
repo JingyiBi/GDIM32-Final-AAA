@@ -10,6 +10,7 @@ public class GameProgress : MonoBehaviour
 
     public bool burgerPickedUp = false;
     public bool firstDeliveryCompleted = false;
+    public bool firstOrderRewardClaimed = false;
 
     public bool secondOrderAccepted = false;
     public bool pizzaPickedUp = false;

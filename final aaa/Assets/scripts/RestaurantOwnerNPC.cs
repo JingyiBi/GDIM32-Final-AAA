@@ -108,14 +108,30 @@ public class RestaurantOwnerNPC : MonoBehaviour
         if (startedBurgerDialogue)
         {
             startedBurgerDialogue = false;
+
             if (DeliveryManager.Instance.burgerOrder != null)
             {
                 OrderManager.Instance.AcceptOrder(DeliveryManager.Instance.burgerOrder);
-                GameProgress.Instance.firstOrderAccepted = true;
-
                 Debug.Log("First order accepted");
             }
+
+            if (!GameProgress.Instance.firstOrderRewardClaimed)
+            {
+                DeliveryManager.Instance.totalEarnings += 50;
+
+                GameProgress.Instance.firstOrderRewardClaimed = true;
+                GameProgress.Instance.firstDeliveryCompleted = true;
+
+                EarningsUI earningsUI = FindObjectOfType<EarningsUI>();
+                if (earningsUI != null)
+                {
+                    earningsUI.RefreshDisplay();
+                }
+
+                Debug.Log("Player received $10 reward");
+            }
         }
+
         else if (startedPizzaDialogue)
         {
             startedPizzaDialogue = false;

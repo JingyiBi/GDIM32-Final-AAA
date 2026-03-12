@@ -7,23 +7,14 @@ public class EarningsUI : MonoBehaviour
 
     private void Start()
     {
-        
-        if (OrderManager.Instance != null)
+        RefreshDisplay();
+    }
+
+    public void RefreshDisplay()
+    {
+        if (earningsText != null && DeliveryManager.Instance != null)
         {
-            OrderManager.Instance.OnOrderSubmitted += UpdateDisplay;
+            earningsText.text = "Total Earning: $" + DeliveryManager.Instance.totalEarnings;
         }
-        UpdateDisplay(0);
-    }
-
-    private void UpdateDisplay(int amount)
-    {
-        if (earningsText != null)
-            earningsText.text = "Earnings: $" + DeliveryManager.Instance.totalEarnings;
-    }
-
-    private void OnDestroy()
-    {
-        if (OrderManager.Instance != null)
-            OrderManager.Instance.OnOrderSubmitted -= UpdateDisplay;
     }
 }

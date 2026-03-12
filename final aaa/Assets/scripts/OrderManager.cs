@@ -10,6 +10,7 @@ public class OrderManager : MonoBehaviour
     
     public event System.Action<int> OnOrderSubmitted;
 
+
     private void Awake()
     {
         if (Instance == null) Instance = this;

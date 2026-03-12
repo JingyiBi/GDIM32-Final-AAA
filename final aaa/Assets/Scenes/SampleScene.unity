@@ -1835,7 +1835,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1857,8 +1857,6 @@ MonoBehaviour:
   interactionPrompt: {fileID: 0}
   isPicked: 0
   inventoryIcon: {fileID: 584527798}
-  burgerInteractDistance: 4
-  sightAngleThreshold: 0.9
 --- !u!1 &279395288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,10 +1939,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 560105351}
   - {fileID: 1857220783}
   - {fileID: 1254473563}
   - {fileID: 1339224379}
-  - {fileID: 560105351}
   - {fileID: 279395289}
   - {fileID: 545738987}
   m_Father: {fileID: 0}
@@ -3664,7 +3662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4147,7 +4145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5274,7 +5272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bc7f0079acb6e443f8926765669f957b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.909
+      value: 0.94
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bc7f0079acb6e443f8926765669f957b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7694,7 +7692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a3e8a3753314ba9b7f86299c320e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 10000
+  interactionDistance: 10
   interactionPrompt: {fileID: 1429966076}
   sightAngleThreshold: 0.9
   burgerStartNode: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
@@ -8635,7 +8633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -9810,6 +9808,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasTalkedToOwner: 0
   firstOrderAccepted: 0
+  burgerPickedUp: 0
+  firstDeliveryCompleted: 0
+  firstOrderRewardClaimed: 0
+  secondOrderAccepted: 0
+  pizzaPickedUp: 0
+  secondDeliveryCompleted: 0
 --- !u!114 &1550310316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10679,7 +10683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -11628,7 +11632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -12303,14 +12307,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd3edf27346e4a5e800b6dacbaf353a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 100000
+  interactionDistance: 10
   interactionPrompt: {fileID: 2082881892}
   nothingNode: {fileID: 11400000, guid: 869105ac5fb0d4b378db9ac3f3ea3d6c, type: 2}
   burgerNode: {fileID: 11400000, guid: 2cf13ab8237a545e4a3b3d3debe03c9f, type: 2}
   pizzaNode: {fileID: 11400000, guid: 0400899ce34d2498498abe6ba0be0550, type: 2}
   hamburgerItem: {fileID: 274716020}
   pizzaItem: {fileID: 865623067}
-  sightAngleThreshold: 0.9
 --- !u!1 &2038372603
 GameObject:
   m_ObjectHideFlags: 0
