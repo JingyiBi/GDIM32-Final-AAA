@@ -6,7 +6,7 @@ public class HamburgerInteract : InteractableBase
     public GameObject inventoryIcon;
     [Header("Interaction Settings")]
     public float burgerInteractDistance = 4f;
-    public float sightAngleThreshold = 0.9f;
+    public float sightAngleThreshold = 0.3f;
     private Transform player;
 
     private void Start()
@@ -37,18 +37,8 @@ public class HamburgerInteract : InteractableBase
 
     void OnMouseDown()
     {
-        if (player == null) return;
-        float distance = Vector3.Distance(transform.position, player.position);
-        Vector3 directionToItem = (transform.position - player.position).normalized;
-        float dotProduct = Vector3.Dot(player.forward, directionToItem);
-        
-        Ray ray = new Ray(player.position, directionToItem);
-        bool hasObstacle = Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
-        
-        bool canInteract = distance <= burgerInteractDistance && dotProduct > sightAngleThreshold && !hasObstacle;
-        
-        if (canInteract)
-            Interact();
+        Debug.Log("Burger clicked");
+        Interact();
     }
 
     public override void Interact()
@@ -69,5 +59,16 @@ public class HamburgerInteract : InteractableBase
 
             Debug.Log("Hamburger picked up!");
         }
+    }
+    public void RemoveFromInventory()
+    {
+        isPicked = false;
+
+        if (inventoryIcon != null)
+        {
+            inventoryIcon.SetActive(false);
+        }
+
+        Debug.Log("Burger removed from inventory");
     }
 }

@@ -5,19 +5,24 @@ public class CustomerAnton : InteractableBase
     public DialogueNode nothingNode;
     public DialogueNode burgerNode;
     public DialogueNode pizzaNode;
+
     public HamburgerInteract hamburgerItem;
     public PizzaInteract pizzaItem;
 
     [Header("Interaction Settings")]
-    public float sightAngleThreshold = 0.9f; 
+    public float sightAngleThreshold = 0.5f;
+
     private Transform player;
     private bool isInRange;
+
+    private bool deliveryDialoguePlayed = false;
+    private bool orderDelivered = false;
 
     private void Start()
     {
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
-        
+
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
     }
@@ -40,7 +45,9 @@ public class CustomerAnton : InteractableBase
         }
 
         isInRange = inDistance && isLookingAt && noObstacle;
+
         interactionPrompt.SetActive(isInRange);
+
         if (isInRange && Input.GetKeyDown(KeyCode.I) && !DialogueManager.Instance.IsDialogueActive)
         {
             Interact();
@@ -49,19 +56,46 @@ public class CustomerAnton : InteractableBase
 
     public override void Interact()
     {
-        if (hamburgerItem != null && hamburgerItem.isPicked)
-        {
-            DialogueManager.Instance.StartDialogue(burgerNode);
-            OrderManager.Instance.SubmitOrder();
-            DeliveryManager.Instance.CompleteFirstDelivery();
-        }
-        else if (pizzaItem != null && pizzaItem.isPicked)
-        {
-            DialogueManager.Instance.StartDialogue(pizzaNode);
-        }
-        else
+        if (orderDelivered)
         {
             DialogueManager.Instance.StartDialogue(nothingNode);
+            return;
         }
+
+        if (hamburgerItem != null && hamburgerItem.isPicked)
+        {
+            if (!deliveryDialoguePlayed)
+            {
+                DialogueManager.Instance.StartDialogue(burgerNode);
+                deliveryDialoguePlayed = true;
+            }
+            else
+            {
+                CompleteDelivery();
+            }
+
+            return;
+        }
+        if (pizzaItem != null && pizzaItem.isPicked)
+        {
+            DialogueManager.Instance.StartDialogue(pizzaNode);
+            return;
+        }
+
+        DialogueManager.Instance.StartDialogue(nothingNode);
+    }
+
+    void CompleteDelivery()
+    {
+        OrderManager.Instance.SubmitOrder();
+        DeliveryManager.Instance.CompleteFirstDelivery();
+
+        if (hamburgerItem != null)
+            hamburgerItem.RemoveFromInventory();
+
+        orderDelivered = true;
+        deliveryDialoguePlayed = false;
+
+        Debug.Log("Burger delivered!");
     }
 }

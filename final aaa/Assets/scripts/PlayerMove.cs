@@ -50,11 +50,6 @@ public class PlayerMove : MonoBehaviour
     {
         bool isRotating = Input.GetMouseButton(1);
 
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-        {
-            isRotating = false;
-        }
-
         if (isRotating)
         {
             Cursor.lockState = CursorLockMode.Locked;
