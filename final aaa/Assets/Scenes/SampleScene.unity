@@ -2135,7 +2135,9 @@ MonoBehaviour:
   panel: {fileID: 1857220782}
   speakerText: {fileID: 482667248}
   contentText: {fileID: 1278076316}
-  choiceButtons: []
+  choiceButtons:
+  - {fileID: 2047295187}
+  - {fileID: 1152252048}
 --- !u!114 &343185959
 MonoBehaviour:
   m_ObjectHideFlags: 0
