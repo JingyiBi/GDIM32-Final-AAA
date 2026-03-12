@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - NPCs
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -12,7 +13,7 @@ TagManager:
   - NPC
   - Water
   - UI
-  - 
+  - Interactable
   - 
   - 
   - 

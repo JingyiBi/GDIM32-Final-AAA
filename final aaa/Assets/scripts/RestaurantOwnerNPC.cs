@@ -3,7 +3,8 @@ using UnityEngine;
 public class RestaurantOwnerNPC : MonoBehaviour
 {
     [Header("Interaction")]
-    public float interactionDistance = 7f;
+    public float promptDisplayDistance = 7f; 
+    public float interactTriggerDistance = 10f; 
     public GameObject interactionPrompt;
     [Tooltip("range")]
     public float sightAngleThreshold = 0.9f; 
@@ -16,7 +17,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private KeyCode interactKey = KeyCode.I;
     private Transform player;
-    private bool isInRange;
+    private bool isInPromptRange; 
 
     private bool startedBurgerDialogue = false;
     private bool startedPizzaDialogue = false;
@@ -47,12 +48,12 @@ public class RestaurantOwnerNPC : MonoBehaviour
         Ray ray = new Ray(rayOrigin, directionToNPC);
         bool hasObstacle = Physics.Raycast(ray, distance, ~ignoreLayers);
         
-        isInRange = distance <= interactionDistance && isLookingAtNPC && !hasObstacle;
-
+        isInPromptRange = distance <= promptDisplayDistance && isLookingAtNPC && !hasObstacle;
         if (interactionPrompt != null)
-            interactionPrompt.SetActive(isInRange);
+            interactionPrompt.SetActive(isInPromptRange);
 
-        if (!isInRange) return;
+        bool canInteractByKey = distance <= interactTriggerDistance;
+        if (!canInteractByKey) return;
 
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
             return;
@@ -103,6 +104,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
         }
     }
 
+   
     private void HandleDialogueEnd()
     {
         if (startedBurgerDialogue)

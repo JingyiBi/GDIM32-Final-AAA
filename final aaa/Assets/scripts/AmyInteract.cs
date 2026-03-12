@@ -12,6 +12,8 @@ public class AmyInteract : InteractableBase
 
     [Header("Interaction Settings")]
     public float sightAngleThreshold = 0.9f;
+    public float promptDisplayDistance = 5f; 
+    public float interactTriggerDistance = 8f; 
     private Transform player;
     private bool isInRange;
 
@@ -32,14 +34,16 @@ public class AmyInteract : InteractableBase
         float dotProduct = Vector3.Dot(player.forward, directionToNPC);
         bool isLookingAt = dotProduct > sightAngleThreshold;
         
-        Ray ray = new Ray(player.position, directionToNPC);
-        bool hasObstacle = Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
+        Vector3 rayOrigin = player.position + Vector3.up;
+        int ignoreLayers = LayerMask.GetMask("Player", "NPC", "Interactable");
+        Ray ray = new Ray(rayOrigin, directionToNPC);
+        bool hasObstacle = Physics.Raycast(ray, distance, ~ignoreLayers);
         
-        isInRange = distance <= interactionDistance && isLookingAt && !hasObstacle;
-
+        isInRange = distance <= promptDisplayDistance && isLookingAt && !hasObstacle;
         interactionPrompt.SetActive(isInRange);
 
-        if (isInRange && Input.GetKeyDown(KeyCode.I) && !DialogueManager.Instance.IsDialogueActive)
+        bool canInteractByKey = distance <= interactTriggerDistance;
+        if (canInteractByKey && Input.GetKeyDown(KeyCode.I) && !DialogueManager.Instance.IsDialogueActive)
         {
             Interact();
         }
