@@ -37,12 +37,15 @@ public class RestaurantOwnerNPC : MonoBehaviour
         if (player == null) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
+       
         Vector3 directionToNPC = (transform.position - player.position).normalized;
         float dotProduct = Vector3.Dot(player.forward, directionToNPC);
         bool isLookingAtNPC = dotProduct > sightAngleThreshold;
         
-        Ray ray = new Ray(player.position, directionToNPC);
-        bool hasObstacle = Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
+        Vector3 rayOrigin = player.position + Vector3.up;
+        int ignoreLayers = LayerMask.GetMask("Player", "NPC", "Interactable");
+        Ray ray = new Ray(rayOrigin, directionToNPC);
+        bool hasObstacle = Physics.Raycast(ray, distance, ~ignoreLayers);
         
         isInRange = distance <= interactionDistance && isLookingAtNPC && !hasObstacle;
 
@@ -62,15 +65,12 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private void InteractWithOwner()
     {
-        
         GameState state = DeliveryManager.Instance.currentGameState;
 
-        
         bool isPizzaFinished = (state == GameState.SecondOrder && 
                                 OrderManager.Instance.currentOrder != null && 
                                 OrderManager.Instance.currentOrder.currentState == OrderState.Submitted);
 
-        
         if (state == GameState.Finished || isPizzaFinished)
         {
             DeliveryManager.Instance.currentGameState = GameState.Finished;
@@ -90,7 +90,6 @@ public class RestaurantOwnerNPC : MonoBehaviour
         
         else if (state == GameState.FirstOrder)
         {
-            
             if (OrderManager.Instance.currentOrder != null)
             {
                 if (wrongReturnNode != null) DialogueManager.Instance.StartDialogue(wrongReturnNode);
@@ -105,7 +104,6 @@ public class RestaurantOwnerNPC : MonoBehaviour
 
     private void HandleDialogueEnd()
     {
-        
         if (startedBurgerDialogue)
         {
             startedBurgerDialogue = false;
