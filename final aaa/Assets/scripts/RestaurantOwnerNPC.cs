@@ -6,15 +6,13 @@ public class RestaurantOwnerNPC : MonoBehaviour
     public float promptDisplayDistance = 7f; 
     public float interactTriggerDistance = 10f; 
     public GameObject interactionPrompt;
-    [Tooltip("range")]
     public float sightAngleThreshold = 0.9f; 
 
     [Header("Dialogue Nodes")]
-    public DialogueNode burgerStartNode;
-    public DialogueNode wrongReturnNode; 
-    public DialogueNode pizzaStartNode;
-    public DialogueNode finishPizzaNode;
-
+    public DialogueNode RO_BurgerOrder;        
+    public DialogueNode RO_PizzaOrder;         
+    public DialogueNode RO_PizzaAndBurger;     
+    public DialogueNode RO_Finish_PizzaOrder;   
     private KeyCode interactKey = KeyCode.I;
     private Transform player;
     private bool isInPromptRange; 
@@ -38,7 +36,6 @@ public class RestaurantOwnerNPC : MonoBehaviour
         if (player == null) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
-       
         Vector3 directionToNPC = (transform.position - player.position).normalized;
         float dotProduct = Vector3.Dot(player.forward, directionToNPC);
         bool isLookingAtNPC = dotProduct > sightAngleThreshold;
@@ -67,6 +64,15 @@ public class RestaurantOwnerNPC : MonoBehaviour
     private void InteractWithOwner()
     {
         GameState state = DeliveryManager.Instance.currentGameState;
+        bool hasBurger = GameProgress.Instance.burgerPickedUp;
+        bool hasPizza = GameProgress.Instance.pizzaPickedUp;
+
+        if ((hasBurger && !GameProgress.Instance.firstDeliveryCompleted) || 
+            (hasPizza && !GameProgress.Instance.secondDeliveryCompleted))
+        {
+            if (RO_PizzaAndBurger != null) DialogueManager.Instance.StartDialogue(RO_PizzaAndBurger);
+            return;
+        }
 
         bool isPizzaFinished = (state == GameState.SecondOrder && 
                                 OrderManager.Instance.currentOrder != null && 
@@ -75,72 +81,59 @@ public class RestaurantOwnerNPC : MonoBehaviour
         if (state == GameState.Finished || isPizzaFinished)
         {
             DeliveryManager.Instance.currentGameState = GameState.Finished;
-            if (finishPizzaNode != null) DialogueManager.Instance.StartDialogue(finishPizzaNode);
+            GameProgress.Instance.secondDeliveryCompleted = true;
+            if (RO_Finish_PizzaOrder != null) DialogueManager.Instance.StartDialogue(RO_Finish_PizzaOrder);
         }
-        
-        else if (state == GameState.SecondOrder)
-        {
-            if (wrongReturnNode != null) DialogueManager.Instance.StartDialogue(wrongReturnNode);
-        }
-        
         else if (state == GameState.Transition)
         {
             startedPizzaDialogue = true;
-            if (pizzaStartNode != null) DialogueManager.Instance.StartDialogue(pizzaStartNode);
+            GameProgress.Instance.secondOrderAccepted = true;
+            if (RO_PizzaOrder != null) DialogueManager.Instance.StartDialogue(RO_PizzaOrder);
         }
-        
         else if (state == GameState.FirstOrder)
         {
+            if (GameProgress.Instance.firstOrderAccepted && !GameProgress.Instance.burgerPickedUp)
+            {
+                if (RO_PizzaAndBurger != null) DialogueManager.Instance.StartDialogue(RO_PizzaAndBurger);
+                return;
+            }
+            
             if (OrderManager.Instance.currentOrder != null)
             {
-                if (wrongReturnNode != null) DialogueManager.Instance.StartDialogue(wrongReturnNode);
+                if (RO_PizzaAndBurger != null) DialogueManager.Instance.StartDialogue(RO_PizzaAndBurger);
             }
             else 
             {
                 startedBurgerDialogue = true;
                 GameProgress.Instance.hasTalkedToOwner = true;
-                if (burgerStartNode != null) DialogueManager.Instance.StartDialogue(burgerStartNode);
+                GameProgress.Instance.firstOrderAccepted = true;
+                if (RO_BurgerOrder != null) DialogueManager.Instance.StartDialogue(RO_BurgerOrder);
             }
         }
     }
 
-   
     private void HandleDialogueEnd()
     {
         if (startedBurgerDialogue)
         {
             startedBurgerDialogue = false;
-
             if (DeliveryManager.Instance.burgerOrder != null)
             {
                 OrderManager.Instance.AcceptOrder(DeliveryManager.Instance.burgerOrder);
-                Debug.Log("First order accepted");
             }
-
             if (!GameProgress.Instance.firstOrderRewardClaimed)
             {
                 DeliveryManager.Instance.totalEarnings += 50;
-
                 GameProgress.Instance.firstOrderRewardClaimed = true;
                 GameProgress.Instance.firstDeliveryCompleted = true;
-
                 EarningsUI earningsUI = FindObjectOfType<EarningsUI>();
-                if (earningsUI != null)
-                {
-                    earningsUI.RefreshDisplay();
-                }
-
-                Debug.Log("Player received $10 reward");
+                if (earningsUI != null) earningsUI.RefreshDisplay();
             }
         }
-
         else if (startedPizzaDialogue)
         {
             startedPizzaDialogue = false;
             DeliveryManager.Instance.StartPizzaPhase();
-            GameProgress.Instance.secondOrderAccepted = true;
-
-            Debug.Log("Second order accepted");
         }
     }
 

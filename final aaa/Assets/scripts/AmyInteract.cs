@@ -3,15 +3,17 @@ using UnityEngine;
 public class AmyInteract : InteractableBase
 {
     [Header("Dialogue Resources")]
-    public DialogueNode noPizzaNode;
-    public DialogueNode givePizzaNode;
-    
+    public DialogueNode amy_手上无东西;     
+    public DialogueNode amy_手上有汉堡时;       
+    public DialogueNode amy_手上只有pizza;       
+    public DialogueNode amy_pizza_plus_cookie;  
+
     [Header("Dependencies")]
     public PizzaInteract pizzaItem;
     public CookiePickup cookieItem;
 
     [Header("Interaction Settings")]
-    public float sightAngleThreshold = 0.9f;
+    public float sightAngleThreshold = 0.7f;
     public float promptDisplayDistance = 5f; 
     public float interactTriggerDistance = 8f; 
     private Transform player;
@@ -22,8 +24,7 @@ public class AmyInteract : InteractableBase
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
         
-        if (interactionPrompt != null)
-            interactionPrompt.SetActive(false);
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
 
     private new void Update()
@@ -42,8 +43,8 @@ public class AmyInteract : InteractableBase
         isInRange = distance <= promptDisplayDistance && isLookingAt && !hasObstacle;
         interactionPrompt.SetActive(isInRange);
 
-        bool canInteractByKey = distance <= interactTriggerDistance;
-        if (canInteractByKey && Input.GetKeyDown(KeyCode.I) && !DialogueManager.Instance.IsDialogueActive)
+        bool canInteractByKey = distance <= interactTriggerDistance && !DialogueManager.Instance.IsDialogueActive;
+        if (canInteractByKey && Input.GetKeyDown(KeyCode.I))
         {
             Interact();
         }
@@ -51,19 +52,37 @@ public class AmyInteract : InteractableBase
 
     public override void Interact()
     {
+        if (!GameProgress.Instance.hasTalkedToOwner)
+        {
+            DialogueManager.Instance.StartDialogue(amy_手上无东西);
+            return;
+        }
+
+        if (GameProgress.Instance.burgerPickedUp)
+        {
+            DialogueManager.Instance.StartDialogue(amy_手上有汉堡时);
+            return;
+        }
+
         if (pizzaItem != null && pizzaItem.isPicked)
         {
-            DialogueManager.Instance.StartDialogue(givePizzaNode);
-            OrderManager.Instance.SubmitOrder();
-            
-            if (cookieItem != null && cookieItem.hasPickedUp)
+            if (cookieItem != null && GameProgress.Instance.cookiePickedUp && !GameProgress.Instance.pizzaTipClaimed)
             {
+                DialogueManager.Instance.StartDialogue(amy_pizza_plus_cookie);
                 DeliveryManager.Instance.AddEarnings(10);
+                GameProgress.Instance.pizzaTipClaimed = true;
             }
+            else
+            {
+                DialogueManager.Instance.StartDialogue(amy_手上只有pizza);
+            }
+            OrderManager.Instance.SubmitOrder();
+            GameProgress.Instance.pizzaPickedUp = false;
+            GameProgress.Instance.secondDeliveryCompleted = true;
         }
         else
         {
-            DialogueManager.Instance.StartDialogue(noPizzaNode);
+            DialogueManager.Instance.StartDialogue(amy_手上无东西);
         }
     }
 }

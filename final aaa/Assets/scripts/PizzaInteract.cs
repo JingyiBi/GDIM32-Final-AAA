@@ -5,8 +5,7 @@ public class PizzaInteract : InteractableBase
     public bool isPicked = false;
     public GameObject inventoryIcon;
     [Header("Interaction Settings")]
-    public float pizzaInteractDistance = 4f;
-    public float sightAngleThreshold = 0.9f;
+    public float pizzaInteractDistance = 6f; 
     private Transform player;
 
     private void Start()
@@ -20,32 +19,23 @@ public class PizzaInteract : InteractableBase
 
     private new void Update()
     {
-        if (isPicked || player == null || interactionPrompt == null) return;
+        if (isPicked || player == null || interactionPrompt == null || !GameProgress.Instance.secondOrderAccepted)
+        {
+            interactionPrompt?.SetActive(false);
+            return;
+        }
 
         float distance = Vector3.Distance(transform.position, player.position);
-        Vector3 directionToItem = (transform.position - player.position).normalized;
-        float dotProduct = Vector3.Dot(player.forward, directionToItem);
-        bool isLookingAt = dotProduct > sightAngleThreshold;
-        
-        Ray ray = new Ray(player.position, directionToItem);
-        bool hasObstacle = Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
-        
-        bool isInRange = distance <= pizzaInteractDistance && isLookingAt && !hasObstacle;
-
+        bool isInRange = distance <= pizzaInteractDistance;
         interactionPrompt.SetActive(isInRange);
     }
 
     void OnMouseDown()
     {
-        if (player == null) return;
+        if (isPicked || player == null || !GameProgress.Instance.secondOrderAccepted) return;
+        
         float distance = Vector3.Distance(transform.position, player.position);
-        Vector3 directionToItem = (transform.position - player.position).normalized;
-        float dotProduct = Vector3.Dot(player.forward, directionToItem);
-        
-        Ray ray = new Ray(player.position, directionToItem);
-        bool hasObstacle = Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
-        
-        bool canInteract = distance <= pizzaInteractDistance && dotProduct > sightAngleThreshold && !hasObstacle;
+        bool canInteract = distance <= pizzaInteractDistance;
         
         if (canInteract)
             Interact();
@@ -62,6 +52,17 @@ public class PizzaInteract : InteractableBase
             gameObject.SetActive(false);
             if (inventoryIcon != null) inventoryIcon.SetActive(true);
             OrderManager.Instance.PickUpOrder();
+            GameProgress.Instance.pizzaPickedUp = true;
         }
+    }
+
+    public void RemoveFromInventory()
+    {
+        if (inventoryIcon != null)
+        {
+            inventoryIcon.SetActive(false);
+            isPicked = false;
+        }
+        GameProgress.Instance.pizzaPickedUp = false;
     }
 }

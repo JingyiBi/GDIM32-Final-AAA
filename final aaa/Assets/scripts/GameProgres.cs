@@ -5,16 +5,24 @@ public class GameProgress : MonoBehaviour
     public static GameProgress Instance { get; private set; }
 
     [Header("Quest States")]
-    public bool hasTalkedToOwner = false;
-    public bool firstOrderAccepted = false;
+    // restaurant owner
+    public bool hasTalkedToOwner = false;         
+    public bool firstOrderAccepted = false;        
+    public bool secondOrderAccepted = false;       
 
-    public bool burgerPickedUp = false;
-    public bool firstDeliveryCompleted = false;
-    public bool firstOrderRewardClaimed = false;
+    // burger delivery
+    public bool burgerPickedUp = false;            
+    public bool firstDeliveryCompleted = false;    
+    public bool firstOrderRewardClaimed = false;   
 
-    public bool secondOrderAccepted = false;
-    public bool pizzaPickedUp = false;
-    public bool secondDeliveryCompleted = false;
+    // pizza delivery
+    public bool pizzaPickedUp = false;            
+    public bool secondDeliveryCompleted = false;   
+    public bool secondOrderRewardClaimed = false;  
+
+    // tips fortune cookie
+    public bool cookiePickedUp = false;           
+    public bool pizzaTipClaimed = false;         
 
     private void Awake()
     {

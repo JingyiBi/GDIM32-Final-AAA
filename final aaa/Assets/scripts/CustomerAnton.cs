@@ -3,9 +3,9 @@ using UnityEngine;
 public class CustomerAnton : InteractableBase
 {
     [Header("Dialogue Resources")]
-    public DialogueNode nothingNode;
-    public DialogueNode burgerNode;
-    public DialogueNode pizzaNode;
+    public DialogueNode anton_Nothing_on_hand;    
+    public DialogueNode anton_Burger_on_hand;    
+    public DialogueNode anton_Pizza_on_hand;     
 
     [Header("Dependencies")]
     public HamburgerInteract hamburgerItem;
@@ -27,8 +27,7 @@ public class CustomerAnton : InteractableBase
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
         
-        if (interactionPrompt != null)
-            interactionPrompt.SetActive(false);
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
 
     private new void Update()
@@ -60,57 +59,49 @@ public class CustomerAnton : InteractableBase
 
     public override void Interact()
     {
-        Debug.Log("Anton interact triggered");
-        if (orderDelivered)
+        orderDelivered = false;
+        bool hasBurger = GameProgress.Instance.burgerPickedUp;
+        bool hasPizza = GameProgress.Instance.pizzaPickedUp;
+
+        if (!GameProgress.Instance.hasTalkedToOwner)
         {
-            DialogueManager.Instance.StartDialogue(nothingNode);
+            DialogueManager.Instance.StartDialogue(anton_Nothing_on_hand);
             return;
         }
 
-        if (hamburgerItem != null && hamburgerItem.isPicked)
+        if (hasBurger && !hasPizza)
         {
-            DialogueManager.Instance.StartDialogue(burgerNode);
+            DialogueManager.Instance.StartDialogue(anton_Burger_on_hand);
             deliveryDialoguePlayed = true;
             waitingForClickDelivery = true;
             return;
         }
-        if (pizzaItem != null && pizzaItem.isPicked)
+
+        if (hasPizza && !hasBurger)
         {
-            DialogueManager.Instance.StartDialogue(pizzaNode);
+            DialogueManager.Instance.StartDialogue(anton_Pizza_on_hand);
             return;
         }
-
-        DialogueManager.Instance.StartDialogue(nothingNode);
+        
+        DialogueManager.Instance.StartDialogue(anton_Nothing_on_hand);
     }
 
     void OnMouseDown()
     {
-        if (!waitingForClickDelivery) return;
-        if (!GameProgress.Instance.burgerPickedUp) return;
-
-        if (!DialogueManager.Instance.IsDialogueActive)
-        {
-            CompleteDelivery();
-            waitingForClickDelivery = false;
-        }
+        if (!waitingForClickDelivery || !GameProgress.Instance.burgerPickedUp || DialogueManager.Instance.IsDialogueActive) return;
+        CompleteDelivery();
+        waitingForClickDelivery = false;
     }
+
     void CompleteDelivery()
     {
         OrderManager.Instance.SubmitOrder();
         DeliveryManager.Instance.CompleteFirstDelivery();
-
-        if (hamburgerItem != null)
-            hamburgerItem.RemoveFromInventory();
-
+        if (hamburgerItem != null) hamburgerItem.RemoveFromInventory();
         GameProgress.Instance.burgerPickedUp = false;
         GameProgress.Instance.firstDeliveryCompleted = true;
-
         orderDelivered = true;
         deliveryDialoguePlayed = false;
-
-        if (interactionPrompt != null)
-            interactionPrompt.SetActive(false);
-
-        Debug.Log("Burger delivered!");
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
 }

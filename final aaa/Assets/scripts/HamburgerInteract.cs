@@ -4,9 +4,9 @@ public class HamburgerInteract : InteractableBase
 {
     public bool isPicked = false;
     public GameObject inventoryIcon;
-
+    [Header("Interaction Settings")]
+    public float burgerInteractDistance = 6f; 
     private Transform player;
-
 
     private void Start()
     {
@@ -17,11 +17,28 @@ public class HamburgerInteract : InteractableBase
             interactionPrompt.SetActive(false);
     }
 
+    private new void Update()
+    {
+        if (isPicked || player == null || interactionPrompt == null || !GameProgress.Instance.firstOrderAccepted)
+        {
+            interactionPrompt?.SetActive(false);
+            return;
+        }
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        bool isInRange = distance <= burgerInteractDistance;
+        interactionPrompt.SetActive(isInRange);
+    }
+
     void OnMouseDown()
     {
-        if (isPicked) return;
-        Debug.Log("Burger clicked");
-        Interact();
+        if (isPicked || player == null || !GameProgress.Instance.firstOrderAccepted) return;
+        
+        float distance = Vector3.Distance(transform.position, player.position);
+        bool canInteract = distance <= burgerInteractDistance;
+        
+        if (canInteract)
+            Interact();
     }
 
     public override void Interact()
@@ -32,26 +49,23 @@ public class HamburgerInteract : InteractableBase
             OrderManager.Instance.currentOrder.foodType == "Burger")
         {
             isPicked = true;
-
             gameObject.SetActive(false);
-
             if (inventoryIcon != null)
                 inventoryIcon.SetActive(true);
 
             OrderManager.Instance.PickUpOrder();
             GameProgress.Instance.burgerPickedUp = true;
-            Debug.Log("Hamburger picked up!");
-        }
+            Debug.Log("[汉堡拾取] burgerPickedUp已设为true");
     }
+    }
+
     public void RemoveFromInventory()
     {
-
         if (inventoryIcon != null)
         {
             inventoryIcon.SetActive(false);
             isPicked = false;
         }
-
-        Debug.Log("Burger removed from inventory");
+        GameProgress.Instance.burgerPickedUp = false;
     }
 }
