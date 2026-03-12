@@ -17,6 +17,7 @@ public class CustomerAnton : InteractableBase
 
     private bool deliveryDialoguePlayed = false;
     private bool orderDelivered = false;
+    private bool waitingForClickDelivery = false;
 
     private void Start()
     {
@@ -56,6 +57,7 @@ public class CustomerAnton : InteractableBase
 
     public override void Interact()
     {
+        Debug.Log("Anton interact triggered");
         if (orderDelivered)
         {
             DialogueManager.Instance.StartDialogue(nothingNode);
@@ -64,15 +66,10 @@ public class CustomerAnton : InteractableBase
 
         if (hamburgerItem != null && hamburgerItem.isPicked)
         {
-            if (!deliveryDialoguePlayed)
-            {
-                DialogueManager.Instance.StartDialogue(burgerNode);
-                deliveryDialoguePlayed = true;
-            }
-            else
-            {
-                CompleteDelivery();
-            }
+            DialogueManager.Instance.StartDialogue(burgerNode);
+
+            deliveryDialoguePlayed = true;
+            waitingForClickDelivery = true;
 
             return;
         }
@@ -84,6 +81,17 @@ public class CustomerAnton : InteractableBase
 
         DialogueManager.Instance.StartDialogue(nothingNode);
     }
+    void OnMouseDown()
+    {
+        if (!waitingForClickDelivery) return;
+        if (!GameProgress.Instance.burgerPickedUp) return;
+
+        if (!DialogueManager.Instance.IsDialogueActive)
+        {
+            CompleteDelivery();
+            waitingForClickDelivery = false;
+        }
+    }
 
     void CompleteDelivery()
     {
@@ -92,6 +100,9 @@ public class CustomerAnton : InteractableBase
 
         if (hamburgerItem != null)
             hamburgerItem.RemoveFromInventory();
+
+        GameProgress.Instance.burgerPickedUp = false;
+        GameProgress.Instance.firstDeliveryCompleted = true;
 
         orderDelivered = true;
         deliveryDialoguePlayed = false;

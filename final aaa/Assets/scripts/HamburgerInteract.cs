@@ -56,7 +56,7 @@ public class HamburgerInteract : InteractableBase
                 inventoryIcon.SetActive(true);
 
             OrderManager.Instance.PickUpOrder();
-
+            GameProgress.Instance.burgerPickedUp = true;
             Debug.Log("Hamburger picked up!");
         }
     }

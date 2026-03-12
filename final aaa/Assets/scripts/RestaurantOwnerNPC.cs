@@ -97,6 +97,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
             else 
             {
                 startedBurgerDialogue = true;
+                GameProgress.Instance.hasTalkedToOwner = true;
                 if (burgerStartNode != null) DialogueManager.Instance.StartDialogue(burgerStartNode);
             }
         }
@@ -110,12 +111,18 @@ public class RestaurantOwnerNPC : MonoBehaviour
             if (DeliveryManager.Instance.burgerOrder != null)
             {
                 OrderManager.Instance.AcceptOrder(DeliveryManager.Instance.burgerOrder);
+                GameProgress.Instance.firstOrderAccepted = true;
+
+                Debug.Log("First order accepted");
             }
         }
         else if (startedPizzaDialogue)
         {
             startedPizzaDialogue = false;
             DeliveryManager.Instance.StartPizzaPhase();
+            GameProgress.Instance.secondOrderAccepted = true;
+
+            Debug.Log("Second order accepted");
         }
     }
 
