@@ -5372,7 +5372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       propertyPath: m_Name
-      value: whole pepperoni
+      value: Pizza
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7691,7 +7691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a3e8a3753314ba9b7f86299c320e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 700
+  interactionDistance: 7
   interactionPrompt: {fileID: 1429966076}
   burgerStartNode: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
   wrongReturnNode: {fileID: 11400000, guid: c40023baa0bd2439e824d10458a1aa89, type: 2}
@@ -12435,9 +12435,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionDistance: 5
   interactionPrompt: {fileID: 2082881892}
-  welcomeNode: {fileID: 0}
-  thankYouNode: {fileID: 0}
-  hamburgerItem: {fileID: 0}
+  nothingNode: {fileID: 11400000, guid: 869105ac5fb0d4b378db9ac3f3ea3d6c, type: 2}
+  burgerNode: {fileID: 11400000, guid: 2cf13ab8237a545e4a3b3d3debe03c9f, type: 2}
+  pizzaNode: {fileID: 11400000, guid: 0400899ce34d2498498abe6ba0be0550, type: 2}
+  hamburgerItem: {fileID: 274716020}
+  pizzaItem: {fileID: 865623067}
 --- !u!1 &2038372603
 GameObject:
   m_ObjectHideFlags: 0
