@@ -5,6 +5,8 @@ public class RestaurantOwnerNPC : MonoBehaviour
     [Header("Interaction")]
     public float interactionDistance = 7f;
     public GameObject interactionPrompt;
+    [Tooltip("range")]
+    public float sightAngleThreshold = 0.9f; 
 
     [Header("Dialogue Nodes")]
     public DialogueNode burgerStartNode;
@@ -35,7 +37,14 @@ public class RestaurantOwnerNPC : MonoBehaviour
         if (player == null) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
-        isInRange = distance <= interactionDistance;
+        Vector3 directionToNPC = (transform.position - player.position).normalized;
+        float dotProduct = Vector3.Dot(player.forward, directionToNPC);
+        bool isLookingAtNPC = dotProduct > sightAngleThreshold;
+        
+        Ray ray = new Ray(player.position, directionToNPC);
+        bool hasObstacle = Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
+        
+        isInRange = distance <= interactionDistance && isLookingAtNPC && !hasObstacle;
 
         if (interactionPrompt != null)
             interactionPrompt.SetActive(isInRange);
