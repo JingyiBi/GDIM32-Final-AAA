@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class AmyInteract : InteractableBase
 {
     [Header("Dialogue Resources")]
@@ -7,26 +6,23 @@ public class AmyInteract : InteractableBase
     public DialogueNode amy_手上有汉堡时;       
     public DialogueNode amy_手上只有pizza;       
     public DialogueNode amy_pizza_plus_cookie;  
-
     [Header("Dependencies")]
     public PizzaInteract pizzaItem;
     public CookiePickup cookieItem;
-
     [Header("Interaction Settings")]
     public float sightAngleThreshold = 0.7f;
     public float promptDisplayDistance = 5f; 
     public float interactTriggerDistance = 8f; 
     private Transform player;
     private bool isInRange;
-
     private void Start()
     {
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
         
-        if (interactionPrompt != null) interactionPrompt.SetActive(false);
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(false);
     }
-
     private new void Update()
     {
         if (player == null || interactionPrompt == null) return;
@@ -40,33 +36,35 @@ public class AmyInteract : InteractableBase
         Ray ray = new Ray(rayOrigin, directionToNPC);
         bool hasObstacle = Physics.Raycast(ray, distance, ~ignoreLayers);
         
-        isInRange = distance <= promptDisplayDistance && isLookingAt && !hasObstacle;
+        isInRange = distance <= promptDisplayDistance && isLookingAt && !hasObstacle && !DialogueManager.Instance.IsDialogueActive;
         interactionPrompt.SetActive(isInRange);
-
         bool canInteractByKey = distance <= interactTriggerDistance && !DialogueManager.Instance.IsDialogueActive;
         if (canInteractByKey && Input.GetKeyDown(KeyCode.I))
         {
             Interact();
         }
     }
-
     public override void Interact()
     {
+        bool hasBurger = GameProgress.Instance.burgerPickedUp;
+        bool hasPizza = GameProgress.Instance.pizzaPickedUp;
+        bool hasCookie = GameProgress.Instance.cookiePickedUp;
+
         if (!GameProgress.Instance.hasTalkedToOwner)
         {
             DialogueManager.Instance.StartDialogue(amy_手上无东西);
             return;
         }
 
-        if (GameProgress.Instance.burgerPickedUp)
+        if (hasBurger)
         {
             DialogueManager.Instance.StartDialogue(amy_手上有汉堡时);
             return;
         }
 
-        if (pizzaItem != null && pizzaItem.isPicked)
+        if (hasPizza)
         {
-            if (cookieItem != null && GameProgress.Instance.cookiePickedUp && !GameProgress.Instance.pizzaTipClaimed)
+            if (cookieItem != null && hasCookie && !GameProgress.Instance.pizzaTipClaimed)
             {
                 DialogueManager.Instance.StartDialogue(amy_pizza_plus_cookie);
                 DeliveryManager.Instance.AddEarnings(10);
@@ -77,12 +75,13 @@ public class AmyInteract : InteractableBase
                 DialogueManager.Instance.StartDialogue(amy_手上只有pizza);
             }
             OrderManager.Instance.SubmitOrder();
+            if(pizzaItem != null) pizzaItem.RemoveFromInventory();
             GameProgress.Instance.pizzaPickedUp = false;
+            GameProgress.Instance.cookiePickedUp = false;
             GameProgress.Instance.secondDeliveryCompleted = true;
+            return;
         }
-        else
-        {
-            DialogueManager.Instance.StartDialogue(amy_手上无东西);
-        }
+
+        DialogueManager.Instance.StartDialogue(amy_手上无东西);
     }
 }
