@@ -8351,7 +8351,8 @@ MonoBehaviour:
   interactionPrompt: {fileID: 1429966076}
   sightAngleThreshold: 0.7
   RO_BurgerOrder: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
-  RO_PizzaOrder: {fileID: 11400000, guid: 8f1cd467f09194cb9aa4f105039e7286, type: 2}
+  RO_PizzaOrder_Line1: {fileID: 11400000, guid: 8f1cd467f09194cb9aa4f105039e7286, type: 2}
+  RO_PizzaOrder_Line2: {fileID: 11400000, guid: e76e10c5106a14872a7be2f4dba80c27, type: 2}
   RO_PizzaAndBurger: {fileID: 11400000, guid: c40023baa0bd2439e824d10458a1aa89, type: 2}
   RO_Finish_PizzaOrder: {fileID: 11400000, guid: c4db7a5158bbb444892ca1f5bc4752f9, type: 2}
 --- !u!1 &1183300694

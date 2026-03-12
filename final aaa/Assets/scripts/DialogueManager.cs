@@ -6,6 +6,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance { get; private set; }
     public DialogueUI dialogueUI;
     public event Action OnDialogueEnd;
+    public event Action<DialogueNode> OnEnterDialogueNode;
     public bool IsDialogueActive { get; private set; }
 
     private void Awake()
@@ -23,6 +24,8 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayNode(DialogueNode node)
     {
+        OnEnterDialogueNode?.Invoke(node);
+        
         dialogueUI.SetSpeaker(node.speakerName);
         dialogueUI.SetText(node.dialogueText);
         dialogueUI.SetChoices(node.choices, (nextNode) => 
@@ -33,7 +36,7 @@ public class DialogueManager : MonoBehaviour
 
         if (node.endsDialogue && (node.choices == null || node.choices.Length == 0))
         {
-            
+            EndDialogue();
         }
     }
 
