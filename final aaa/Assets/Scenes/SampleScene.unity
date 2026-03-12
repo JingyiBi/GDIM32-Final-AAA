@@ -10956,7 +10956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26100ff3ffe484046ac434a01f5f9850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 5
+  interactionDistance: 10000
   interactionPrompt: {fileID: 395737837}
   noPizzaNode: {fileID: 11400000, guid: 2f3d7094d10e0438bb22cdfd522454cc, type: 2}
   givePizzaNode: {fileID: 11400000, guid: ffb712bb8030241e1b6c6a50ad25b29d, type: 2}
@@ -12303,7 +12303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd3edf27346e4a5e800b6dacbaf353a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 5
+  interactionDistance: 100000
   interactionPrompt: {fileID: 2082881892}
   nothingNode: {fileID: 11400000, guid: 869105ac5fb0d4b378db9ac3f3ea3d6c, type: 2}
   burgerNode: {fileID: 11400000, guid: 2cf13ab8237a545e4a3b3d3debe03c9f, type: 2}
