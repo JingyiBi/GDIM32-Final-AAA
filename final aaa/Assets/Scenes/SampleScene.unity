@@ -5741,8 +5741,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 19.34336
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 19.09572
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.598
+      value: 11.6309
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5750,7 +5758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.731
+      value: 6.7444
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5787,6 +5795,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       propertyPath: m_TagString
@@ -5846,9 +5858,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionDistance: 5
   interactionPrompt: {fileID: 76669312}
-  isPicked: 1
+  isPicked: 0
   inventoryIcon: {fileID: 90287487}
-  pizzaInteractDistance: 20000
+  pizzaInteractDistance: 6
 --- !u!4 &865623070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
