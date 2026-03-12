@@ -59,7 +59,7 @@ public class StartUIManager : MonoBehaviour
         mainMenuPanel.SetActive(true);
     }
 
-    void StartGame()
+    public void StartGame()
     {
         if (startUI != null)
         {

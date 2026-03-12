@@ -20,7 +20,15 @@ public class OrderManager : MonoBehaviour
     {
         currentOrder = order;
         currentOrder.currentState = OrderState.Accepted;
-        if (OrderUI.Instance != null) OrderUI.Instance.UpdateOrderUI(order);
+
+        if (GameProgress.Instance != null)
+            GameProgress.Instance.firstOrderAccepted = true;
+
+        OrderUIManager ui = FindObjectOfType<OrderUIManager>();
+        if (ui != null)
+            ui.EnableOrderButton();
+
+        Debug.Log("First order accepted!");
     }
 
     public void PickUpOrder()
