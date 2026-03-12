@@ -10964,7 +10964,7 @@ MonoBehaviour:
   interactionPrompt: {fileID: 395737837}
   noPizzaNode: {fileID: 11400000, guid: 2f3d7094d10e0438bb22cdfd522454cc, type: 2}
   givePizzaNode: {fileID: 11400000, guid: ffb712bb8030241e1b6c6a50ad25b29d, type: 2}
-  pizzaItem: {fileID: 0}
+  pizzaItem: {fileID: 865623067}
   cookieItem: {fileID: 0}
   sightAngleThreshold: 0.9
 --- !u!1001 &1786587649
