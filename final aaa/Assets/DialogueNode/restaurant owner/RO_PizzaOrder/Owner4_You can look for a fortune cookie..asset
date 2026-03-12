@@ -18,8 +18,6 @@ MonoBehaviour:
   - choiceText: What's that?
     nextNode: {fileID: 11400000, guid: 9233fb146433d4625a03ceae205c03d8, type: 2}
   - choiceText: What is the purpose?
-    nextNode: {fileID: 0}
+    nextNode: {fileID: 11400000, guid: 95f3832141a624e728c845bfd0736306, type: 2}
   endsDialogue: 0
-  autoContinue: 0
-  autoContinueDelay: 2
   nextNode: {fileID: 0}
