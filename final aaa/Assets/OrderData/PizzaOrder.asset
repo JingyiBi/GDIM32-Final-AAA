@@ -17,6 +17,4 @@ MonoBehaviour:
   foodType: Pizza
   basePay: 80
   isUnlocked: 1
-  currentState: 2
-  isCookieOffered: 0
-  isCookiePicked: 0
+  currentState: 4

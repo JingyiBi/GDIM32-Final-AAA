@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class CustomerAnton : InteractableBase
 {
     [Header("Dialogue Resources")]

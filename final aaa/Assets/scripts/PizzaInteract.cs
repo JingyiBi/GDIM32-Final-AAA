@@ -50,7 +50,9 @@ public class PizzaInteract : InteractableBase
         {
             isPicked = true;
             gameObject.SetActive(false);
-            if (inventoryIcon != null) inventoryIcon.SetActive(true);
+            if (inventoryIcon != null) 
+                inventoryIcon.SetActive(true);
+
             OrderManager.Instance.PickUpOrder();
             GameProgress.Instance.pizzaPickedUp = true;
         }

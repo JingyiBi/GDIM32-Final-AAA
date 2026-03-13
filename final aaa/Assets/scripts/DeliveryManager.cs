@@ -15,8 +15,15 @@ public class DeliveryManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); }
-        else { Destroy(gameObject); }
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void AddEarnings(int amount)
@@ -27,12 +34,26 @@ public class DeliveryManager : MonoBehaviour
     public void CompleteFirstDelivery()
     {
         currentGameState = GameState.Transition;
-        if (pizzaOrder != null) pizzaOrder.isUnlocked = true;
+
+        if (pizzaOrder != null)
+            pizzaOrder.isUnlocked = true;
     }
 
     public void StartPizzaPhase()
     {
         currentGameState = GameState.SecondOrder;
         OrderManager.Instance.AcceptOrder(pizzaOrder);
+    }
+
+    public void CompleteSecondDelivery()
+    {
+        Debug.Log("Second delivery completed!");
+
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.secondDeliveryCompleted = true;
+        }
+
+        currentGameState = GameState.Finished;  
     }
 }
