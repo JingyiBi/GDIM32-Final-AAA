@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;   
 
 public class OrderManager : MonoBehaviour
 {
@@ -7,44 +6,62 @@ public class OrderManager : MonoBehaviour
 
     public OrderData currentOrder;
 
-    
     public event System.Action<int> OnOrderSubmitted;
-
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     public void AcceptOrder(OrderData order)
     {
+        if (order == null) return;
+
         currentOrder = order;
         currentOrder.currentState = OrderState.Accepted;
 
         if (GameProgress.Instance != null)
-            GameProgress.Instance.firstOrderAccepted = true;
+        {
+            if (order.foodType == "Burger")
+                GameProgress.Instance.firstOrderAccepted = true;
 
-        OrderUIManager ui = FindObjectOfType<OrderUIManager>();
-        if (ui != null)
-            ui.EnableOrderButton();
+            if (order.foodType == "Pizza")
+                GameProgress.Instance.secondOrderAccepted = true;
+        }
 
-        Debug.Log("First order accepted!");
+        OrderUIManager uiManager = FindObjectOfType<OrderUIManager>();
+        if (uiManager != null)
+            uiManager.EnableOrderButton();
+
+        if (OrderUI.Instance != null)
+            OrderUI.Instance.UpdateOrderUI(order);
+
+        Debug.Log("Order accepted: " + order.foodType);
     }
 
     public void PickUpOrder()
     {
-        if (currentOrder != null) currentOrder.currentState = OrderState.PickedUp;
+        if (currentOrder == null) return;
+
+        currentOrder.currentState = OrderState.PickedUp;
+
+        Debug.Log("Order picked up: " + currentOrder.foodType);
     }
 
     public void SubmitOrder()
     {
         if (currentOrder == null) return;
-        
+
         currentOrder.currentState = OrderState.Submitted;
-        
+
         OnOrderSubmitted?.Invoke(currentOrder.basePay);
-        
-        if (OrderUI.Instance != null) OrderUI.Instance.HideOrderUI();
+
+        if (OrderUI.Instance != null)
+            OrderUI.Instance.HideOrderUI();
+
+        Debug.Log("Order submitted: " + currentOrder.foodType);
     }
 }
