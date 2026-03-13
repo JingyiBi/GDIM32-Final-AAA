@@ -51,7 +51,7 @@ We actually revised some details based on the Proposal and Breakdown, but it is 
 
 ## Final Submission
 ### Group Devlog
-#### Finite State Machine (FSM) Pattern with C# Enums
+#### 1. Finite State Machine (FSM) Pattern with C# Enums
 The Finite State Machine (FSM) pattern is a simple way to organize how game objects behave by splitting their actions into clear "states" (like "doing a burger order" or "doing a pizza order") and rules for switching between states. Using C# enums makes this easier because enums are a safe way to list all possible states (you can’t use a state that doesn’t exist).
 
 Where We Used This in Our Game Code？
