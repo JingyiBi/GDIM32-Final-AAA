@@ -51,6 +51,79 @@ We actually revised some details based on the Proposal and Breakdown, but it is 
 
 ## Final Submission
 ### Group Devlog
+#### Finite State Machine (FSM) Pattern with C# Enums
+The Finite State Machine (FSM) pattern is a simple way to organize how game objects behave by splitting their actions into clear "states" (like "doing a burger order" or "doing a pizza order") and rules for switching between states. Using C# enums makes this easier because enums are a safe way to list all possible states (you can’t use a state that doesn’t exist).
+
+Where We Used This in Our Game Code？
+
+1. Enum Definition in DeliveryManager.cs
+   
+We made a `GameState` enum to track what part of the game the player is in:
+
+    public enum GameState
+    {
+        FirstOrder,    // Player is doing Anton’s burger order
+        Transition,    // Player finished the burger order (ready for pizza)
+        SecondOrder,   // Player is doing Amy’s pizza order
+        Finished       // All orders are done
+    }
+    
+    public class DeliveryManager : MonoBehaviour
+    {
+        public static DeliveryManager Instance { get; private set; }
+        public GameState currentGameState = GameState.FirstOrder; // Start with burger order
+    
+        // Switch to pizza order state
+        public void StartPizzaPhase()
+        {
+            if (currentGameState == GameState.Transition)
+            {
+                currentGameState = GameState.SecondOrder;
+            }
+        }
+    
+        // Mark burger order as finished
+        public void CompleteFirstDelivery()
+        {
+            currentGameState = GameState.Transition;
+        }
+    }
+
+2. Using the Enum in RestaurantOwnerNPC.cs
+The NPC (restaurant owner) uses the enum to decide what to say to the player:
+
+        private void InteractWithOwner()
+        {
+            GameState state = DeliveryManager.Instance.currentGameState;
+        
+            // If player finished the burger order, show pizza order dialogue
+            if (state == GameState.Transition)
+            {
+                startedPizzaDialogue = true;
+                GameProgress.Instance.secondOrderAccepted = true;
+                if (RO_PizzaOrder_Line1 != null) DialogueManager.Instance.StartDialogue(RO_PizzaOrder_Line1);
+            }
+            // If player is still doing the burger order, show burger dialogue
+            else if (state == GameState.FirstOrder)
+            {
+                startedBurgerDialogue = true;
+                GameProgress.Instance.hasTalkedToOwner = true;
+                GameProgress.Instance.firstOrderAccepted = true;
+                if (RO_BurgerOrder != null) DialogueManager.Instance.StartDialogue(RO_BurgerOrder);
+            }
+        }
+
+
+Why This Pattern Helped Our Game？
+
+1. Easy to understand: Instead of messy code with lots of `if` statements, we just check the `GameState` enum to know what the game should do. Even new coders can see "FirstOrder = burger, SecondOrder = pizza".
+
+2. Hard to break: Enums only let us use the states we defined (like `FirstOrder`), so we can’t accidentally use a fake state (like "BurgerDone123") that would crash the game.
+   
+3. Easy to change: If we want to add a new state (like "BonusOrder"), we just add it to the enum and write one small piece of code—we don’t have to rewrite all the game logic.
+
+This pattern made our game’s flow (burger order -> pizza order -> finished) clear and easy to fix.
+
 ### Team Member Name 1
 Jingyi Bi:
 
@@ -60,7 +133,7 @@ Peiyi Xiong:
 ### Team Member Name 3
 Ruixuan Pan:
 
-
+## Open-Source Assets
 - [funky preparation](https://www.aigei.com) - background music
 - [characters](https://www.mixamo.com/#/)- 3D characters model and animation
 - [buildings](https://brokenvector.itch.io/low-poly-brick-houses) - 3D building model
