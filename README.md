@@ -58,7 +58,7 @@ Where We Used This in Our Game Code？
 
 1. Enum Definition in DeliveryManager.cs
    
-We made a `GameState` enum to track what part of the game the player is in:
+We made a GameState enum to track what part of the game the player is in:
 
     public enum GameState
     {
@@ -116,11 +116,11 @@ The NPC (restaurant owner) uses the enum to decide what to say to the player:
 
 Why This Pattern Helped Our Game？
 
-1. Easy to understand: Instead of messy code with lots of `if` statements, we just check the `GameState` enum to know what the game should do. Even new coders can see "FirstOrder = burger, SecondOrder = pizza".
+1. Easy to understand: Instead of messy code with lots of if statements, we just check the GameState enum to know what the game should do. Even new coders can see "FirstOrder = burger, SecondOrder = pizza".
 
-2. Hard to break: Enums only let us use the states we defined (like `FirstOrder`), so we can’t accidentally use a fake state (like "BurgerDone123") that would crash the game.
+2. Hard to break: Enums only let us use the states we defined, so we can’t accidentally use a fake state that would crash the game.
    
-3. Easy to change: If we want to add a new state (like "BonusOrder"), we just add it to the enum and write one small piece of code—we don’t have to rewrite all the game logic.
+3. Easy to change: If we want to add a new state, we just add it to the enum and write one small piece of code. We don’t have to rewrite all the game logic.
 
 This pattern made our game’s flow (burger order -> pizza order -> finished) clear and easy to fix.
 
