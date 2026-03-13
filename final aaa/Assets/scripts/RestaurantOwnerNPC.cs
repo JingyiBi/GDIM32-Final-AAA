@@ -13,6 +13,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
     public DialogueNode RO_PizzaOrder_Line2;    
     public DialogueNode RO_PizzaAndBurger;      
     public DialogueNode RO_Finish_PizzaOrder;   
+    public DialogueNode RO_Finish_PizzaOrder_Line2;
 
     private KeyCode interactKey = KeyCode.I;
     private Transform player;
@@ -21,6 +22,7 @@ public class RestaurantOwnerNPC : MonoBehaviour
     private bool startedBurgerDialogue = false;
     private bool startedPizzaDialogue = false;
     private bool hasGivenBurgerReward = false;
+    private bool hasGivenPizzaReward = false;
 
     private void Start()
     {
@@ -164,6 +166,15 @@ public class RestaurantOwnerNPC : MonoBehaviour
             DeliveryManager.Instance.totalEarnings += 50;
             GameProgress.Instance.firstOrderRewardClaimed = true;
             hasGivenBurgerReward = true;
+            EarningsUI earningsUI = FindObjectOfType<EarningsUI>();
+            if (earningsUI != null) earningsUI.RefreshDisplay();
+        }
+
+        if (enteredNode == RO_Finish_PizzaOrder_Line2 && !hasGivenPizzaReward && GameProgress.Instance.secondDeliveryCompleted)
+        {
+            DeliveryManager.Instance.totalEarnings += 80;
+            GameProgress.Instance.secondOrderRewardClaimed = true;
+            hasGivenPizzaReward = true;
             EarningsUI earningsUI = FindObjectOfType<EarningsUI>();
             if (earningsUI != null) earningsUI.RefreshDisplay();
         }
