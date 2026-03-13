@@ -11827,7 +11827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26100ff3ffe484046ac434a01f5f9850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 10000
+  interactionDistance: 7
   interactionPrompt: {fileID: 395737837}
   "amy_\u624B\u4E0A\u65E0\u4E1C\u897F": {fileID: 11400000, guid: 2f3d7094d10e0438bb22cdfd522454cc, type: 2}
   "amy_\u624B\u4E0A\u6709\u6C49\u5821\u65F6": {fileID: 11400000, guid: 90b17f0e141cf41ffa414836f1b921a7, type: 2}

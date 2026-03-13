@@ -16,8 +16,6 @@ MonoBehaviour:
   dialogueText: Oh, hi there!
   choices:
   - choiceText: continue
-    nextNode: {fileID: 0}
+    nextNode: {fileID: 11400000, guid: 6d55f7df3be5a47ea9f010b3e510294e, type: 2}
   endsDialogue: 0
-  autoContinue: 0
-  autoContinueDelay: 2
   nextNode: {fileID: 0}

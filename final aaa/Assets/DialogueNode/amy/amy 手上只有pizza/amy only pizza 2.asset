@@ -16,8 +16,6 @@ MonoBehaviour:
   dialogueText: Click on me to hand the pizza over.
   choices:
   - choiceText: continue
-    nextNode: {fileID: 0}
+    nextNode: {fileID: 11400000, guid: 94c938142b5a6479abf155bc27e35f38, type: 2}
   endsDialogue: 0
-  autoContinue: 0
-  autoContinueDelay: 2
   nextNode: {fileID: 0}
