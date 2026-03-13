@@ -630,7 +630,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.028, y: 0.026}
+  m_AnchoredPosition: {x: -0.0044, y: -0.0732}
   m_SizeDelta: {x: 960, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &79622714
@@ -6083,8 +6083,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8433,12 +8433,13 @@ MonoBehaviour:
   promptDisplayDistance: 2000
   interactTriggerDistance: 5
   interactionPrompt: {fileID: 1429966076}
-  sightAngleThreshold: 0.7
+  sightAngleThreshold: 0.5
   RO_BurgerOrder: {fileID: 11400000, guid: 6b3475d7d7163d94cb22106c1733dddf, type: 2}
   RO_PizzaOrder_Line1: {fileID: 11400000, guid: 8f1cd467f09194cb9aa4f105039e7286, type: 2}
-  RO_PizzaOrder_Line2: {fileID: 11400000, guid: e76e10c5106a14872a7be2f4dba80c27, type: 2}
+  RO_PizzaOrder_Line2: {fileID: 11400000, guid: 71cebd5cbc20c4b73ba3f087aa441af1, type: 2}
   RO_PizzaAndBurger: {fileID: 11400000, guid: c40023baa0bd2439e824d10458a1aa89, type: 2}
   RO_Finish_PizzaOrder: {fileID: 11400000, guid: c4db7a5158bbb444892ca1f5bc4752f9, type: 2}
+  RO_Finish_PizzaOrder_Line2: {fileID: 11400000, guid: af3618b275d724c8ba81f82f4aa3843e, type: 2}
 --- !u!1 &1183300694
 GameObject:
   m_ObjectHideFlags: 0
@@ -11751,7 +11752,7 @@ Transform:
   m_GameObject: {fileID: 1741046087}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.7420993, y: 0.10586816, z: 12.577}
+  m_LocalPosition: {x: 2.7420993, y: 0.12, z: 11.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11941,7 +11942,7 @@ MonoBehaviour:
   amy_pizza_plus_cookie: {fileID: 11400000, guid: c3b99d31e4e9e4512996a1092a5bf9f8, type: 2}
   pizzaItem: {fileID: 865623067}
   cookieItem: {fileID: 0}
-  sightAngleThreshold: 0.7
+  sightAngleThreshold: 0.5
   promptDisplayDistance: 2000
   interactTriggerDistance: 7
 --- !u!1001 &1786587649
@@ -12079,8 +12080,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -13202,11 +13203,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75e938ff1d1fe414296d59a3e81574a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.34999618
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75e938ff1d1fe414296d59a3e81574a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 31.5013
+      value: 30.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75e938ff1d1fe414296d59a3e81574a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13425,10 +13426,9 @@ MonoBehaviour:
   anton_Pizza_on_hand: {fileID: 11400000, guid: 0400899ce34d2498498abe6ba0be0550, type: 2}
   hamburgerItem: {fileID: 274716020}
   pizzaItem: {fileID: 865623067}
-  sightAngleThreshold: 0.7
+  sightAngleThreshold: 0.5
   promptDisplayDistance: 2000
   interactTriggerDistance: 7
-  orderDelivered: 0
 --- !u!1 &2038372603
 GameObject:
   m_ObjectHideFlags: 0
