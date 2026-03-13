@@ -124,6 +124,79 @@ Why This Pattern Helped Our Game？
 
 This pattern made our game’s flow (burger order -> pizza order -> finished) clear and easy to fix.
 
+#### 2. Inheritance with Polymorphism
+Inheritance with Polymorphism is a simple coding pattern where one class (a "child" class) takes on the features of another class (a "parent" class), and can change or add to those features. This lets us make similar objects (like burger and pizza interactables) share code, so we don’t have to write the same thing twice.
+
+Where We Used This in Our Game Code？
+
+1. Abstract Parent Class (InteractableBase.cs)
+We made an abstract parent class for all things the player can interact with (like burgers, pizza, and NPCs). It has a basic Interact() method that child classes can change:
+
+         // Abstract parent class 
+         public abstract class InteractableBase : MonoBehaviour
+         {
+             public GameObject interactionPrompt; // Shared prompt for all interactables
+         
+             // Abstract method (child classes MUST write their own version)
+             public abstract void Interact();
+         }
+
+
+2. Child Class 1: HamburgerInteract.cs (Overrides Interact())
+The burger uses the parent class but changes the Interact() method to fit how burgers work:
+
+         // Child class for burgers (inherits from InteractableBase)
+         public class HamburgerInteract : InteractableBase
+         {
+             public bool isPicked = false;
+             public GameObject inventoryIcon;
+         
+             // Override: Change the parent’s Interact() method for burgers
+             public override void Interact()
+             {
+                 if (isPicked) return;
+         
+                 // Burger logic: Pick up the burger
+                 isPicked = true;
+                 gameObject.SetActive(false);
+                 inventoryIcon.SetActive(true);
+                 GameProgress.Instance.burgerPickedUp = true;
+             }
+         }
+
+
+ 3. Child Class 2: PizzaInteract.cs (Also Overrides Interact())
+The pizza uses the same parent class but has its own Interact() logic:
+
+         // Child class for pizza (inherits from InteractableBase)
+         public class PizzaInteract : InteractableBase
+         {
+             public bool isPicked = false;
+             public GameObject inventoryIcon;
+         
+             // Override: Change the parent’s Interact() method for pizza
+             public override void Interact()
+             {
+                 if (isPicked) return;
+         
+                 // Pizza logic: Pick up the pizza
+                 isPicked = true;
+                 gameObject.SetActive(false);
+                 inventoryIcon.SetActive(true);
+                 GameProgress.Instance.pizzaPickedUp = true;
+             }
+         }
+
+
+Why This Pattern Helped Our Game？
+
+1. No duplicate code: The interactionPrompt (the "click to pick up" text) is in the parent class, so we don’t have to add it to both burger and pizza code.
+   
+2. Easy to add new items: If we want to add a soda interactable, we just make a new child class and write only the soda‘s Interact() logic，all the basic stuff (like the prompt) is already in the parent.
+   
+3. Clear and organized: All interactable things follow the same rules (they all have an Interact() method), so our code is easy to read and fix. Even if we change how the prompt works, we only change it in the parent class.
+
+
 ### Team Member Name 1
 Jingyi Bi:
 
