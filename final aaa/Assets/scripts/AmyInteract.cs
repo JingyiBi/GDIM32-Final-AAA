@@ -125,10 +125,12 @@ public class AmyInteract : InteractableBase
 
         GameProgress.Instance.pizzaPickedUp = false;
         GameProgress.Instance.cookiePickedUp = false;
+
         GameProgress.Instance.secondDeliveryCompleted = true;
 
-        DeliveryManager.Instance.CompleteSecondDelivery();
+        int tip = 20;
+        DeliveryManager.Instance.AddEarnings(tip);
 
-        Debug.Log("Amy delivery completed");
+        DeliveryManager.Instance.CompleteSecondDelivery();
     }
 }

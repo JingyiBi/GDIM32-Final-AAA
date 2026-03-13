@@ -9,7 +9,10 @@ public class EarningsUI : MonoBehaviour
     {
         RefreshDisplay();
     }
-
+    void Update()
+    {
+        earningsText.text = "Total Earnings: $" + DeliveryManager.Instance.totalEarnings;
+    }
     public void RefreshDisplay()
     {
         if (earningsText != null && DeliveryManager.Instance != null)
