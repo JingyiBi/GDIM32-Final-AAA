@@ -72,8 +72,30 @@ public class RestaurantOwnerNPC : MonoBehaviour
         bool hasBurger = GameProgress.Instance.burgerPickedUp;
         bool hasPizza = GameProgress.Instance.pizzaPickedUp;
 
+        // 第一个订单完成且空手的场景
+        bool isFirstOrderDoneAndEmptyHanded = 
+            GameProgress.Instance.firstDeliveryCompleted && 
+            !hasBurger && !hasPizza && 
+            OrderManager.Instance.currentOrder == null;
+        
+        if (isFirstOrderDoneAndEmptyHanded)
+        {
+            if (RO_PizzaAndBurger != null) DialogueManager.Instance.StartDialogue(RO_PizzaAndBurger);
+            return;
+        }
+
         if ((hasBurger && !GameProgress.Instance.firstDeliveryCompleted) || 
             (hasPizza && !GameProgress.Instance.secondDeliveryCompleted))
+        {
+            if (RO_PizzaAndBurger != null) DialogueManager.Instance.StartDialogue(RO_PizzaAndBurger);
+            return;
+        }
+
+        bool isSecondOrderEmptyHanded = 
+            state == GameState.SecondOrder && 
+            !hasPizza && !hasBurger && 
+            GameProgress.Instance.secondOrderAccepted;
+        if (isSecondOrderEmptyHanded)
         {
             if (RO_PizzaAndBurger != null) DialogueManager.Instance.StartDialogue(RO_PizzaAndBurger);
             return;

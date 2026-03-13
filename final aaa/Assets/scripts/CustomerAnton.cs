@@ -19,7 +19,7 @@ public class CustomerAnton : InteractableBase
     private bool isInRange;
 
     private bool deliveryDialoguePlayed = false;
-    public bool orderDelivered = false;
+    private bool isDeliveryCompleted = false; 
     private bool waitingForClickDelivery = false;
 
     private void Start()
@@ -32,9 +32,15 @@ public class CustomerAnton : InteractableBase
 
     private new void Update()
     {
-        if (player == null || interactionPrompt == null || orderDelivered) 
+        if (player == null || interactionPrompt == null) 
         {
             interactionPrompt?.SetActive(false);
+            return;
+        }
+
+        if (waitingForClickDelivery)
+        {
+            interactionPrompt.SetActive(false);
             return;
         }
 
@@ -50,6 +56,7 @@ public class CustomerAnton : InteractableBase
         
         isInRange = distance <= promptDisplayDistance && isLookingAt && !hasObstacle && !DialogueManager.Instance.IsDialogueActive;
         interactionPrompt.SetActive(isInRange);
+        
         bool canInteractByKey = distance <= interactTriggerDistance && !DialogueManager.Instance.IsDialogueActive;
         if (canInteractByKey && Input.GetKeyDown(KeyCode.I))
         {
@@ -59,9 +66,14 @@ public class CustomerAnton : InteractableBase
 
     public override void Interact()
     {
-        orderDelivered = false;
         bool hasBurger = GameProgress.Instance.burgerPickedUp;
         bool hasPizza = GameProgress.Instance.pizzaPickedUp;
+
+        if (isDeliveryCompleted)
+        {
+            DialogueManager.Instance.StartDialogue(anton_Nothing_on_hand);
+            return;
+        }
 
         if (!GameProgress.Instance.hasTalkedToOwner)
         {
@@ -100,8 +112,8 @@ public class CustomerAnton : InteractableBase
         if (hamburgerItem != null) hamburgerItem.RemoveFromInventory();
         GameProgress.Instance.burgerPickedUp = false;
         GameProgress.Instance.firstDeliveryCompleted = true;
-        orderDelivered = true;
+        isDeliveryCompleted = true;
         deliveryDialoguePlayed = false;
-        if (interactionPrompt != null) interactionPrompt.SetActive(false);
+       
     }
 }
