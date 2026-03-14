@@ -52,149 +52,230 @@ We actually revised some details based on the Proposal and Breakdown, but it is 
 ## Final Submission
 ### Group Devlog
 #### 1. Finite State Machine (FSM) Pattern with C# Enums
-The Finite State Machine (FSM) pattern is a simple way to organize how game objects behave by splitting their actions into clear "states" (like "doing a burger order" or "doing a pizza order") and rules for switching between states. Using C# enums makes this easier because enums are a safe way to list all possible states (you can’t use a state that doesn’t exist).
+The Finite State Machine pattern shows how an object acts by breaking it down into different states, transitions between states, and actions that happen when states change. We used C# enums to make clear game states and cut down on error-prone conditional logic.
 
 Where We Used This in Our Game Code？
 
-1. Enum Definition in DeliveryManager.cs
-   
-We made a GameState enum to track what part of the game the player is in:
+DeliveryManager.cs
+      
+      // Defines the game’s core states as an enum (FSM state definition)
+      public enum GameState { FirstOrder, Transition, SecondOrder, Finished }
+      
+      public class DeliveryManager : MonoBehaviour
+      {
+          public static DeliveryManager Instance { get; private set; }
+          public GameState currentGameState = GameState.FirstOrder; // Active state
+      
+          // State transition methods
+          public void CompleteFirstDelivery()
+          {
+              currentGameState = GameState.Transition; // Transition to post-burger delivery state
+              if (pizzaOrder != null)
+                  pizzaOrder.isUnlocked = true;
+          }
+      
+          public void StartPizzaPhase()
+          {
+              currentGameState = GameState.SecondOrder; // Transition to pizza delivery state
+              OrderManager.Instance.AcceptOrder(pizzaOrder);
+          }
+      
+          public void CompleteSecondDelivery()
+          {
+              currentGameState = GameState.Finished; // Transition to game completion state
+              GameProgress.Instance.secondDeliveryCompleted = true;
+          }
+      }
+State-Driven Logic: RestaurantOwnerNPC.cs
 
-    public enum GameState
-    {
-        FirstOrder,    // Player is doing Anton’s burger order
-        Transition,    // Player finished the burger order (ready for pizza)
-        SecondOrder,   // Player is doing Amy’s pizza order
-        Finished       // All orders are done
-    }
-    
-    public class DeliveryManager : MonoBehaviour
-    {
-        public static DeliveryManager Instance { get; private set; }
-        public GameState currentGameState = GameState.FirstOrder; // Start with burger order
-    
-        // Switch to pizza order state
-        public void StartPizzaPhase()
-        {
-            if (currentGameState == GameState.Transition)
-            {
-                currentGameState = GameState.SecondOrder;
-            }
-        }
-    
-        // Mark burger order as finished
-        public void CompleteFirstDelivery()
-        {
-            currentGameState = GameState.Transition;
-        }
-    }
+The InteractWithOwner() method uses currentGameState to determine which dialogue to trigger and which game logic to execute:
+      
+      private void InteractWithOwner()
+      {
+          GameState state = DeliveryManager.Instance.currentGameState;
+          // State-based conditional logic
+          if (state == GameState.Finished || isPizzaFinished)
+          {
+              DeliveryManager.Instance.currentGameState = GameState.Finished;
+              GameProgress.Instance.secondDeliveryCompleted = true;
+              if (RO_Finish_PizzaOrder != null) DialogueManager.Instance.StartDialogue(RO_Finish_PizzaOrder);
+          }
+          else if (state == GameState.Transition)
+          {
+              startedPizzaDialogue = true;
+              GameProgress.Instance.secondOrderAccepted = true;
+              if (RO_PizzaOrder_Line1 != null) DialogueManager.Instance.StartDialogue(RO_PizzaOrder_Line1);
+          }
+          else if (state == GameState.FirstOrder)
+          {
+              // First order (burger) logic
+              startedBurgerDialogue = true;
+              GameProgress.Instance.hasTalkedToOwner = true;
+              GameProgress.Instance.firstOrderAccepted = true;
+              if (RO_BurgerOrder != null) DialogueManager.Instance.StartDialogue(RO_BurgerOrder);
+          }
+      }
+Why This Pattern Was Useful
 
-2. Using the Enum in RestaurantOwnerNPC.cs
-The NPC (restaurant owner) uses the enum to decide what to say to the player:
+Easier State Management: The GameState enum gives us one clear variable to show the game's current state, instead of having to deal with a lot of boolean flags like isBurgerPhase or isPizzaPhase. This makes it a lot easier to keep track of how the game is going and find any bugs that have to do with the state.
 
-        private void InteractWithOwner()
-        {
-            GameState state = DeliveryManager.Instance.currentGameState;
-        
-            // If player finished the burger order, show pizza order dialogue
-            if (state == GameState.Transition)
-            {
-                startedPizzaDialogue = true;
-                GameProgress.Instance.secondOrderAccepted = true;
-                if (RO_PizzaOrder_Line1 != null) DialogueManager.Instance.StartDialogue(RO_PizzaOrder_Line1);
-            }
-            // If player is still doing the burger order, show burger dialogue
-            else if (state == GameState.FirstOrder)
-            {
-                startedBurgerDialogue = true;
-                GameProgress.Instance.hasTalkedToOwner = true;
-                GameProgress.Instance.firstOrderAccepted = true;
-                if (RO_BurgerOrder != null) DialogueManager.Instance.StartDialogue(RO_BurgerOrder);
-            }
-        }
+Easy to Extend: Adding a new state, like a BonusLevel, is simple. All you have to do is change the enum and add the code that goes with it. You don't have to change any code that isn't related to the checks.
 
-
-Why This Pattern Helped Our Game？
-
-1. Easy to understand: Instead of messy code with lots of if statements, we just check the GameState enum to know what the game should do. Even new coders can see "FirstOrder = burger, SecondOrder = pizza".
-
-2. Hard to break: Enums only let us use the states we defined, so we can’t accidentally use a fake state that would crash the game.
-   
-3. Easy to change: If we want to add a new state, we just add it to the enum and write one small piece of code. We don’t have to rewrite all the game logic.
-
-This pattern made our game’s flow (burger order -> pizza order -> finished) clear and easy to fix.
+Clear Separation of Behavior: FirstOrder, Transition, SecondOrder, and Finished are all states that handle their own logic. Each phase has its own logic. For instance, the way pizzas and burgers are brought to customers is different. This stops the different parts of the game from working together by mistake.
 
 #### 2. Inheritance with Polymorphism
-Inheritance with Polymorphism is a simple coding pattern where one class (a "child" class) takes on the features of another class (a "parent" class), and can change or add to those features. This lets us make similar objects (like burger and pizza interactables) share code, so we don’t have to write the same thing twice.
+Inheritance allows subclasses to reuse code from a parent class, while polymorphism enables subclasses to override parent methods to implement unique behavior. We used an abstract base class (InteractableBase) to define a common interface for all interactable objects (like hamburgers, pizzas, NPCs), then subclassed it to implement object's own interaction logic.
 
 Where We Used This in Our Game Code？
 
-1. Abstract Parent Class (InteractableBase.cs)
-We made an abstract parent class for all things the player can interact with (like burgers, pizza, and NPCs). It has a basic Interact() method that child classes can change:
+Abstract Base Class: InteractableBase.cs
+This class defines a common structure for all interactable objects, including an abstract Interact() method (enforcing implementation in subclasses):
 
-         // Abstract parent class 
-         public abstract class InteractableBase : MonoBehaviour
-         {
-             public GameObject interactionPrompt; // Shared prompt for all interactables
-         
-             // Abstract method (child classes MUST write their own version)
-             public abstract void Interact();
-         }
+      public abstract class InteractableBase : MonoBehaviour
+      {
+          [Header("Interaction Settings")]
+          public float interactionDistance = 5f;
+          public GameObject interactionPrompt;
+      
+          // Abstract method: subclasses MUST implement this
+          public abstract void Interact();
+      
+          // Shared helper method (inherited by all subclasses)
+          protected bool IsPlayerInRange()
+          {
+              GameObject player = GameObject.FindWithTag("Player");
+              if (player == null) return false;
+              return Vector3.Distance(transform.position, player.transform.position) <= interactionDistance;
+          }
+      
+          // Virtual method: subclasses can override (optional)
+          protected virtual void Update()
+          {
+              if (IsPlayerInRange() && Input.GetKeyDown(KeyCode.I))
+              {
+                  Interact();
+              }
+          }
+      }
+Subclass 1: HamburgerInteract.cs (Overrides Interact())
 
+      public class HamburgerInteract : InteractableBase
+      {
+          // Override abstract Interact() method to implement burger's own logic
+          public override void Interact()
+          {
+              if (isPicked) return;
+      
+              if (OrderManager.Instance.currentOrder != null &&
+                  OrderManager.Instance.currentOrder.foodType == "Burger")
+              {
+                  isPicked = true;
+                  gameObject.SetActive(false);
+                  inventoryIcon.SetActive(true);
+                  OrderManager.Instance.PickUpOrder();
+                  GameProgress.Instance.burgerPickedUp = true;
+              }
+          }
+      
+          // Override Update() to add burger's own range checks
+          private new void Update()
+          {
+              if (isPicked || player == null || !GameProgress.Instance.firstOrderAccepted)
+              {
+                  interactionPrompt?.SetActive(false);
+                  return;
+              }
+              float distance = Vector3.Distance(transform.position, player.position);
+              interactionPrompt.SetActive(distance <= burgerInteractDistance);
+          }
+      }
+Subclass 2: PizzaInteract.cs (Overrides Interact())
 
-2. Child Class 1: HamburgerInteract.cs (Overrides Interact())
-The burger uses the parent class but changes the Interact() method to fit how burgers work:
+      public class PizzaInteract : InteractableBase
+      {
+          // Override abstract Interact() method to implement pizza-specific logic
+          public override void Interact()
+          {
+              if (isPicked) return;
+      
+              if (OrderManager.Instance.currentOrder != null && 
+                  OrderManager.Instance.currentOrder.foodType == "Pizza")
+              {
+                  isPicked = true;
+                  gameObject.SetActive(false);
+                  inventoryIcon.SetActive(true);
+                  OrderManager.Instance.PickUpOrder();
+                  GameProgress.Instance.pizzaPickedUp = true;
+              }
+          }
+      
+          // Override Update() to add pizza-specific range checks
+          private new void Update()
+          {
+              if (isPicked || player == null || !GameProgress.Instance.secondOrderAccepted)
+              {
+                  interactionPrompt?.SetActive(false);
+                  return;
+              }
+              float distance = Vector3.Distance(transform.position, player.position);
+              interactionPrompt.SetActive(distance <= pizzaInteractDistance);
+          }
+      }
+Subclass 3: CustomerAnton.cs (Overrides Interact())
 
-         // Child class for burgers (inherits from InteractableBase)
-         public class HamburgerInteract : InteractableBase
-         {
-             public bool isPicked = false;
-             public GameObject inventoryIcon;
-         
-             // Override: Change the parent’s Interact() method for burgers
-             public override void Interact()
-             {
-                 if (isPicked) return;
-         
-                 // Burger logic: Pick up the burger
-                 isPicked = true;
-                 gameObject.SetActive(false);
-                 inventoryIcon.SetActive(true);
-                 GameProgress.Instance.burgerPickedUp = true;
-             }
-         }
+      public class CustomerAnton : InteractableBase
+      {
+          // Override abstract Interact() method to implement NPC's own dialogue logic
+          public override void Interact()
+          {
+              bool hasBurger = GameProgress.Instance.burgerPickedUp;
+              bool hasPizza = GameProgress.Instance.pizzaPickedUp;
+      
+              if (isDeliveryCompleted)
+              {
+                  DialogueManager.Instance.StartDialogue(anton_Nothing_on_hand);
+                  return;
+              }
+      
+              if (hasBurger && !hasPizza)
+              {
+                  DialogueManager.Instance.StartDialogue(anton_Burger_on_hand);
+                  deliveryDialoguePlayed = true;
+                  waitingForClickDelivery = true;
+              }
+          }
+      }
+      
+Why This Pattern Was Useful
+Better Code Reuse Across Classes:The InteractableBase class contains shared logic like IsPlayerInRange() and the interaction prompt. Because of this, the subclasses don’t have to repeat the same code. This helped reduce repeated code in HamburgerInteract, PizzaInteract, and CustomerAnton.
 
+Using Polymorphism to Allow Different Behaviors:
+The abstract Interact() method makes sure that all interactable objects follow the same structure, but each subclass can still have its own behavior. For example, one object can pick up a burger while another can start an NPC conversation. This also makes it easier to add new interactable objects later, like a soda can, by just creating a new subclass and overriding Interact().
 
- 3. Child Class 2: PizzaInteract.cs (Also Overrides Interact())
-The pizza uses the same parent class but has its own Interact() logic:
+Making the Code Easier to Update and Maintain:
+If we want to change the core interaction logic, like changing the interaction key from I to E, we only need to update it in the base class instead of every subclass. This makes the code easier to manage and reduces the chance of bugs.
 
-         // Child class for pizza (inherits from InteractableBase)
-         public class PizzaInteract : InteractableBase
-         {
-             public bool isPicked = false;
-             public GameObject inventoryIcon;
-         
-             // Override: Change the parent’s Interact() method for pizza
-             public override void Interact()
-             {
-                 if (isPicked) return;
-         
-                 // Pizza logic: Pick up the pizza
-                 isPicked = true;
-                 gameObject.SetActive(false);
-                 inventoryIcon.SetActive(true);
-                 GameProgress.Instance.pizzaPickedUp = true;
-             }
-         }
+#### 3. Singleton Pattern
+We used the Singleton pattern to complement these core patterns, ensuring global access to critical managers (for example: DeliveryManager, GameProgress) without messy FindObjectOfType calls.
 
+Where We Used This in Our Game Code？
 
-Why This Pattern Helped Our Game？
+GameProgress.cs
 
-1. No duplicate code: The interactionPrompt (the "click to pick up" text) is in the parent class, so we don’t have to add it to both burger and pizza code.
-   
-2. Easy to add new items: If we want to add a soda interactable, we just make a new child class and write only the soda‘s Interact() logic，all the basic stuff (like the prompt) is already in the parent.
-   
-3. Clear and organized: All interactable things follow the same rules (they all have an Interact() method), so our code is easy to read and fix. Even if we change how the prompt works, we only change it in the parent class.
+      public class GameProgress : MonoBehaviour
+      {
+          public static GameProgress Instance { get; private set; }
+      
+          private void Awake()
+          {
+              if (Instance == null) Instance = this;
+              else Destroy(gameObject); // Ensure only one instance exists
+          }
+      }
+      
+Why It Was Useful
+Global State Access: The Singleton pattern lets any class access game progress (like GameProgress.Instance.burgerPickedUp) or state (like DeliveryManager.Instance.currentGameState) without passing references between objects. This was critical for FSM state checks and polymorphic interaction logic (like HamburgerInteract checking if the first order is accepted).
+
 
 
 ### Team Member Name 1
