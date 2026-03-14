@@ -52,13 +52,13 @@ We actually revised some details based on the Proposal and Breakdown, but it is 
 ## Final Submission
 ### Group Devlog
 #### 1. Finite State Machine (FSM) Pattern with C# Enums
-The Finite State Machine pattern organizes a system into different states and defines how it moves from one state to another. We used C# enums to make clear game states and cut down on error-prone conditional logic.
+The Finite State Machine(FSM) pattern organizes a system into different states and defines how it moves from one state to another. In our game project, we used FSM and a C# enum to make clear game states in the delivery process.
 
-Where We Used This in Our Game Code？
+Where we used it in our code? 
 
-DeliveryManager.cs
+DeliveryManager.cs: It is our core game state controller
+The main FSM can be found in DeliveryManager.cs, and we define the delivery phases using a C# enum:
       
-      // Defines the game’s core states as an enum (FSM state definition)
       public enum GameState { FirstOrder, Transition, SecondOrder, Finished }
       
       public class DeliveryManager : MonoBehaviour
@@ -117,11 +117,11 @@ The InteractWithOwner() method uses currentGameState to determine which dialogue
       }
 Why This Pattern Was Useful？
 
-Easier State Management: The GameState enum gives us one clear variable to show the game's current state, instead of having to deal with a lot of boolean flags like isBurgerPhase or isPizzaPhase. This makes it a lot easier to keep track of how the game is going and find any bugs that have to do with the state.
+The GameState enum gives us one clear variable to show the game's current state, instead of having to deal with a lot of boolean flags like isBurgerPhase or isPizzaPhase. This makes it a lot easier to keep track of how the game is going and find any bugs that have to do with the state.
 
-Easy to Extend: Adding a new state, like a BonusLevel, is simple. All you have to do is change the enum and add the code that goes with it. You don't have to change any code that isn't related to the checks.
+It is also easier to extend and reduces complex conditional logic. Adding a new state like a BonusLevel is simple. All we have to do is change the enum and add the code that goes with it. We don't have to change any code that isn't related to the checks.
 
-Clear Separation of Behavior: FirstOrder, Transition, SecondOrder, and Finished are all states that handle their own logic. Each phase has its own logic. For instance, the way pizzas and burgers are brought to customers is different. This stops the different parts of the game from working together by mistake.
+It provides clear Separation of Behavior in FirstOrder, Transition, SecondOrder, and Finished are all states that handle their own logic. Each phase has its own logic. For instance, the way pizzas and burgers are brought to customers is different. This stops the different parts of the game from working together by mistake.
 
 #### 2. Inheritance with Polymorphism
 Inheritance allows subclasses to reuse code from a parent class, while polymorphism enables subclasses to override parent methods to implement unique behavior. We used an abstract base class (InteractableBase) to define a common interface for all interactable objects (like hamburgers, pizzas, NPCs), then subclassed it to implement object's own interaction logic.
