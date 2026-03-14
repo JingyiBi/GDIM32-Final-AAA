@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: amy pizza+cookie 4
   m_EditorClassIdentifier: 
   speakerName: Amy
-  dialogueText: You can click on me to give the pizza to me.
+  dialogueText: You can click on me to give the pizza and cookie to me.
   choices:
   - choiceText: continue
     nextNode: {fileID: 11400000, guid: 059a642a1f84d46e0a80478aff35944f, type: 2}
   endsDialogue: 0
-  autoContinue: 0
-  autoContinueDelay: 2
   nextNode: {fileID: 0}

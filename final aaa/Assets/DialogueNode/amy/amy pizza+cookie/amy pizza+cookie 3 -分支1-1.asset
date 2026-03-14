@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: "amy pizza+cookie 3 -\u5206\u652F1-1"
   m_EditorClassIdentifier: 
   speakerName: Amy
-  dialogueText: Oh, wow! This is amazing! I'm going to give you a 20-dollar tip!
+  dialogueText: Oh, wow! This is amazing! I wiill give you a 20-dollar tip!
   choices:
-  - choiceText: "\uFF08Give Amy Fortune cookie\uFF09"
+  - choiceText: continue
     nextNode: {fileID: 11400000, guid: 9098b8dc4746f4b0cb72426ba0f26b2f, type: 2}
   endsDialogue: 0
-  autoContinue: 0
-  autoContinueDelay: 2
   nextNode: {fileID: 0}

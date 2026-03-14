@@ -17,9 +17,7 @@ MonoBehaviour:
   choices:
   - choiceText: Sure
     nextNode: {fileID: 11400000, guid: e419986e5f6d24d168e4f841a070d207, type: 2}
-  - choiceText: Not
-    nextNode: {fileID: 11400000, guid: 469678f328eed49a4826b27f7fb85730, type: 2}
+  - choiceText: Of course.
+    nextNode: {fileID: 11400000, guid: e419986e5f6d24d168e4f841a070d207, type: 2}
   endsDialogue: 0
-  autoContinue: 0
-  autoContinueDelay: 2
   nextNode: {fileID: 0}

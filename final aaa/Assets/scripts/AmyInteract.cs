@@ -16,6 +16,9 @@ public class AmyInteract : InteractableBase
     public float sightAngleThreshold = 0.7f;
     public float promptDisplayDistance = 5f;
 
+    private enum DeliveryType { None, OnlyPizza, PizzaAndCookie }
+    private DeliveryType currentDeliveryType = DeliveryType.None;
+
     private Transform player;
     private bool waitingForClickDelivery = false;
 
@@ -67,35 +70,35 @@ public class AmyInteract : InteractableBase
 
         Debug.Log("Amy Interact | Burger: " + hasBurger + " | Pizza: " + hasPizza + " | Cookie: " + hasCookie);
 
-        // no
+        currentDeliveryType = DeliveryType.None;
+
         if (!GameProgress.Instance.hasTalkedToOwner)
         {
             DialogueManager.Instance.StartDialogue(amy_手上无东西);
             return;
         }
 
-        // burger
         if (hasBurger)
         {
             DialogueManager.Instance.StartDialogue(amy_手上有汉堡时);
             return;
         }
 
-        //  pizza + cookie
         if (hasPizza && hasCookie)
         {
             Debug.Log("Amy dialogue branch: pizza + cookie");
             DialogueManager.Instance.StartDialogue(amy_pizza_plus_cookie);
             waitingForClickDelivery = true;
+            currentDeliveryType = DeliveryType.PizzaAndCookie;
             return;
         }
 
-        // Only pizza
         if (hasPizza)
         {
             Debug.Log("Amy dialogue branch: pizza only");
             DialogueManager.Instance.StartDialogue(amy_手上只有pizza);
             waitingForClickDelivery = true;
+            currentDeliveryType = DeliveryType.OnlyPizza;
             return;
         }
 
@@ -120,17 +123,30 @@ public class AmyInteract : InteractableBase
         if (pizzaItem != null)
             pizzaItem.RemoveFromInventory();
 
-        if (cookieItem != null)
+        if (cookieItem != null && currentDeliveryType == DeliveryType.PizzaAndCookie)
             cookieItem.RemoveFromInventory();
 
         GameProgress.Instance.pizzaPickedUp = false;
-        GameProgress.Instance.cookiePickedUp = false;
+        if (currentDeliveryType == DeliveryType.PizzaAndCookie)
+            GameProgress.Instance.cookiePickedUp = false;
 
         GameProgress.Instance.secondDeliveryCompleted = true;
 
-        int tip = 20;
+        int tip = 0;
+        switch (currentDeliveryType)
+        {
+            case DeliveryType.OnlyPizza:
+                tip = 0; 
+                break;
+            case DeliveryType.PizzaAndCookie:
+                tip = 20; 
+                break;
+        }
+        
         DeliveryManager.Instance.AddEarnings(tip);
+        Debug.Log($"完成配送，小费：{tip}（配送类型：{currentDeliveryType}）");
 
         DeliveryManager.Instance.CompleteSecondDelivery();
+        currentDeliveryType = DeliveryType.None;
     }
 }
