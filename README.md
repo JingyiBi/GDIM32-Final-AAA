@@ -115,7 +115,7 @@ The InteractWithOwner() method uses currentGameState to determine which dialogue
               if (RO_BurgerOrder != null) DialogueManager.Instance.StartDialogue(RO_BurgerOrder);
           }
       }
-Why This Pattern Was Useful
+Why This Pattern Was Useful？
 
 Easier State Management: The GameState enum gives us one clear variable to show the game's current state, instead of having to deal with a lot of boolean flags like isBurgerPhase or isPizzaPhase. This makes it a lot easier to keep track of how the game is going and find any bugs that have to do with the state.
 
@@ -246,7 +246,8 @@ Subclass 3: CustomerAnton.cs (Overrides Interact())
           }
       }
       
-Why This Pattern Was Useful
+Why This Pattern Was Useful？
+
 Better Code Reuse Across Classes: The InteractableBase class contains shared logic like IsPlayerInRange() and the interaction prompt. Because of this, the subclasses don’t have to repeat the same code. This helped reduce repeated code in HamburgerInteract, PizzaInteract, and CustomerAnton.
 
 Using Polymorphism to Allow Different Behaviors:
@@ -273,7 +274,8 @@ GameProgress.cs
           }
       }
       
-Why It Was Useful
+Why It Was Useful？
+
 Global State Access: The Singleton pattern lets any class access game progress (like GameProgress.Instance.burgerPickedUp) or state (like DeliveryManager.Instance.currentGameState) without passing references between objects. This was critical for FSM state checks and polymorphic interaction logic (like HamburgerInteract checking if the first order is accepted).
 
 
