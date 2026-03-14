@@ -52,7 +52,7 @@ We actually revised some details based on the Proposal and Breakdown, but it is 
 ## Final Submission
 ### Group Devlog
 #### 1. Finite State Machine (FSM) Pattern with C# Enums
-The Finite State Machine pattern shows how an object acts by breaking it down into different states, transitions between states, and actions that happen when states change. We used C# enums to make clear game states and cut down on error-prone conditional logic.
+The Finite State Machine pattern organizes a system into different states and defines how it moves from one state to another. We used C# enums to make clear game states and cut down on error-prone conditional logic.
 
 Where We Used This in Our Game Code？
 
