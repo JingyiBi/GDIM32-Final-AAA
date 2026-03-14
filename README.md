@@ -295,6 +295,17 @@ Besides these features, I helped improve the overall quality of the game. I coll
 ### Team Member Name 3
 Ruixuan Pan:
 
+After the Check-in, I mainly focused on finishing the second delivery interaction system, from the item pick-up, the dialogue braching design (Using Scriptable) for different NPCs, the Start UI, Order UI, and connecting the systems to the UI and game state machine. 
+
+One of my primary contributions was implementing the CookiePickup, PizzaPickup systems. I wrote the scripts to manage how player picks up the items and adds it to inventory UI. These work by using the variables like 'inventoryIcon', 'cookieInteractDistance', and 'hasPickdup'. I also used the method 'OnMouseDown()' to detect mouse interaction with the GameObject, and set 'GameProgress.Instance.cookiePickedUp = true' to check its state. 
+
+I also helped connect the order completion system to the overal game progression. When player completes Costumer Amy's Delivery, the 'CompleteDelivery()' method calls 'OrderManager.Instance.SubmitOrder()' and updates state variables of secondDlivery Completed. It can also remove the items from inventory by calling 'RemoveFromInventory()' when the delivery finished. Thus, the UI and game state remain synchronized in delivery. 
+
+Besides that, I also worked on some GameObjects and UI elements, including the Cookie item, OrderUI and the StartUI. Using the OrderPopupPanel and the Orderdata, I tried to make the OrderUI pop up different order pictures in different delivery progress from 'currentOrder = order'. Their states are controlled that player couldn't click the UI to see the ordermap untill he/she accepted the delivery. 
+
+Overall, my work focused on building and debugging the interaction logic and connects them with player actions, item pickups, NPC dialogueNode, and order completion. Due to the update of State machine and scriptable dialoguenode，we really spend a long long time on it to rebuild many things, thanks all. 
+
+
 ## Open-Source Assets
 - [funky preparation](https://www.aigei.com) - background music
 - [characters](https://www.mixamo.com/#/)- 3D characters model and animation
