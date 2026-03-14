@@ -1,41 +1,34 @@
 using UnityEngine;
-using TMPro;
 
 public class GameOverUIHelper : MonoBehaviour
 {
-    [Header("UI Components")]
-    public GameObject endPanel;        
-    public TextMeshProUGUI resultText; 
+    [Header("UI")]
+    public GameObject endPanel;
 
     private bool hasShown = false;
 
-    void Start() 
+    void Start()
     {
-        if(endPanel != null) endPanel.SetActive(false); 
+        if (endPanel != null)
+            endPanel.SetActive(false);
     }
 
     void Update()
     {
         if (hasShown || GameProgress.Instance == null) return;
 
-        
         if (GameProgress.Instance.secondOrderRewardClaimed)
         {
-            
-            Invoke("ShowFinalResult", 1.0f);
-            hasShown = true; 
+            Invoke("ShowGameOverUI", 1f);
+            hasShown = true;
         }
     }
 
-    void ShowFinalResult()
+    void ShowGameOverUI()
     {
-        if(endPanel != null) endPanel.SetActive(true);
-        
-        int total = DeliveryManager.Instance.totalEarnings;
-        if(resultText != null) 
-            resultText.text = $" Your delivery today was successfully completed, with a total income of {total}";
-            
-        
+        if (endPanel != null)
+            endPanel.SetActive(true);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
