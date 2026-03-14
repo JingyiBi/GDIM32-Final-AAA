@@ -286,6 +286,12 @@ Jingyi Bi:
 ### Team Member Name 2
 Peiyi Xiong: 
 
+During the development of the project, I worked on several gameplay and system improvements. I modified the player movement code to make the controls feel smoother and more stable. I also worked on the dialogue system and wrote all of the dialogue used in the game. In total, I created 11 dialogue groups for the three NPC characters. To better organize the dialogue, I helped convert the dialogue data into ScriptableObjects and modified the state machine so that each NPC’s dialogue is tied to specific game states. This allows NPCs to say different lines depending on the player’s progress in the game.
+
+I also implemented a visibility check for interactions. The interaction prompts for NPCs and items now only appear when the player is looking directly at them, which makes the interaction feel more natural. In addition, I added lighting to the scene to improve the overall atmosphere and visibility. I also wrote the code for the Start UI and created the first version of the start menu.
+
+Besides these features, I helped improve the overall quality of the game. I collected sound effects for the characters, fixed several collider issues, and solved a problem where NPC models would clip through objects. Throughout development, I also spent time testing the game, identifying bugs, and debugging them to make the gameplay more stable.
+
 ### Team Member Name 3
 Ruixuan Pan:
 
