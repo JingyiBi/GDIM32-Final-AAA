@@ -210,7 +210,7 @@ Subclass 2: PizzaInteract.cs (Overrides Interact())
           }
       
           // Override Update() to add pizza-specific range checks
-          private new void Update()
+          private override void Update()
           {
               if (isPicked || player == null || !GameProgress.Instance.secondOrderAccepted)
               {
@@ -247,7 +247,7 @@ Subclass 3: CustomerAnton.cs (Overrides Interact())
       }
       
 Why This Pattern Was Useful
-Better Code Reuse Across Classes:The InteractableBase class contains shared logic like IsPlayerInRange() and the interaction prompt. Because of this, the subclasses don’t have to repeat the same code. This helped reduce repeated code in HamburgerInteract, PizzaInteract, and CustomerAnton.
+Better Code Reuse Across Classes: The InteractableBase class contains shared logic like IsPlayerInRange() and the interaction prompt. Because of this, the subclasses don’t have to repeat the same code. This helped reduce repeated code in HamburgerInteract, PizzaInteract, and CustomerAnton.
 
 Using Polymorphism to Allow Different Behaviors:
 The abstract Interact() method makes sure that all interactable objects follow the same structure, but each subclass can still have its own behavior. For example, one object can pick up a burger while another can start an NPC conversation. This also makes it easier to add new interactable objects later, like a soda can, by just creating a new subclass and overriding Interact().
@@ -256,7 +256,7 @@ Making the Code Easier to Update and Maintain:
 If we want to change the core interaction logic, like changing the interaction key from I to E, we only need to update it in the base class instead of every subclass. This makes the code easier to manage and reduces the chance of bugs.
 
 #### 3. Singleton Pattern
-We used the Singleton pattern to complement these core patterns, ensuring global access to critical managers (for example: DeliveryManager, GameProgress) without messy FindObjectOfType calls.
+We used the Singleton pattern so different scripts could easily access important managers like DeliveryManager and GameProgress without needing to repeatedly search for them.
 
 Where We Used This in Our Game Code？
 
