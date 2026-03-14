@@ -178,7 +178,7 @@ Subclass 1: HamburgerInteract.cs (Overrides Interact())
           }
       
           // Override Update() to add burger's own range checks
-          private new void Update()
+          private override void Update()
           {
               if (isPicked || player == null || !GameProgress.Instance.firstOrderAccepted)
               {
