@@ -4,6 +4,11 @@ public class HamburgerInteract : InteractableBase
 {
     public bool isPicked = false;
     public GameObject inventoryIcon;
+
+    [Header("Sound")]
+    public AudioClip pickupSFX;
+    private AudioSource audioSource;
+
     [Header("Interaction Settings")]
     public float burgerInteractDistance = 6f; 
     private Transform player;
@@ -11,7 +16,10 @@ public class HamburgerInteract : InteractableBase
     private void Start()
     {
         GameObject playerObj = GameObject.FindWithTag("Player");
-        if (playerObj != null) player = playerObj.transform;
+        { if (playerObj != null) player = playerObj.transform;
+
+        audioSource = playerObj.GetComponent<AudioSource>();
+        }
         
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
@@ -49,6 +57,11 @@ public class HamburgerInteract : InteractableBase
             OrderManager.Instance.currentOrder.foodType == "Burger")
         {
             isPicked = true;
+            if (audioSource != null && pickupSFX != null)
+            {
+                audioSource.PlayOneShot(pickupSFX);
+            }
+
             gameObject.SetActive(false);
             if (inventoryIcon != null)
                 inventoryIcon.SetActive(true);

@@ -4,6 +4,11 @@ public class PizzaInteract : InteractableBase
 {
     public bool isPicked = false;
     public GameObject inventoryIcon;
+
+    [Header("Sound")]
+    public AudioClip pickupSFX;
+    private AudioSource audioSource;
+
     [Header("Interaction Settings")]
     public float pizzaInteractDistance = 6f; 
     private Transform player;
@@ -11,8 +16,10 @@ public class PizzaInteract : InteractableBase
     private void Start()
     {
         GameObject playerObj = GameObject.FindWithTag("Player");
-        if (playerObj != null) player = playerObj.transform;
-        
+        if (playerObj != null)
+        { player = playerObj.transform;
+            audioSource = playerObj.GetComponent<AudioSource>();
+        }
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
     }
@@ -48,6 +55,11 @@ public class PizzaInteract : InteractableBase
         if (OrderManager.Instance.currentOrder != null && 
             OrderManager.Instance.currentOrder.foodType == "Pizza")
         {
+            isPicked = true;
+            if (audioSource != null && pickupSFX != null)
+            {
+                audioSource.PlayOneShot(pickupSFX);
+            }
             isPicked = true;
             gameObject.SetActive(false);
             if (inventoryIcon != null) 
