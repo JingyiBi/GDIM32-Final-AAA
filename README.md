@@ -282,7 +282,11 @@ Global State Access: The Singleton pattern lets any class access game progress (
 
 ### Team Member Name 1
 Jingyi Bi:
-
+Since the Check-In, I mainly focused on improving the game systems, debugging issues, and refining the UI logic.
+One of my main contributions was refactoring many of the existing scripts to work with a new state machine system. I reorganized the core interaction logic so that different gameplay events could be controlled by quest states. This required modifying multiple scripts and updating how interactions check the current game progress. The state machine now helps track player progress and allows different systems, such as NPC dialogue and delivery tasks, to respond correctly to the current game state.
+I also worked on several UI systems and UI fixes. I implemented the end-of-day delivery summary UI, which displays the player’s delivery results after finishing the tasks. I also added the cookie proximity prompt UI, which shows a UI indicator when the player approaches the cookie item. In addition, I fixed an issue where the NPC head text UI was flickering by adjusting the camera and UI update logic. I also optimized several UI layouts and added UI borders and feedback elements to improve readability.
+Besides system and UI work, I also continued debugging and improving gameplay stability. I fixed collider issues for different GameObjects such as houses, branches, and NPCs to prevent model clipping. I also added sound effects to certain interactions to improve player feedback.
+Overall, my work after the Check-In mainly focused on refactoring scripts for the state machine, improving UI systems, fixing gameplay bugs, and stabilizing the interaction logic so that different systems in the game work together more reliably.
 ### Team Member Name 2
 Peiyi Xiong: 
 
