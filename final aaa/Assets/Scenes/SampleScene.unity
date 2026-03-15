@@ -899,7 +899,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &90287489
 MonoBehaviour:
@@ -6233,12 +6233,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 865623067}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 865623073}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 865623074}
   m_SourcePrefab: {fileID: 100100000, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
 --- !u!1 &865623065 stripped
 GameObject:
@@ -6282,54 +6276,13 @@ MonoBehaviour:
   interactionPrompt: {fileID: 76669312}
   isPicked: 0
   inventoryIcon: {fileID: 90287487}
+  pickupSFX: {fileID: 8300000, guid: fe5eca88106a9bc4e8f0272c57ae3330, type: 3}
   pizzaInteractDistance: 6
 --- !u!4 &865623070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 10f38285aa60341fdb2d3f36198c091a, type: 3}
   m_PrefabInstance: {fileID: 865623064}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &865623073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865623065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1367856227}
-          m_TargetAssemblyTypeName: AudioManagerPatch, Assembly-CSharp
-          m_MethodName: PlayPickup
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &865623074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865623065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a14a2f0aa1bf54478807f2925c88790e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupSound: {fileID: 8300000, guid: fe5eca88106a9bc4e8f0272c57ae3330, type: 3}
 --- !u!4 &865981885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb2433fe8eb88411992904e8d3c1c8c3, type: 3}
@@ -12433,7 +12386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea984d83e9b0842eda8bf4eca53e644a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ceb02b7a898a1af4ab7d483fdbdccedc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12467,8 +12420,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -813.21326, y: 114.090904}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: -844, y: 96}
+  m_SizeDelta: {x: 250, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1733005312
 GameObject:
