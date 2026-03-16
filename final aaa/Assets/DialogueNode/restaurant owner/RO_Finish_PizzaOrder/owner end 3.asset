@@ -17,7 +17,5 @@ MonoBehaviour:
   choices:
   - choiceText: Thank you.
     nextNode: {fileID: 0}
-  endsDialogue: 0
-  autoContinue: 1
-  autoContinueDelay: 2
+  endsDialogue: 1
   nextNode: {fileID: 0}

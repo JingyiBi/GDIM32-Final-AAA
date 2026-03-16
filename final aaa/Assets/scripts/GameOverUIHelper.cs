@@ -15,7 +15,8 @@ public class GameOverUIHelper : MonoBehaviour
 
     void Update()
     {
-        if (hasShown || GameProgress.Instance == null) return;
+        if (hasShown || GameProgress.Instance == null || DialogueManager.Instance.IsDialogueActive)
+            return;
 
         if (GameProgress.Instance.secondOrderRewardClaimed)
         {
