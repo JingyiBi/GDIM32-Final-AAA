@@ -316,3 +316,4 @@ Overall, my work focused on building and debugging the interaction logic and con
 - [buildings](https://brokenvector.itch.io/low-poly-brick-houses) - 3D building model
 - [characters](https://vinrax.itch.io/psx-casual-male-character) - 3D characters model
 - [characters](https://vinrax.itch.io/psx-secretary-character)- 3D characters model
+- [sound effect](link_paste_here)- pick up sound effect
