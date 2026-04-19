@@ -9961,7 +9961,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 190.69086, y: -238.82983}
-  m_SizeDelta: {x: 533.7795, y: 226.5596}
+  m_SizeDelta: {x: 550, y: 226.5596}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1339224380
 MonoBehaviour:
@@ -12778,7 +12778,7 @@ MonoBehaviour:
   pizzaItem: {fileID: 865623067}
   cookieItem: {fileID: 1741046091}
   sightAngleThreshold: 0.5
-  promptDisplayDistance: 2000
+  promptDisplayDistance: 10
 --- !u!1001 &1786587649
 PrefabInstance:
   m_ObjectHideFlags: 0

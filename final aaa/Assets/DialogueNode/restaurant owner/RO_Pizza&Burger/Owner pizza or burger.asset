@@ -16,8 +16,6 @@ MonoBehaviour:
   dialogueText: What are you standing there for? Go deliver the food!
   choices:
   - choiceText: OK
-    nextNode: {fileID: 0}
+    nextNode: {fileID: 11400000, guid: 3016df9d99c632e40aac0ec954979642, type: 2}
   endsDialogue: 0
-  autoContinue: 1
-  autoContinueDelay: 2
   nextNode: {fileID: 0}

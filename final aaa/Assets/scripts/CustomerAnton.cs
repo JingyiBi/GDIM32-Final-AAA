@@ -63,10 +63,22 @@ public class CustomerAnton : InteractableBase
         }
     }
 
-    public override void Interact()
+        
+        public override void Interact()
     {
         bool hasBurger = GameProgress.Instance.burgerPickedUp;
         bool hasPizza = GameProgress.Instance.pizzaPickedUp;
+
+        Debug.Log($"Anton交互 - hasPizza:{hasPizza} | hasBurger:{hasBurger} | hasTalkedToOwner:{GameProgress.Instance.hasTalkedToOwner} | isDeliveryCompleted:{isDeliveryCompleted}");
+        
+        if (hasPizza && !hasBurger)
+        {
+            Debug.Log("触发披萨对话分支");
+            DialogueManager.Instance.StartDialogue(anton_Pizza_on_hand);
+            deliveryDialoguePlayed = true;
+            waitingForClickDelivery = true;
+            return;
+        }
 
         if (isDeliveryCompleted)
         {
@@ -87,13 +99,8 @@ public class CustomerAnton : InteractableBase
             waitingForClickDelivery = true;
             return;
         }
-
-        if (hasPizza && !hasBurger)
-        {
-            DialogueManager.Instance.StartDialogue(anton_Pizza_on_hand);
-            return;
-        }
         
+        Debug.Log("触发无物品对话分支");
         DialogueManager.Instance.StartDialogue(anton_Nothing_on_hand);
     }
 
